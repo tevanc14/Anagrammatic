@@ -77,7 +77,8 @@ class CharacterEntryFieldState extends State<CharacterEntryField> {
         },
         onSubmitted: (String str) {
 //          _text.removeWhere((value) => value == null);
-          widget.onSubmit(_text.join());
+          // DEBT: removeWhere would stall everything, so take out nulls here
+          widget.onSubmit(_text.join().replaceAll(new RegExp('(null)+'), ''));
         },
       ),
     );

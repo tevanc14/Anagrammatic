@@ -47,13 +47,10 @@ class CharacterFormState extends State<CharacterForm> {
                     fields: 7,
                     keyboardType: TextInputType.text,
                     onSubmit: (String value) {
-                      // DEBT: removeWhere would stall everything, so take out nulls here
-                      String editedValue =
-                          value.replaceAll(new RegExp('(null)+'), '');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LengthForm(editedValue)),
+                            builder: (context) => LengthForm(value)),
                       );
                     },
                   ),
