@@ -28,57 +28,56 @@ class CharacterEntryField extends StatefulWidget {
 }
 
 class CharacterEntryFieldState extends State<CharacterEntryField> {
-  List<String> _text;
-  List<FocusNode> _focusNodes;
-  List<TextEditingController> _textControllers;
+  List<String> text;
+  List<FocusNode> focusNodes;
+  List<TextEditingController> textControllers;
 
   @override
   void initState() {
     super.initState();
-    _text = List<String>(widget.fields);
-    _focusNodes = List<FocusNode>(widget.fields);
-    _textControllers = List<TextEditingController>(widget.fields);
+    text = List<String>(widget.fields);
+    focusNodes = List<FocusNode>(widget.fields);
+    textControllers = List<TextEditingController>(widget.fields);
   }
 
   @override
   void dispose() {
-    _textControllers.forEach((TextEditingController t) => t.dispose());
+    textControllers.forEach((TextEditingController t) => t.dispose());
     super.dispose();
   }
 
   void clearTextFields() {
-    _textControllers.forEach(
+    textControllers.forEach(
         (TextEditingController tEditController) => tEditController.clear());
-    _text.clear();
+    text.clear();
   }
 
   Widget buildTextField(int index, BuildContext context) {
-    _focusNodes[index] = FocusNode();
-    _textControllers[index] = TextEditingController();
+    focusNodes[index] = FocusNode();
+    textControllers[index] = TextEditingController();
 
-    return Container(
+    return new Container(
       width: widget.fieldWidth,
       margin: EdgeInsets.only(right: 10.0),
       child: TextField(
         inputFormatters: [TextFormatter(widget.keyboardType)],
-        controller: _textControllers[index],
+        controller: textControllers[index],
         keyboardType: widget.keyboardType,
         textAlign: TextAlign.center,
         maxLength: 1,
-        enableInteractiveSelection: false,
         style: Theme.of(context).textTheme.title,
-        focusNode: _focusNodes[index],
+        focusNode: focusNodes[index],
         decoration: InputDecoration(counterText: ''),
         onChanged: (String character) {
-          _text[index] = character;
+          text[index] = character;
           if (index + 1 != widget.fields && character.trim() != '') {
-            FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
+            FocusScope.of(context).requestFocus(focusNodes[index + 1]);
           }
         },
         onSubmitted: (String str) {
 //          _text.removeWhere((value) => value == null);
           // DEBT: removeWhere would stall everything, so take out nulls here
-          widget.onSubmit(_text.join().replaceAll(new RegExp('(null)+'), ''));
+          widget.onSubmit(text.join().replaceAll(new RegExp('(null)+'), ''));
         },
       ),
     );
@@ -89,9 +88,9 @@ class CharacterEntryFieldState extends State<CharacterEntryField> {
       return buildTextField(i, context);
     });
 
-    FocusScope.of(context).requestFocus(_focusNodes[0]);
+    FocusScope.of(context).requestFocus(focusNodes[0]);
 
-    return Row(
+    return new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         verticalDirection: VerticalDirection.down,
         children: textFields);
@@ -99,7 +98,7 @@ class CharacterEntryFieldState extends State<CharacterEntryField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return new Container(
       child: generateTextFields(context),
     );
   }
@@ -113,6 +112,15 @@ class TextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
+    // Deleting a character
+    if (newValue.text.length < oldValue.text.length) {
+      return new TextEditingValue(
+        text: newValue.text,
+        selection: newValue.selection,
+      );
+    }
+
+    // Only allow letters, and capitalize them
     if (keyboardType == TextInputType.text) {
       if (newValue.text.contains(new RegExp('[^a-zA-Z]'))) {
         return new TextEditingValue(
@@ -123,6 +131,7 @@ class TextFormatter extends TextInputFormatter {
         selection: newValue.selection,
       );
     } else {
+      // Only allow numbers less than 8
       if (newValue.text.contains(new RegExp('[^0-9]')) ||
           int.parse(newValue.text) > 7) {
         return new TextEditingValue(
