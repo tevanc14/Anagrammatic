@@ -53,21 +53,21 @@ class CharacterEntryFieldState extends State<CharacterEntryField> {
   }
 
   Widget buildTextField(int index, BuildContext context) {
-    focusNodes[index] = FocusNode();
-    textControllers[index] = TextEditingController();
+    focusNodes[index] = new FocusNode();
+    textControllers[index] = new TextEditingController();
 
     return new Container(
       width: widget.fieldWidth,
       margin: EdgeInsets.only(right: 10.0),
-      child: TextField(
-        inputFormatters: [TextFormatter(widget.keyboardType)],
+      child: new TextField(
+        inputFormatters: [new TextFormatter(widget.keyboardType)],
         controller: textControllers[index],
         keyboardType: widget.keyboardType,
         textAlign: TextAlign.center,
         maxLength: 1,
         style: Theme.of(context).textTheme.title,
         focusNode: focusNodes[index],
-        decoration: InputDecoration(counterText: ''),
+        decoration: new InputDecoration(counterText: ''),
         onChanged: (String character) {
           text[index] = character;
           if (index + 1 != widget.fields && character.trim() != '') {
@@ -132,8 +132,7 @@ class TextFormatter extends TextInputFormatter {
       );
     } else {
       // Only allow numbers less than 8
-      if (newValue.text.contains(new RegExp('[^0-9]')) ||
-          int.parse(newValue.text) > 7) {
+      if (newValue.text.contains(new RegExp('[^0-9]'))) {
         return new TextEditingValue(
             text: oldValue.text, selection: oldValue.selection);
       } else {

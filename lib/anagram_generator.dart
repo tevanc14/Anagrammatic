@@ -22,11 +22,7 @@ Future<List<Anagram>> generateAnagrams(String characters, int length) async {
 class Anagram {
   final String word;
 
-  Anagram({this.word});s
-
-  factory Anagram.fromJson(Map<String, dynamic> json) {
-    return new Anagram(word: json['word']);
-  }
+  Anagram({this.word});
 }
 
 List<Anagram> createAnagramList(List data) {

@@ -11,11 +11,11 @@ class AnagramaticApp extends StatelessWidget {
 
     return new MaterialApp(
       title: appTitle,
-      theme: ThemeData(
+      theme: new ThemeData(
           brightness: Brightness.dark,
           primaryColor: Colors.blueGrey[600],
           accentColor: Colors.grey[600]),
-      home: CharacterForm(),
+      home: new CharacterForm(),
     );
   }
 }
@@ -24,20 +24,20 @@ class CharacterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: Form(
-            child: Column(
+        body: new Form(
+            child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-          Text('What characters are available?'),
-          Padding(padding: const EdgeInsets.only(top: 48.0)),
-          CharacterEntryField(
+          new Text('What characters are available?'),
+          new Padding(padding: const EdgeInsets.only(top: 48.0)),
+          new CharacterEntryField(
             fields: 7,
             keyboardType: TextInputType.text,
             onSubmit: (String value) {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => LengthForm(characters: value)),
+                new MaterialPageRoute(
+                    builder: (context) => new LengthForm(characters: value)),
               );
             },
           ),
@@ -53,20 +53,20 @@ class LengthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: Form(
-            child: Column(
+        body: new Form(
+            child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-          Text('How many characters long should the anagrams be?'),
-          Padding(padding: const EdgeInsets.only(top: 48.0)),
-          CharacterEntryField(
+          new Text('How many characters long should the anagrams be?'),
+          new Padding(padding: const EdgeInsets.only(top: 48.0)),
+          new CharacterEntryField(
             fields: 1,
             keyboardType: TextInputType.number,
             onSubmit: (String value) {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => AnagramList(
+                new MaterialPageRoute(
+                    builder: (context) => new AnagramList(
                         characters: this.characters, length: int.parse(value))),
               );
             },
@@ -75,9 +75,7 @@ class LengthForm extends StatelessWidget {
   }
 }
 
-// List: https://proandroiddev.com/flutter-thursday-02-beautiful-list-ui-and-detail-page-a9245f5ceaf0
-// currently takes two back presses to navigate back a page
-// separate out widgets and API service
+// currently takes two back presses to navigate back from length screen
 // consider state storage alternatives to passing variables into widgets
 // something for when no anagrams exist
 // check length against the number of characters given
