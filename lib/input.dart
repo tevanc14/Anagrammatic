@@ -124,17 +124,21 @@ class TextFormatter extends TextInputFormatter {
     if (keyboardType == TextInputType.text) {
       if (newValue.text.contains(new RegExp('[^a-zA-Z]'))) {
         return new TextEditingValue(
-            text: oldValue.text, selection: oldValue.selection);
+          text: oldValue.text,
+          selection: oldValue.selection,
+        );
       }
       return new TextEditingValue(
         text: newValue.text?.toUpperCase(),
         selection: newValue.selection,
       );
     } else {
-      // Only allow numbers less than 8
+      // Only allow numbers
       if (newValue.text.contains(new RegExp('[^0-9]'))) {
         return new TextEditingValue(
-            text: oldValue.text, selection: oldValue.selection);
+          text: oldValue.text,
+          selection: oldValue.selection,
+        );
       } else {
         return new TextEditingValue(
           text: newValue.text,
