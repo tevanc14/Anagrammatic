@@ -98,8 +98,4 @@ class AnagramCardState extends State<AnagramCard> {
       throw 'Could not launch $url';
     }
   }
-
-//  launchURL(String word) {
-//    print(word);
-//  }
 }
