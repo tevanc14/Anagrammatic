@@ -1,4 +1,4 @@
-import 'package:anagramatic/service/anagram_generator.dart';
+import 'package:anagrammatic/service/anagram_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,28 +17,35 @@ class AnagramCardState extends State<AnagramCard> {
   @override
   Widget build(BuildContext context) {
     return new Card(
-        color: Theme.of(context).primaryColor,
         elevation: 10.0,
-        margin: new EdgeInsets.symmetric(
-          horizontal: 15.0,
-          vertical: 15.0,
-        ),
-        child: new ListTile(
-          title: new Text(widget.anagram.word,
-              style: new TextStyle(
-                fontSize: 40.0,
-                fontWeight: FontWeight.bold,
-              )),
-          trailing: new IconButton(
-            icon: Icon(Icons.keyboard_arrow_right, size: 30.0),
-            tooltip: 'Define',
-            onPressed: () => launchURL(widget.anagram.word),
+        margin: new EdgeInsets.all(15.0),
+        child: new Column(children: <Widget>[
+          new ListTile(
+            title: new FittedBox(
+              child: Text(widget.anagram.word),
+              fit: BoxFit.contain,
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+            ),
           ),
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 40.0,
+          new ButtonTheme.bar(
+            child: new ButtonBar(
+              children: <Widget>[
+                new RaisedButton(
+                  child: new Text(
+                    'DEFINE',
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () {
+                    launchURL(widget.anagram.word);
+                  },
+                ),
+              ],
+            ),
           ),
-        ));
+        ]));
   }
 
   launchURL(String word) async {

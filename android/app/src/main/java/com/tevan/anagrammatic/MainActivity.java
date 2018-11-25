@@ -1,4 +1,4 @@
-package com.tevan.anagramatic;
+package com.tevan.anagrammatic;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
