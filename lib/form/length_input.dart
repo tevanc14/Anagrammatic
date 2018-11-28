@@ -34,7 +34,7 @@ class LengthInputState extends State<LengthInput> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: new Text(
-                  'How many characters long should the anagrams be? (20 or less)',
+                  'How many characters long should the anagrams be?\n(20 or less)',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 25.0,
