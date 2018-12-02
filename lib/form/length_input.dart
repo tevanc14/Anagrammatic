@@ -67,7 +67,7 @@ class LengthInputState extends State<LengthInput> {
                 onPressed: () {
                   transferToAnagramList(context);
                 },
-              )
+              ),
             ],
           ),
         ));
