@@ -18,7 +18,9 @@ class AnagramCardState extends State<AnagramCard> {
   Widget build(BuildContext context) {
     return Card(
         elevation: 10.0,
-        margin: EdgeInsets.all(15.0),
+        margin: const EdgeInsets.all(
+          15.0,
+        ),
         child: Column(children: <Widget>[
           ListTile(
             title: FittedBox(

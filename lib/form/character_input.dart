@@ -46,8 +46,12 @@ class CharacterInputState extends State<CharacterInput> {
                   textAlign: TextAlign.center,
                   maxLength: 20,
                   maxLengthEnforced: true,
-                  decoration: InputDecoration(counterText: ''),
-                  style: TextStyle(fontSize: 20.0),
+                  decoration: InputDecoration(
+                    counterText: '',
+                  ),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
                   onChanged: (String text) {
                     changeText();
                   },
@@ -57,7 +61,9 @@ class CharacterInputState extends State<CharacterInput> {
                 ),
               ),
               RaisedButton(
-                child: const Text('Submit'),
+                child: const Text(
+                  'Submit',
+                ),
                 color: Theme.of(context).accentColor,
                 onPressed: () {
                   transferToLengthInput(context);
@@ -72,8 +78,7 @@ class CharacterInputState extends State<CharacterInput> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-            LengthInput(characters: textController.text)),
+          builder: (context) => LengthInput(characters: textController.text)),
     );
   }
 

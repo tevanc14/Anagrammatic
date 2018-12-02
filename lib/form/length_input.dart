@@ -32,7 +32,9 @@ class LengthInputState extends State<LengthInput> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40.0,
+                ),
                 child: Text(
                   'How many characters long should the anagrams be?\n(20 or less)',
                   textAlign: TextAlign.center,
@@ -51,7 +53,9 @@ class LengthInputState extends State<LengthInput> {
                   controller: textController,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(counterText: ''),
+                  decoration: InputDecoration(
+                    counterText: '',
+                  ),
                   style: TextStyle(fontSize: 20.0),
                   onChanged: (String text) {
                     changeText();
@@ -62,7 +66,9 @@ class LengthInputState extends State<LengthInput> {
                 ),
               ),
               RaisedButton(
-                child: const Text('Submit'),
+                child: const Text(
+                  'Submit',
+                ),
                 color: Theme.of(context).accentColor,
                 onPressed: () {
                   transferToAnagramList(context);

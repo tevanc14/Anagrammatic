@@ -1,4 +1,5 @@
 import 'dart:async' show Future;
+
 import 'package:flutter/services.dart' show rootBundle;
 
 class Anagram {
@@ -32,6 +33,8 @@ Future<List<Anagram>> generateAnagrams(String characters, int length) async {
     }
   }
 
+  anagramList.sort((a, b) => a.word.compareTo(b.word));
+
   return anagramList;
 }
 
@@ -39,4 +42,3 @@ Future<String> loadWords() async {
   final String wordsFilename = 'assets/words.txt';
   return await rootBundle.loadString(wordsFilename);
 }
-

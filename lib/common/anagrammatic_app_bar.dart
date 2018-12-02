@@ -4,7 +4,7 @@ class AnagrammaticAppBar {
   AnagrammaticAppBar._();
 
   static AppBar appBar = AppBar(
-    title: Text('Anagrammatic'),
+    title: const Text('Anagrammatic'),
     brightness: Brightness.dark,
   );
 }

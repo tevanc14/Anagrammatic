@@ -22,23 +22,29 @@ class AnagramListState extends State<AnagramList> {
         appBar: AnagrammaticAppBar.appBar,
         body: Container(
           child: FutureBuilder<List<Anagram>>(
-            future: generateAnagrams(widget.characters, widget.length),
-            builder: (context, anagramResponse) {
-              if (anagramResponse.hasData) {
-                if (anagramResponse.data.length > 0) {
+            future: generateAnagrams(
+              widget.characters,
+              widget.length,
+            ),
+            builder: (context, generatedAnagrams) {
+              if (generatedAnagrams.hasData) {
+                if (generatedAnagrams.data.length > 0) {
                   return ListView.builder(
-                      itemCount: anagramResponse.data.length,
+                      itemCount: generatedAnagrams.data.length,
                       itemBuilder: (context, index) {
                         return AnagramCard(
-                            anagram: anagramResponse.data[index]);
+                          anagram: generatedAnagrams.data[index],
+                        );
                       });
                 } else {
-                  return Text("No anagrams were found 😢",
-                      style: TextStyle(fontSize: 25.0));
+                  return const Text("No anagrams were found 😢",
+                      style: TextStyle(
+                        fontSize: 25.0,
+                      ));
                 }
-              } else if (anagramResponse.hasError) {
+              } else if (generatedAnagrams.hasError) {
                 return Text(
-                  "${anagramResponse.error}",
+                  "${generatedAnagrams.error}",
                   textAlign: TextAlign.center,
                 );
               }
