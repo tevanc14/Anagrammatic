@@ -25,15 +25,15 @@ class LengthInputState extends State<LengthInput> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         appBar: AnagrammaticAppBar.appBar,
-        body: new Form(
+        body: Form(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: new Text(
+                child: Text(
                   'How many characters long should the anagrams be?\n(20 or less)',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -41,7 +41,7 @@ class LengthInputState extends State<LengthInput> {
                   ),
                 ),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 30.0,
                   horizontal: 175.0,
@@ -51,7 +51,7 @@ class LengthInputState extends State<LengthInput> {
                   controller: textController,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
-                  decoration: new InputDecoration(counterText: ''),
+                  decoration: InputDecoration(counterText: ''),
                   style: TextStyle(fontSize: 20.0),
                   onChanged: (String text) {
                     changeText();
@@ -61,7 +61,7 @@ class LengthInputState extends State<LengthInput> {
                   },
                 ),
               ),
-              new RaisedButton(
+              RaisedButton(
                 child: const Text('Submit'),
                 color: Theme.of(context).accentColor,
                 onPressed: () {
@@ -77,8 +77,8 @@ class LengthInputState extends State<LengthInput> {
     if (textController.text.isNotEmpty) {
       Navigator.push(
         context,
-        new MaterialPageRoute(
-            builder: (context) => new AnagramList(
+        MaterialPageRoute(
+            builder: (context) => AnagramList(
                   characters: widget.characters,
                   length: int.parse(textController.text),
                 )),
@@ -94,7 +94,7 @@ class LengthInputState extends State<LengthInput> {
 
     String newText = editText(oldText);
     int lengthDifference = newText.length - oldText.length;
-    TextSelection newSelection = new TextSelection(
+    TextSelection newSelection = TextSelection(
       baseOffset: oldSelection.baseOffset + lengthDifference,
       extentOffset: oldSelection.baseOffset + lengthDifference,
     );
@@ -106,7 +106,7 @@ class LengthInputState extends State<LengthInput> {
   String editText(String text) {
     int length = int.parse(text);
     if (length <= 20) {
-      return text.replaceAll(new RegExp(r'[^0-9]'), '');
+      return text.replaceAll(RegExp(r'[^0-9]'), '');
     } else {
       return '';
     }

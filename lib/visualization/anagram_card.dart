@@ -9,19 +9,19 @@ class AnagramCard extends StatefulWidget {
 
   @override
   State createState() {
-    return new AnagramCardState();
+    return AnagramCardState();
   }
 }
 
 class AnagramCardState extends State<AnagramCard> {
   @override
   Widget build(BuildContext context) {
-    return new Card(
+    return Card(
         elevation: 10.0,
-        margin: new EdgeInsets.all(15.0),
-        child: new Column(children: <Widget>[
-          new ListTile(
-            title: new FittedBox(
+        margin: EdgeInsets.all(15.0),
+        child: Column(children: <Widget>[
+          ListTile(
+            title: FittedBox(
               child: Text(widget.anagram.word),
               fit: BoxFit.contain,
             ),
@@ -29,11 +29,11 @@ class AnagramCardState extends State<AnagramCard> {
               horizontal: 20.0,
             ),
           ),
-          new ButtonTheme.bar(
-            child: new ButtonBar(
+          ButtonTheme.bar(
+            child: ButtonBar(
               children: <Widget>[
-                new RaisedButton(
-                  child: new Text(
+                RaisedButton(
+                  child: Text(
                     'DEFINE',
                     style: Theme.of(context).textTheme.title,
                   ),

@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 class AnagrammaticApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(
+    return MaterialApp(
+      theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.blueGrey[600],
         accentColor: Colors.grey[600]),
-      home: new CharacterInput(),
+      home: CharacterInput(),
     );
   }
 }

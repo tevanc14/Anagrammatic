@@ -26,10 +26,10 @@ class Anagram {
 }
 
 List<Anagram> createAnagramList(List data) {
-  List<Anagram> list = new List();
+  List<Anagram> list = List();
   for (int i = 0; i < data.length; i++) {
     String word = data[i];
-    Anagram anagram = new Anagram(word: word);
+    Anagram anagram = Anagram(word: word);
     list.add(anagram);
   }
   return list;

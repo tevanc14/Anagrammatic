@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class AnagrammaticAppBar {
   AnagrammaticAppBar._();
 
-  static AppBar appBar = new AppBar(
-    title: new Text('Anagrammatic'),
+  static AppBar appBar = AppBar(
+    title: Text('Anagrammatic'),
     brightness: Brightness.dark,
   );
 }

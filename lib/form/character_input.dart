@@ -11,7 +11,7 @@ class CharacterInput extends StatefulWidget {
 }
 
 class CharacterInputState extends State<CharacterInput> {
-  final textController = new TextEditingController();
+  final textController = TextEditingController();
 
   @override
   void dispose() {
@@ -21,13 +21,13 @@ class CharacterInputState extends State<CharacterInput> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         appBar: AnagrammaticAppBar.appBar,
-        body: new Form(
+        body: Form(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text(
+              Text(
                 'What characters are available?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -46,7 +46,7 @@ class CharacterInputState extends State<CharacterInput> {
                   textAlign: TextAlign.center,
                   maxLength: 20,
                   maxLengthEnforced: true,
-                  decoration: new InputDecoration(counterText: ''),
+                  decoration: InputDecoration(counterText: ''),
                   style: TextStyle(fontSize: 20.0),
                   onChanged: (String text) {
                     changeText();
@@ -56,7 +56,7 @@ class CharacterInputState extends State<CharacterInput> {
                   },
                 ),
               ),
-              new RaisedButton(
+              RaisedButton(
                 child: const Text('Submit'),
                 color: Theme.of(context).accentColor,
                 onPressed: () {
@@ -71,9 +71,9 @@ class CharacterInputState extends State<CharacterInput> {
   void transferToLengthInput(BuildContext context) {
     Navigator.push(
       context,
-      new MaterialPageRoute(
+      MaterialPageRoute(
           builder: (context) =>
-              new LengthInput(characters: textController.text)),
+            LengthInput(characters: textController.text)),
     );
   }
 
@@ -85,7 +85,7 @@ class CharacterInputState extends State<CharacterInput> {
 
     String newText = editText(oldText);
     int lengthDifference = newText.length - oldText.length;
-    TextSelection newSelection = new TextSelection(
+    TextSelection newSelection = TextSelection(
       baseOffset: oldSelection.baseOffset + lengthDifference,
       extentOffset: oldSelection.baseOffset + lengthDifference,
     );
@@ -95,6 +95,6 @@ class CharacterInputState extends State<CharacterInput> {
   }
 
   String editText(String text) {
-    return text.toUpperCase().replaceAll(new RegExp(r'[^A-Z]'), '');
+    return text.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   }
 }
