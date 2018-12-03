@@ -17,11 +17,12 @@ class AnagramCardState extends State<AnagramCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 10.0,
-        margin: const EdgeInsets.all(
-          15.0,
-        ),
-        child: Column(children: <Widget>[
+      elevation: 10.0,
+      margin: const EdgeInsets.all(
+        15.0,
+      ),
+      child: Column(
+        children: <Widget>[
           ListTile(
             title: FittedBox(
               child: Text(widget.anagram.word),
@@ -47,7 +48,9 @@ class AnagramCardState extends State<AnagramCard> {
               ],
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 
   launchURL(String word) async {

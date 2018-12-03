@@ -14,4 +14,8 @@ class FormInputElements {
       25.0,
     ),
   );
+
+  static EdgeInsetsGeometry padding = EdgeInsets.symmetric(
+    horizontal: 70.0,
+  );
 }

@@ -40,9 +40,7 @@ class InputsState extends State<Inputs> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0,
-                  ),
+                  padding: FormInputElements.padding,
                   child: TextFormField(
                     controller: charactersTextController,
                     autofocus: true,
@@ -58,9 +56,11 @@ class InputsState extends State<Inputs> {
                     validator: (characters) {
                       if (characters.contains(RegExp(r'[^a-zA-Z]'))) {
                         return 'Must be only letters';
+                      } else if (characters.length <= 0) {
+                        return 'Must contain at least one character';
                       }
                     },
-                    onFieldSubmitted: (v) {
+                    onFieldSubmitted: (value) {
                       FocusScope.of(context).requestFocus(lengthFocus);
                     },
                   ),
@@ -71,9 +71,7 @@ class InputsState extends State<Inputs> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0,
-                  ),
+                  padding: FormInputElements.padding,
                   child: TextFormField(
                     controller: lengthTextController,
                     focusNode: lengthFocus,
@@ -85,18 +83,29 @@ class InputsState extends State<Inputs> {
                       border: FormInputElements.inputBorder,
                     ),
                     validator: (length) {
-                      print(length);
-                      print(length.contains(RegExp(r'[^0-9]')));
-                      print(length.length);
-                      if (length.contains(RegExp(r'[^0-9]')) ||
-                          length.length <= 0) {
+                      if (length.contains(RegExp(r'[^0-9]'))) {
                         return 'Must be a number';
+                      } else if (length.length <= 0) {
+                        return 'Must be at least 1';
+                      } else if (int.parse(length) >= 20) {
+                        return 'Must be less than 20';
                       }
                     },
                     onFieldSubmitted: (value) {
-                      if (key.currentState.validate()) {
                         transferToAnagramList(context);
-                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                  ),
+                  child: RaisedButton(
+                    child: const Text('Generate'),
+                    color: Theme.of(context).primaryColor,
+                    elevation: 8.0,
+                    onPressed: () {
+                      transferToAnagramList(context);
                     },
                   ),
                 ),
@@ -105,24 +114,20 @@ class InputsState extends State<Inputs> {
           ],
         ),
       ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () => {},
-//        tooltip: 'Generate Anagrams',
-//        child: Icon(Icons.done),
-//        backgroundColor: Theme.of(context).primaryColor,
-//      ),
     );
   }
 
   void transferToAnagramList(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AnagramList(
-              characters: charactersTextController.text,
-              length: int.parse(lengthTextController.text),
-            ),
-      ),
-    );
+    if (key.currentState.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AnagramList(
+                characters: charactersTextController.text,
+                length: int.parse(lengthTextController.text),
+              ),
+        ),
+      );
+    }
   }
 }
