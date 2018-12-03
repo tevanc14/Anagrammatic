@@ -25,9 +25,11 @@ bool containsCharacters(String word, String characters, int length) {
 Future<List<Anagram>> generateAnagrams(String characters, int length) async {
   String data = await loadWords();
   List<String> words = data.split('\n');
+
+  String uppercaseCharacters = characters.toUpperCase();
   List<Anagram> anagramList = List();
   for (String word in words) {
-    if (containsCharacters(word, characters, length)) {
+    if (containsCharacters(word, uppercaseCharacters, length)) {
       Anagram anagram = Anagram(word: word);
       anagramList.add(anagram);
     }
