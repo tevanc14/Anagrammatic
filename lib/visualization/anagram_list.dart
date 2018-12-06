@@ -1,6 +1,6 @@
-import 'package:anagrammatic/common/anagrammatic_app_bar.dart';
-import 'package:anagrammatic/service/anagram_generator.dart';
-import 'package:anagrammatic/visualization/anagram_card.dart';
+import 'package:Anagrammatic/common/anagrammatic_app_bar.dart';
+import 'package:Anagrammatic/service/anagram_generator.dart';
+import 'package:Anagrammatic/visualization/anagram_card.dart';
 import 'package:flutter/material.dart';
 
 class AnagramList extends StatefulWidget {
@@ -37,10 +37,12 @@ class AnagramListState extends State<AnagramList> {
                       );
                     });
               } else {
-                return const Text("No anagrams were found 😢",
-                    style: TextStyle(
-                      fontSize: 25.0,
-                    ));
+                return const Text(
+                  "No anagrams were found 😢",
+                  style: TextStyle(
+                    fontSize: 25.0,
+                  ),
+                );
               }
             } else if (generatedAnagrams.hasError) {
               return Text(
