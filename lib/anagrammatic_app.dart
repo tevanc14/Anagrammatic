@@ -1,8 +1,10 @@
-import 'package:Anagrammatic/form/inputs.dart';
+import 'package:anagrammatic/form/inputs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AnagrammaticApp extends StatelessWidget {
+  static final String title = 'Anagrammatic';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

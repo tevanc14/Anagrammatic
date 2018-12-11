@@ -1,6 +1,5 @@
-import 'package:Anagrammatic/common/anagrammatic_app_bar.dart';
-import 'package:Anagrammatic/common/form_input_elements.dart';
-import 'package:Anagrammatic/visualization/anagram_list.dart';
+import 'package:anagrammatic/common/form_input_elements.dart';
+import 'package:anagrammatic/visualization/anagram_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,9 +14,6 @@ class InputsState extends State<Inputs> {
   final key = GlobalKey<FormState>();
 
   final charactersTextController = TextEditingController();
-  final lengthTextController = TextEditingController();
-
-  final FocusNode lengthFocus = FocusNode();
 
   bool showSubmitButton = false;
 
@@ -26,13 +22,14 @@ class InputsState extends State<Inputs> {
     super.initState();
 
     charactersTextController.addListener(checkCurrentInputs);
-    lengthTextController.addListener(checkCurrentInputs);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AnagrammaticAppBar.appBar,
+      appBar: AppBar(
+        title: const Text('Anagrammatic'),
+      ),
       body: Form(
         key: key,
         child: ListView(
@@ -45,7 +42,7 @@ class InputsState extends State<Inputs> {
                     50.0,
                   ),
                   child: Text(
-                    'Create anagrams with a set of characters and a certain length',
+                    'Create anagrams with a set of characters',
                     style: Theme.of(context).textTheme.title,
                     textAlign: TextAlign.center,
                   ),
@@ -66,37 +63,8 @@ class InputsState extends State<Inputs> {
                     validator: (value) {
                       return validateTextField(value);
                     },
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).requestFocus(lengthFocus);
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20.0,
-                  ),
-                ),
-                Padding(
-                  padding: FormInputElements.padding,
-                  child: TextFormField(
-                    controller: lengthTextController,
-                    inputFormatters: [LengthInputFormatter()],
-                    focusNode: lengthFocus,
-                    textAlign: TextAlign.center,
-                    maxLength: 2,
-                    keyboardType: TextInputType.number,
-                    style: FormInputElements.textStyle,
-                    decoration: InputDecoration(
-                      labelText: 'Length',
-                      border: FormInputElements.inputBorder,
-                    ),
-                    validator: (value) {
-                      return validateTextField(value);
-                    },
                     onFieldSubmitted: (value) {
                       transferToAnagramList(context);
-                      changeSubmitButtonVisibility(true);
                     },
                   ),
                 ),
@@ -114,7 +82,7 @@ class InputsState extends State<Inputs> {
               child: Icon(Icons.done),
               backgroundColor: Theme.of(context).primaryColor,
             )
-          : new Container(),
+          : Container(),
     );
   }
 
@@ -133,8 +101,7 @@ class InputsState extends State<Inputs> {
   }
 
   bool inputsAreNotEmpty() {
-    return charactersTextController.text.isNotEmpty &&
-        lengthTextController.text.isNotEmpty;
+    return charactersTextController.text.isNotEmpty;
   }
 
   transferToAnagramList(BuildContext context) {
@@ -145,7 +112,6 @@ class InputsState extends State<Inputs> {
         MaterialPageRoute(
           builder: (context) => AnagramList(
                 characters: charactersTextController.text,
-                length: int.parse(lengthTextController.text),
               ),
         ),
       );
@@ -165,13 +131,5 @@ class CharacterInputFormatter extends TextInputFormatter {
         selection: newValue.selection,
       );
     }
-  }
-}
-
-class LengthInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    return newValue.text.contains(RegExp('[^0-9]')) ? oldValue : newValue;
   }
 }

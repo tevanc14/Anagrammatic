@@ -8,6 +8,35 @@ class Anagram {
   Anagram({this.word});
 }
 
+Future<List<Anagram>> generateAnagrams(String characters) async {
+  String data = await loadWords();
+  List<String> words = data.split('\n');
+  List<List<Anagram>> anagramLists = List();
+
+  for (int i = 1; i <= characters.length; i++) {
+    anagramLists.add(await generateAnagramsOfLength(words, characters, i));
+  }
+
+  List<Anagram> anagramList = anagramLists.expand((x) => x).toList();
+  anagramList.sort((a, b) => a.word.compareTo(b.word));
+
+  return anagramList;
+}
+
+Future<List<Anagram>> generateAnagramsOfLength(
+  List<String> words, String characters, int length) async {
+  String uppercaseCharacters = characters.toUpperCase();
+  List<Anagram> anagramList = List();
+  for (String word in words) {
+    if (containsCharacters(word, uppercaseCharacters, length)) {
+      Anagram anagram = Anagram(word: word);
+      anagramList.add(anagram);
+    }
+  }
+
+  return anagramList;
+}
+
 bool containsCharacters(String word, String characters, int length) {
   if (word.length != length) {
     return false;
@@ -20,24 +49,6 @@ bool containsCharacters(String word, String characters, int length) {
     }
     return true;
   }
-}
-
-Future<List<Anagram>> generateAnagrams(String characters, int length) async {
-  String data = await loadWords();
-  List<String> words = data.split('\n');
-
-  String uppercaseCharacters = characters.toUpperCase();
-  List<Anagram> anagramList = List();
-  for (String word in words) {
-    if (containsCharacters(word, uppercaseCharacters, length)) {
-      Anagram anagram = Anagram(word: word);
-      anagramList.add(anagram);
-    }
-  }
-
-  anagramList.sort((a, b) => a.word.compareTo(b.word));
-
-  return anagramList;
 }
 
 Future<String> loadWords() async {

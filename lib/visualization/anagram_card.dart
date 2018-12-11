@@ -1,4 +1,4 @@
-import 'package:Anagrammatic/service/anagram_generator.dart';
+import 'package:anagrammatic/service/anagram_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,39 +16,22 @@ class AnagramCard extends StatefulWidget {
 class AnagramCardState extends State<AnagramCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10.0,
-      margin: const EdgeInsets.all(
-        15.0,
+    return ListTile(
+      title: Text(
+        widget.anagram.word,
+        style: TextStyle(
+          fontSize: 40.0,
+        ),
       ),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: FittedBox(
-              child: Text(widget.anagram.word),
-              fit: BoxFit.contain,
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 20.0,
-            ),
-          ),
-          ButtonTheme.bar(
-            child: ButtonBar(
-              children: <Widget>[
-                RaisedButton(
-                  child: Text(
-                    'DEFINE',
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    launchURL(widget.anagram.word);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+      trailing: IconButton(
+        icon: Icon(
+          Icons.chevron_right,
+        ),
+        onPressed: () {
+          launchURL(
+            widget.anagram.word,
+          );
+        },
       ),
     );
   }

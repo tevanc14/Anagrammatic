@@ -1,6 +1,6 @@
-import 'package:Anagrammatic/common/anagrammatic_app_bar.dart';
-import 'package:Anagrammatic/service/anagram_generator.dart';
-import 'package:Anagrammatic/visualization/anagram_card.dart';
+import 'package:anagrammatic/anagrammatic_app.dart';
+import 'package:anagrammatic/service/anagram_generator.dart';
+import 'package:anagrammatic/visualization/anagram_card.dart';
 import 'package:flutter/material.dart';
 
 class AnagramList extends StatefulWidget {
@@ -19,12 +19,19 @@ class AnagramListState extends State<AnagramList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AnagrammaticAppBar.appBar,
+      appBar: AppBar(
+        title: Text(AnagrammaticApp.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: Container(
         child: FutureBuilder<List<Anagram>>(
           future: generateAnagrams(
             widget.characters,
-            widget.length,
           ),
           builder: (context, generatedAnagrams) {
             if (generatedAnagrams.hasData) {
@@ -32,6 +39,11 @@ class AnagramListState extends State<AnagramList> {
                 return ListView.builder(
                     itemCount: generatedAnagrams.data.length,
                     itemBuilder: (context, index) {
+                      if (index.isOdd)
+                        return new Divider(
+                          color: Theme.of(context).textTheme.title.color,
+                        );
+
                       return AnagramCard(
                         anagram: generatedAnagrams.data[index],
                       );
