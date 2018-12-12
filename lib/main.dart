@@ -11,4 +11,5 @@ void main() => runApp(AnagrammaticApp());
 // Revamp list view (search bar, checkpoints for long list, total results count, maybe put some of this in app bar)?
 // Convert static widgets to proper stateless widgets
 // Sticky headers of the letter of the alphabet?
-// Header in general
+// Tap outside of input close keyboard
+// Should something else be on the input screen
