@@ -1,4 +1,5 @@
 import 'package:anagrammatic/anagram/anagram_list.dart';
+import 'package:anagrammatic/two_panels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,58 +29,72 @@ class InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: key,
-        child: ListView(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        dismissKeyboard();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: Form(
+            key: key,
+            child: ListView(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                  ),
-                  child: TextFormField(
-                    controller: charactersTextController,
-                    inputFormatters: [CharacterInputFormatter()],
-                    autofocus: true,
-                    textAlign: TextAlign.center,
-                    maxLength: 20,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Characters',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          25.0,
-                        ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 80.0,
                       ),
                     ),
-                    validator: (value) {
-                      return validateTextField(value);
-                    },
-                    onFieldSubmitted: (value) {
-                      transferToAnagramList(context);
-                    },
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                      ),
+                      child: TextFormField(
+                        controller: charactersTextController,
+                        inputFormatters: [CharacterInputFormatter()],
+                        autofocus: true,
+                        textAlign: TextAlign.center,
+                        maxLength: 20,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                        ),
+                        decoration: InputDecoration(
+                          labelText: 'Characters',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              25.0,
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          return validateTextField(value);
+                        },
+                        onFieldSubmitted: (value) {
+                          transferToAnagramList(context);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
+          floatingActionButton: showSubmitButton
+              ? FloatingActionButton(
+                  onPressed: () {
+                    transferToAnagramList(context);
+                  },
+                  tooltip: 'Generate Anagrams',
+                  child: Icon(Icons.done),
+                  backgroundColor: Theme.of(context).primaryColor,
+                )
+              : Container(),
         ),
       ),
-      floatingActionButton: showSubmitButton
-          ? FloatingActionButton(
-              onPressed: () {
-                transferToAnagramList(context);
-              },
-              tooltip: 'Generate Anagrams',
-              child: Icon(Icons.done),
-              backgroundColor: Theme.of(context).primaryColor,
-            )
-          : Container(),
     );
   }
 
@@ -102,16 +117,23 @@ class InputState extends State<Input> {
   }
 
   transferToAnagramList(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
     if (key.currentState.validate()) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              AnagramList(characters: charactersTextController.text),
+          builder: (context) => TwoPanels(
+                frontLayerWidget: AnagramList(
+                  characters: charactersTextController.text,
+                ),
+                showBackButton: true,
+              ),
         ),
       );
     }
+  }
+
+  dismissKeyboard() {
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 }
 

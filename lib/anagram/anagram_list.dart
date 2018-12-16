@@ -31,10 +31,11 @@ class AnagramListState extends State<AnagramList> {
                 return ListView.builder(
                   itemCount: anagrams.length,
                   itemBuilder: (context, index) {
-                    if (index.isOdd)
+                    if (index.isOdd) {
                       return new Divider(
                         color: Theme.of(context).textTheme.title.color,
                       );
+                    }
 
                     return AnagramTile(
                       anagram: anagrams[index],

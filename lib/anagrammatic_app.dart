@@ -1,10 +1,9 @@
-import 'package:anagrammatic/backdrop_page.dart';
+import 'package:anagrammatic/input/input.dart';
+import 'package:anagrammatic/two_panels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AnagrammaticApp extends StatefulWidget {
-  static final String title = 'Anagrammatic';
-
   @override
   AnagrammaticAppState createState() => AnagrammaticAppState();
 }
@@ -18,7 +17,10 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
         primaryColor: Colors.blueGrey[600],
         accentColor: Colors.grey[600],
       ),
-      home: BackdropPage(),
+      home: TwoPanels(
+        frontLayerWidget: Input(),
+        showBackButton: false,
+      ),
     );
   }
 }
