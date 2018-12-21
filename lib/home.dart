@@ -24,19 +24,30 @@ class _HomeState extends State<Home> {
   Widget frontPage;
   bool showBackButton = false;
 
-  void _pageTransition(Widget newPage) {
+  Widget _getInputWidget() {
+    return Input(
+      transition: _listTransition,
+    );
+  }
+
+  void _listTransition(Widget newPage) {
     setState(() {
       showBackButton = true;
       frontPage = newPage;
     });
   }
 
+  void _inputTransition() {
+    setState(() {
+      showBackButton = false;
+      frontPage = _getInputWidget();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    frontPage = Input(
-      transition: _pageTransition,
-    );
+    frontPage = _getInputWidget();
   }
 
   @override
@@ -71,7 +82,7 @@ class _HomeState extends State<Home> {
                 ? IconButton(
                     icon: const BackButtonIcon(),
                     tooltip: 'Back',
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => _inputTransition(),
                   )
                 // TODO: Insert logo here
                 : const Text(
