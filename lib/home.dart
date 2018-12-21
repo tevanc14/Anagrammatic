@@ -1,26 +1,44 @@
-import 'package:anagrammatic/backdrop.dart';
-import 'package:anagrammatic/options.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:anagrammatic/backdrop.dart';
+import 'package:anagrammatic/input.dart';
 
-const Duration frontLayerSwitchDuration = Duration(milliseconds: 300);
+const Duration frontLayerSwitchDuration = Duration(
+  milliseconds: 300,
+);
 
-class TwoPanels extends StatefulWidget {
+class Home extends StatefulWidget {
   final String title = 'Anagrammatic';
 
-  const TwoPanels({
-    @required this.frontLayerWidget,
-    @required this.showBackButton
+  Home({
+    this.optionsPage,
   });
 
-  final Widget frontLayerWidget;
-  final bool showBackButton;
+  final Widget optionsPage;
 
   @override
-  TwoPanelsState createState() => TwoPanelsState();
+  _HomeState createState() => _HomeState();
 }
 
-class TwoPanelsState extends State<TwoPanels> {
+class _HomeState extends State<Home> {
+  Widget frontPage;
+  bool showBackButton = false;
+
+  void _pageTransition(Widget newPage) {
+    setState(() {
+      showBackButton = true;
+      frontPage = newPage;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    frontPage = Input(
+      transition: _pageTransition,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -44,33 +62,35 @@ class TwoPanelsState extends State<TwoPanels> {
           backTitle: const Text(
             'Options',
           ),
-          backLayer: Options(),
+          backLayer: widget.optionsPage,
           frontAction: AnimatedSwitcher(
             duration: frontLayerSwitchDuration,
             switchOutCurve: switchOutCurve,
             switchInCurve: switchInCurve,
-            // TODO: Insert logo here
-            child: widget.showBackButton
+            child: showBackButton
                 ? IconButton(
-                  icon: const BackButtonIcon(),
-                  tooltip: 'Back',
-                  onPressed: () => Navigator.pop(context),
-                )
+                    icon: const BackButtonIcon(),
+                    tooltip: 'Back',
+                    onPressed: () => Navigator.pop(context),
+                  )
+                // TODO: Insert logo here
                 : const Text(
                     '',
                   ),
           ),
           frontTitle: AnimatedSwitcher(
-            duration: frontLayerSwitchDuration,
-            child: Text(
-              widget.title,
-            ),
+              duration: frontLayerSwitchDuration,
+              child: Text(
+                widget.title,
+              )),
+          frontHeading: Container(
+            height: 24.0,
           ),
           frontLayer: AnimatedSwitcher(
             duration: frontLayerSwitchDuration,
             switchOutCurve: switchOutCurve,
             switchInCurve: switchInCurve,
-            child: widget.frontLayerWidget,
+            child: frontPage,
           ),
         ),
       ),

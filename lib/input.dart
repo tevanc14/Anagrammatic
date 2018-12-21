@@ -1,9 +1,14 @@
-import 'package:anagrammatic/anagram/anagram_list.dart';
-import 'package:anagrammatic/two_panels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:anagrammatic/anagram_list.dart';
 
 class Input extends StatefulWidget {
+  const Input({
+    this.transition,
+  });
+
+  final transition;
+
   @override
   State createState() {
     return InputState();
@@ -29,6 +34,8 @@ class InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return GestureDetector(
       onTap: () {
         dismissKeyboard();
@@ -55,12 +62,15 @@ class InputState extends State<Input> {
                       ),
                       child: TextFormField(
                         controller: charactersTextController,
-                        inputFormatters: [CharacterInputFormatter()],
+                        inputFormatters: [
+                          CharacterInputFormatter(),
+                        ],
                         autofocus: true,
                         textAlign: TextAlign.center,
                         maxLength: 20,
                         style: TextStyle(
                           fontSize: 20.0,
+                          color: theme.textTheme.title.color,
                         ),
                         decoration: InputDecoration(
                           labelText: 'Characters',
@@ -88,9 +98,9 @@ class InputState extends State<Input> {
                   onPressed: () {
                     transferToAnagramList(context);
                   },
-                  tooltip: 'Generate Anagrams',
+                  tooltip: 'Generate anagrams',
                   child: Icon(Icons.done),
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: theme.primaryColor,
                 )
               : Container(),
         ),
@@ -118,15 +128,9 @@ class InputState extends State<Input> {
 
   transferToAnagramList(BuildContext context) {
     if (key.currentState.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TwoPanels(
-                frontLayerWidget: AnagramList(
-                  characters: charactersTextController.text,
-                ),
-                showBackButton: true,
-              ),
+      widget.transition(
+        AnagramList(
+          characters: charactersTextController.text,
         ),
       );
     }

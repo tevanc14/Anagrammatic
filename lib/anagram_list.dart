@@ -1,7 +1,7 @@
-import 'package:anagrammatic/anagram/anagram.dart';
-import 'package:anagrammatic/anagram/anagram_generator.dart';
-import 'package:anagrammatic/anagram/anagram_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:anagrammatic/anagram.dart';
+import 'package:anagrammatic/anagram_generator.dart';
+import 'package:anagrammatic/anagram_tile.dart';
 
 class AnagramList extends StatefulWidget {
   final String characters;
@@ -15,11 +15,13 @@ class AnagramList extends StatefulWidget {
 }
 
 class AnagramListState extends State<AnagramList> {
+  final key = GlobalKey<AnagramListState>();
   List<Anagram> anagrams = List();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       body: Container(
         child: FutureBuilder<List<Anagram>>(
           future: generateAnagrams(widget.characters),
