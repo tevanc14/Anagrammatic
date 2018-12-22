@@ -7,9 +7,9 @@ import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
-const double _kFrontHeadingHeight = 32.0; // front layer beveled rectangle
-const double _kFrontClosedHeight = 92.0; // front layer height when closed
-const double _kBackAppBarHeight = 56.0; // back layer (options) appbar height
+const double _frontHeadingHeight = 32.0; // front layer beveled rectangle
+const double _frontClosedHeight = 184.0; // front layer height when closed
+const double _backAppBarHeight = 56.0; // back layer (options) appbar height
 
 // The size of the front layer heading's left and right beveled corners.
 final Animatable<BorderRadius> _kFrontHeadingBevelRadius = BorderRadiusTween(
@@ -18,8 +18,8 @@ final Animatable<BorderRadius> _kFrontHeadingBevelRadius = BorderRadiusTween(
     topRight: Radius.circular(12.0),
   ),
   end: const BorderRadius.only(
-    topLeft: Radius.circular(_kFrontHeadingHeight),
-    topRight: Radius.circular(_kFrontHeadingHeight),
+    topLeft: Radius.circular(_frontHeadingHeight),
+    topRight: Radius.circular(_frontHeadingHeight),
   ),
 );
 
@@ -168,7 +168,7 @@ class _BackAppBar extends StatelessWidget {
       child: DefaultTextStyle(
         style: theme.primaryTextTheme.title,
         child: SizedBox(
-          height: _kBackAppBarHeight,
+          height: _backAppBarHeight,
           child: Row(children: children),
         ),
       ),
@@ -229,7 +229,9 @@ class _BackdropState extends State<Backdrop>
     // not be called at build time.
     final RenderBox renderBox = _backdropKey.currentContext.findRenderObject();
     return math.max(
-        0.0, renderBox.size.height - _kBackAppBarHeight - _kFrontClosedHeight);
+      0.0,
+      renderBox.size.height - _backAppBarHeight - _frontClosedHeight,
+    );
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
@@ -249,6 +251,7 @@ class _BackdropState extends State<Backdrop>
       _controller.fling(velocity: math.min(-2.0, -flingVelocity));
     else
       _controller.fling(velocity: _controller.value < 0.5 ? -2.0 : 2.0);
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   void _toggleFrontLayer() {
@@ -256,15 +259,26 @@ class _BackdropState extends State<Backdrop>
     final AnimationStatus status = _controller.status;
     final bool isOpen = status == AnimationStatus.completed ||
         status == AnimationStatus.forward;
-    _controller.fling(velocity: isOpen ? -2.0 : 2.0);
+    _controller.fling(
+      velocity: isOpen ? -2.0 : 2.0,
+    );
   }
 
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
     final Animation<RelativeRect> frontRelativeRect =
         _controller.drive(RelativeRectTween(
       begin: RelativeRect.fromLTRB(
-          0.0, constraints.biggest.height - _kFrontClosedHeight, 0.0, 0.0),
-      end: const RelativeRect.fromLTRB(0.0, _kBackAppBarHeight, 0.0, 0.0),
+        0.0,
+        constraints.biggest.height - _frontClosedHeight,
+        0.0,
+        0.0,
+      ),
+      end: const RelativeRect.fromLTRB(
+        0.0,
+        _backAppBarHeight,
+        0.0,
+        0.0,
+      ),
     ));
 
     final List<Widget> layers = <Widget>[
@@ -277,8 +291,14 @@ class _BackdropState extends State<Backdrop>
             title: _CrossFadeTransition(
               progress: _controller,
               alignment: AlignmentDirectional.centerStart,
-              child0: Semantics(namesRoute: true, child: widget.frontTitle),
-              child1: Semantics(namesRoute: true, child: widget.backTitle),
+              child0: Semantics(
+                namesRoute: true,
+                child: widget.frontTitle,
+              ),
+              child1: Semantics(
+                namesRoute: true,
+                child: widget.backTitle,
+              ),
             ),
             trailing: IconButton(
               onPressed: _toggleFrontLayer,
@@ -328,10 +348,6 @@ class _BackdropState extends State<Backdrop>
       ),
     ];
 
-    // The front "heading" is a (typically transparent) widget that's stacked on
-    // top of, and at the top of, the front layer. It adds support for dragging
-    // the front layer up and down and for opening and closing the front layer
-    // with a tap. It may obscure part of the front layer's topmost child.
     if (widget.frontHeading != null) {
       layers.add(
         PositionedTransition(

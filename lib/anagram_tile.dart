@@ -1,5 +1,5 @@
-import 'package:anagrammatic/anagram/anagram.dart';
 import 'package:flutter/material.dart';
+import 'package:anagrammatic/anagram.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AnagramTile extends StatefulWidget {
@@ -42,4 +42,6 @@ class AnagramTileState extends State<AnagramTile> {
       throw 'Could not launch $url';
     }
   }
+
+  canLaunch(String url) {}
 }

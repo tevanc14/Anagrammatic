@@ -1,6 +1,6 @@
 import 'dart:async' show Future;
 
-import 'package:anagrammatic/anagram/anagram.dart';
+import 'package:anagrammatic/anagram.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 Future<List<Anagram>> generateAnagrams(String characters) async {
@@ -19,7 +19,7 @@ Future<List<Anagram>> generateAnagrams(String characters) async {
 }
 
 Future<List<Anagram>> generateAnagramsOfLength(
-  List<String> words, String characters, int length) async {
+    List<String> words, String characters, int length) async {
   String uppercaseCharacters = characters.toUpperCase();
   List<Anagram> anagramList = List();
   for (String word in words) {
