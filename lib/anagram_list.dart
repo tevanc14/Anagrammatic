@@ -6,7 +6,9 @@ import 'package:anagrammatic/anagram_tile.dart';
 class AnagramList extends StatefulWidget {
   final String characters;
 
-  AnagramList({@required this.characters});
+  AnagramList({
+    @required this.characters,
+  });
 
   @override
   State createState() {

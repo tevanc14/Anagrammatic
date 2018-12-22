@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.16.1] - 2018-12-22
+
+Added
+
+- Heading widget for options page
+
+Changed
+
+- Named parameters for options headings
+- Formatting work
+
 ## [0.16.0] - 2018-12-21
 
 Added

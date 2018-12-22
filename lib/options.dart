@@ -1,26 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/themes.dart';
+import 'package:flutter_range_slider/flutter_range_slider.dart';
+
+class _Heading extends StatelessWidget {
+  const _Heading({
+    this.title,
+  });
+
+  final String title;
+
+  final EdgeInsets _headingPadding = const EdgeInsets.only(
+    top: 16.0,
+    left: 40.0,
+    right: 20.0,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: _headingPadding,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: switchColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class _BooleanItem extends StatelessWidget {
-  const _BooleanItem(
+  _BooleanItem({
     this.title,
     this.value,
     this.onChanged,
-  );
+  });
 
   final String title;
   final bool value;
   final ValueChanged<bool> onChanged;
 
+  final EdgeInsets _booleanItemPadding = const EdgeInsets.only(
+    left: 60.0,
+    right: 20.0,
+  );
+
   @override
   Widget build(BuildContext context) {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 40.0,
-        right: 20.0,
-      ),
+      padding: _booleanItemPadding,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -55,9 +91,9 @@ class _ThemeSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BooleanItem(
-      'Dark Theme',
-      options.theme == darkTheme,
-      (bool value) {
+      title: 'Dark Theme',
+      value: options.theme == darkTheme,
+      onChanged: (bool value) {
         onOptionsChanged(
           options.copyWith(
             theme: value ? darkTheme : lightTheme,
@@ -71,9 +107,13 @@ class _ThemeSwitch extends StatelessWidget {
 class Options {
   Options({
     this.theme,
+    this.anagramSizeLowerBound,
+    this.anagramSizeUpperBound,
   });
 
   final AnagrammaticTheme theme;
+  final double anagramSizeLowerBound;
+  final double anagramSizeUpperBound;
 
   Options copyWith({
     AnagrammaticTheme theme,
@@ -97,6 +137,12 @@ class OptionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        _Heading(
+          title: 'Filter',
+        ),
+        _Heading(
+          title: 'Personalization',
+        ),
         _ThemeSwitch(
           options: options,
           onOptionsChanged: onOptionsChanged,

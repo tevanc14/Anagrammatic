@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
     );
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: theme.primaryColor,
       body: SafeArea(
         bottom: false,
         child: Backdrop(
@@ -90,10 +90,11 @@ class _HomeState extends State<Home> {
                   ),
           ),
           frontTitle: AnimatedSwitcher(
-              duration: frontLayerSwitchDuration,
-              child: Text(
-                widget.title,
-              )),
+            duration: frontLayerSwitchDuration,
+            child: Text(
+              widget.title,
+            ),
+          ),
           frontHeading: Container(
             height: 24.0,
           ),

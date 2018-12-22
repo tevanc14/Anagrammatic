@@ -92,12 +92,18 @@ class _CrossFadeTransition extends AnimatedWidget {
 
     final double opacity1 = CurvedAnimation(
       parent: ReverseAnimation(progress),
-      curve: const Interval(0.5, 1.0),
+      curve: const Interval(
+        0.5,
+        1.0,
+      ),
     ).value;
 
     final double opacity2 = CurvedAnimation(
       parent: progress,
-      curve: const Interval(0.5, 1.0),
+      curve: const Interval(
+        0.5,
+        1.0,
+      ),
     ).value;
 
     return Stack(
@@ -203,15 +209,26 @@ class _BackdropState extends State<Backdrop>
   AnimationController _controller;
   Animation<double> _frontOpacity;
 
-  static final Animatable<double> _frontOpacityTween =
-      Tween<double>(begin: 0.2, end: 1.0).chain(
-          CurveTween(curve: const Interval(0.0, 0.4, curve: Curves.easeInOut)));
+  static final Animatable<double> _frontOpacityTween = Tween<double>(
+    begin: 0.2,
+    end: 1.0,
+  ).chain(
+    CurveTween(
+      curve: const Interval(
+        0.0,
+        0.4,
+        curve: Curves.easeInOut,
+      ),
+    ),
+  );
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(
+        milliseconds: 300,
+      ),
       value: 1.0,
       vsync: this,
     );
@@ -241,16 +258,32 @@ class _BackdropState extends State<Backdrop>
 
   void _handleDragEnd(DragEndDetails details) {
     if (_controller.isAnimating ||
-        _controller.status == AnimationStatus.completed) return;
+        _controller.status == AnimationStatus.completed) {
+      return;
+    }
 
     final double flingVelocity =
         details.velocity.pixelsPerSecond.dy / _backdropHeight;
-    if (flingVelocity < 0.0)
-      _controller.fling(velocity: math.max(2.0, -flingVelocity));
-    else if (flingVelocity > 0.0)
-      _controller.fling(velocity: math.min(-2.0, -flingVelocity));
-    else
-      _controller.fling(velocity: _controller.value < 0.5 ? -2.0 : 2.0);
+    if (flingVelocity < 0.0) {
+      _controller.fling(
+        velocity: math.max(
+          2.0,
+          -flingVelocity,
+        ),
+      );
+    } else if (flingVelocity > 0.0) {
+      _controller.fling(
+        velocity: math.min(
+          -2.0,
+          -flingVelocity,
+        ),
+      );
+    } else {
+      _controller.fling(
+        velocity: _controller.value < 0.5 ? -2.0 : 2.0,
+      );
+    }
+
     FocusScope.of(context).requestFocus(FocusNode());
   }
 

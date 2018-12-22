@@ -41,7 +41,9 @@ class InputState extends State<Input> {
         dismissKeyboard();
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(
+          8.0,
+        ),
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
           body: Form(
