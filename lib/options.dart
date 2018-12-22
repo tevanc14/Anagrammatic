@@ -16,16 +16,54 @@ class _BooleanItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
-    return Row(
-      children: <Widget>[
-        Expanded(child: Text(title)),
-        Switch(
-          value: value,
-          onChanged: onChanged,
-          activeColor: const Color(0xFF39CEFD),
-          activeTrackColor: isDark ? Colors.white30 : Colors.black26,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 40.0,
+        right: 20.0,
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+            activeColor: switchColor,
+            activeTrackColor: isDark ? Colors.white30 : Colors.black26,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ThemeSwitch extends StatelessWidget {
+  const _ThemeSwitch({
+    this.options,
+    this.onOptionsChanged,
+  });
+
+  final Options options;
+  final ValueChanged<Options> onOptionsChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return _BooleanItem(
+      'Dark Theme',
+      options.theme == darkTheme,
+      (bool value) {
+        onOptionsChanged(
+          options.copyWith(
+            theme: value ? darkTheme : lightTheme,
+          ),
+        );
+      },
     );
   }
 }
@@ -57,16 +95,13 @@ class OptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _BooleanItem(
-      'Dark Theme',
-      options.theme == darkTheme,
-      (bool value) {
-        onOptionsChanged(
-          options.copyWith(
-            theme: value ? darkTheme : lightTheme,
-          ),
-        );
-      },
+    return Column(
+      children: <Widget>[
+        _ThemeSwitch(
+          options: options,
+          onOptionsChanged: onOptionsChanged,
+        ),
+      ],
     );
   }
 }

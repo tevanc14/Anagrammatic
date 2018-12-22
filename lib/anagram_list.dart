@@ -16,7 +16,7 @@ class AnagramList extends StatefulWidget {
 
 class AnagramListState extends State<AnagramList> {
   final key = GlobalKey<AnagramListState>();
-  List<Anagram> anagrams = List();
+  List<Anagram> _anagrams = List();
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +28,10 @@ class AnagramListState extends State<AnagramList> {
           builder: (context, generatedAnagrams) {
             if (generatedAnagrams.hasData) {
               if (generatedAnagrams.data.length > 0) {
-                anagrams = generatedAnagrams.data;
+                _anagrams = generatedAnagrams.data;
 
                 return ListView.builder(
-                  itemCount: anagrams.length,
+                  itemCount: _anagrams.length,
                   itemBuilder: (context, index) {
                     if (index.isOdd) {
                       return new Divider(
@@ -40,7 +40,7 @@ class AnagramListState extends State<AnagramList> {
                     }
 
                     return AnagramTile(
-                      anagram: anagrams[index],
+                      anagram: _anagrams[index],
                     );
                   },
                 );
@@ -48,7 +48,7 @@ class AnagramListState extends State<AnagramList> {
                 return const Text(
                   "No anagrams were found 😢",
                   style: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: 24.0,
                   ),
                 );
               }

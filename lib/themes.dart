@@ -23,12 +23,13 @@ final AnagrammaticTheme lightTheme = AnagrammaticTheme._(
   _buildLightTheme(),
 );
 
-final String _fontFamily = 'GoogleSans';
+final String fontFamily = 'GoogleSans';
+final Color switchColor = const Color(0xFF39CEFD);
 
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
     title: base.title.copyWith(
-      fontFamily: _fontFamily,
+      fontFamily: fontFamily,
     ),
   );
 }
@@ -36,6 +37,7 @@ TextTheme _buildTextTheme(TextTheme base) {
 ThemeData _buildDarkTheme() {
   Color primaryColor = Colors.blueGrey[700];
   Color secondaryColor = Colors.grey[600];
+  Color backgroundColor = const Color(0xFF202124);
   final ThemeData base = ThemeData.dark();
   final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
     primary: primaryColor,
@@ -46,9 +48,9 @@ ThemeData _buildDarkTheme() {
     buttonColor: primaryColor,
     indicatorColor: Colors.white,
     accentColor: secondaryColor,
-    canvasColor: const Color(0xFF202124),
-    scaffoldBackgroundColor: const Color(0xFF202124),
-    backgroundColor: const Color(0xFF202124),
+    canvasColor: backgroundColor,
+    scaffoldBackgroundColor: backgroundColor,
+    backgroundColor: backgroundColor,
     errorColor: const Color(0xFFB00020),
     buttonTheme: ButtonThemeData(
       colorScheme: colorScheme,

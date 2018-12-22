@@ -76,7 +76,7 @@ class InputState extends State<Input> {
                           labelText: 'Characters',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
-                              25.0,
+                              24.0,
                             ),
                           ),
                         ),
@@ -99,8 +99,11 @@ class InputState extends State<Input> {
                     transferToAnagramList(context);
                   },
                   tooltip: 'Generate anagrams',
-                  child: Icon(Icons.done),
+                  child: Icon(
+                    Icons.done,
+                  ),
                   backgroundColor: theme.primaryColor,
+                  foregroundColor: Colors.white,
                 )
               : Container(),
         ),

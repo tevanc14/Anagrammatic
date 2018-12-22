@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.16.0] - 2018-12-21
+
+Added
+
+- Theme switch in options menu
+- LICENSE file
+
+Changed
+
+- Hierarchy of widgets
+- Logic to transition between pages
+
 ## [0.15.0] - 2018-12-15
 
 Added
