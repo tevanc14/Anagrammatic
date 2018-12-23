@@ -1,3 +1,4 @@
+import 'package:anagrammatic/app.dart';
 import 'package:flutter/material.dart';
 import 'package:anagrammatic/anagram.dart';
 import 'package:anagrammatic/anagram_generator.dart';
@@ -20,8 +21,17 @@ class AnagramListState extends State<AnagramList> {
   final key = GlobalKey<AnagramListState>();
   List<Anagram> _anagrams = List();
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   AnagrammaticApp.of(context).options.addListener(() {
+
+  //   })
+  // }
+
   @override
   Widget build(BuildContext context) {
+    var options = AnagrammaticApp.of(context).options;
     return Scaffold(
       key: key,
       body: Container(
@@ -35,8 +45,15 @@ class AnagramListState extends State<AnagramList> {
                 return ListView.builder(
                   itemCount: _anagrams.length,
                   itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Text(
+                        options.anagramSizeLowerBound.toString(),
+                        style: TextStyle(fontSize: 30.0),
+                      );
+                    }
+
                     if (index.isOdd) {
-                      return new Divider(
+                      return Divider(
                         color: Theme.of(context).textTheme.title.color,
                       );
                     }

@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.17.0] - 2018-12-22
+
+Added
+
+- Minimum length options
+
+Changed
+
+- More inherited actions for option state
+- Fixed definition link functionality
+
+Removed
+
+- Passing around functions to alter option state
+
 ## [0.16.1] - 2018-12-22
 
 Added

@@ -1,3 +1,4 @@
+import 'package:anagrammatic/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/backdrop.dart';
@@ -14,7 +15,7 @@ class Home extends StatefulWidget {
     this.optionsPage,
   });
 
-  final Widget optionsPage;
+  final OptionsPage optionsPage;
 
   @override
   _HomeState createState() => _HomeState();
@@ -24,7 +25,7 @@ class _HomeState extends State<Home> {
   Widget frontPage;
   bool showBackButton = false;
 
-  Widget _getInputWidget() {
+  Input _getInputWidget() {
     return Input(
       transition: _listTransition,
     );

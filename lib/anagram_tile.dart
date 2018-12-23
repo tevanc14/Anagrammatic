@@ -42,6 +42,4 @@ class AnagramTileState extends State<AnagramTile> {
       throw 'Could not launch $url';
     }
   }
-
-  canLaunch(String url) {}
 }

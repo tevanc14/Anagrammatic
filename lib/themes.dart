@@ -24,7 +24,7 @@ final AnagrammaticTheme lightTheme = AnagrammaticTheme._(
 );
 
 final String fontFamily = 'GoogleSans';
-final Color switchColor = const Color(0xFF39CEFD);
+final Color optionsAccentColor = const Color(0xFF39CEFD);
 
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
