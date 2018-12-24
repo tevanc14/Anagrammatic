@@ -21,13 +21,24 @@ class AnagramListState extends State<AnagramList> {
   final key = GlobalKey<AnagramListState>();
   List<Anagram> _anagrams = List();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   AnagrammaticApp.of(context).options.addListener(() {
+  String resultCountLabel(List<Anagram> anagrams) {
+    if (anagrams.length == 1) {
+      return '${anagrams.length} result';
+    } else {
+      return '${anagrams.length} results';
+    }
+  }
 
-  //   })
-  // }
+  List<Anagram> filterAnagrams(
+    List<Anagram> anagrams,
+    int lowerBound,
+    int upperBound,
+  ) {
+    return anagrams.where((anagram) {
+      return anagram.word.length >= lowerBound &&
+          anagram.word.length <= upperBound;
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +53,15 @@ class AnagramListState extends State<AnagramList> {
               if (generatedAnagrams.data.length > 0) {
                 _anagrams = generatedAnagrams.data;
 
+                _anagrams = filterAnagrams(
+                  _anagrams,
+                  options.anagramSizeLowerBound,
+                  options.anagramSizeUpperBound,
+                );
+
                 return ListView.builder(
                   itemCount: _anagrams.length,
                   itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return Text(
-                        options.anagramSizeLowerBound.toString(),
-                        style: TextStyle(fontSize: 30.0),
-                      );
-                    }
-
                     if (index.isOdd) {
                       return Divider(
                         color: Theme.of(context).textTheme.title.color,

@@ -7,11 +7,11 @@ import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
-const double _frontHeadingHeight = 32.0; // front layer beveled rectangle
+const double _frontHeadingHeight = 32.0; // front layer rounded rectangle
 const double _frontClosedHeight = 184.0; // front layer height when closed
 const double _backAppBarHeight = 56.0; // back layer (options) appbar height
 
-// The size of the front layer heading's left and right beveled corners.
+// The size of the front layer heading's left and right corners.
 final Animatable<BorderRadius> _kFrontHeadingBevelRadius = BorderRadiusTween(
   begin: const BorderRadius.only(
     topLeft: Radius.circular(12.0),

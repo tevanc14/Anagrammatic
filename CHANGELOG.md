@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.18.0] - 2018-12-25
+
+Added
+
+- Maximum length option
+- Filter results based on length
+- Constants file for global configurations
+
 ## [0.17.0] - 2018-12-22
 
 Added

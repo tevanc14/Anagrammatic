@@ -1,6 +1,7 @@
-import 'package:anagrammatic/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:anagrammatic/app.dart';
+import 'package:anagrammatic/constants.dart';
 import 'package:anagrammatic/themes.dart';
 
 final double _horizontalPadding = 28.0;
@@ -10,6 +11,8 @@ final double _verticalPadding = 16.0;
 final TextStyle _whiteText = TextStyle(
   color: Colors.white,
 );
+
+typedef LengthCounterValidityCallback = bool Function(int counter);
 
 class _CategoryHeading extends StatelessWidget {
   _CategoryHeading({
@@ -119,12 +122,68 @@ class _ThemeSwitch extends StatelessWidget {
   }
 }
 
-class _LengthCounter extends StatefulWidget {
-  _LengthCounter({
-    this.counter,
+class _MinimumLengthCounter extends StatelessWidget {
+  const _MinimumLengthCounter({
+    this.options,
   });
 
+  final Options options;
+
+  bool isValid(int newValue) {
+    return newValue <= options.anagramSizeUpperBound &&
+        newValue >= minimumAnagramLength;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AnagrammaticAppState appState = AnagrammaticApp.of(context);
+
+    return _LengthCounter(
+      text: 'Minimum length',
+      counter: options.anagramSizeLowerBound,
+      onChanged: appState.updateAnagramSizeLowerBound,
+      isValid: isValid,
+    );
+  }
+}
+
+class _MaximumLengthCounter extends StatelessWidget {
+  const _MaximumLengthCounter({
+    this.options,
+  });
+
+  final Options options;
+
+  bool isValid(int newValue) {
+    return newValue >= options.anagramSizeLowerBound &&
+        newValue <= maximumAnagramLength;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AnagrammaticAppState appState = AnagrammaticApp.of(context);
+
+    return _LengthCounter(
+      text: 'Maximum length',
+      counter: options.anagramSizeUpperBound,
+      onChanged: appState.updateAnagramSizeUpperBound,
+      isValid: isValid,
+    );
+  }
+}
+
+class _LengthCounter extends StatefulWidget {
+  _LengthCounter({
+    this.text,
+    this.counter,
+    this.onChanged,
+    this.isValid,
+  });
+
+  final String text;
   int counter;
+  final ValueChanged<int> onChanged;
+  final LengthCounterValidityCallback isValid;
 
   @override
   _LengthCounterState createState() => _LengthCounterState();
@@ -162,18 +221,21 @@ class _LengthCounterState extends State<_LengthCounter> {
         children: <Widget>[
           Expanded(
             child: Text(
-              'Minimum length',
-              style: _whiteText
+              widget.text,
+              style: _whiteText,
             ),
           ),
           _numberAdjustmentButton(
             buttonText: '-',
             onPressed: () {
               setState(() {
-                widget.counter--;
-                AnagrammaticApp.of(context).updateAnagramSizeBounds(
-                  lowerBound: widget.counter,
-                );
+                int newValue = widget.counter - 1;
+                if (widget.isValid(newValue)) {
+                  widget.counter = newValue;
+                  widget.onChanged(
+                    newValue,
+                  );
+                }
               });
             },
           ),
@@ -181,19 +243,26 @@ class _LengthCounterState extends State<_LengthCounter> {
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
             ),
-            child: Text(
-              '${widget.counter}',
-              style: _whiteText,
+            child: SizedBox(
+              width: 16.0,
+              child: Text(
+                '${widget.counter}',
+                style: _whiteText,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           _numberAdjustmentButton(
             buttonText: '+',
             onPressed: () {
               setState(() {
-                widget.counter++;
-                AnagrammaticApp.of(context).updateAnagramSizeBounds(
-                  lowerBound: widget.counter,
-                );
+                int newValue = widget.counter + 1;
+                if (widget.isValid(newValue)) {
+                  widget.counter = newValue;
+                  widget.onChanged(
+                    newValue,
+                  );
+                }
               });
             },
           ),
@@ -241,10 +310,13 @@ class OptionsPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         _CategoryHeading(
-          text: 'Filter',
+          text: 'Result organization',
         ),
-        _LengthCounter(
-          counter: options.anagramSizeLowerBound,
+        _MinimumLengthCounter(
+          options: options,
+        ),
+        _MaximumLengthCounter(
+          options: options,
         ),
         _CategoryHeading(
           text: 'Display',

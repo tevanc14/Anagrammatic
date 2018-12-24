@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:anagrammatic/constants.dart';
 import 'package:anagrammatic/home.dart';
 import 'package:anagrammatic/options.dart';
 import 'package:anagrammatic/themes.dart';
 
 class AnagrammaticApp extends StatefulWidget {
-  static _AnagrammaticAppState of(BuildContext context) {
+  static AnagrammaticAppState of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(OptionsContainer)
             as OptionsContainer)
         .data;
   }
 
   @override
-  _AnagrammaticAppState createState() => _AnagrammaticAppState();
+  AnagrammaticAppState createState() => AnagrammaticAppState();
 }
 
-class _AnagrammaticAppState extends State<AnagrammaticApp> {
+class AnagrammaticAppState extends State<AnagrammaticApp> {
   Options options;
 
   @override
@@ -23,8 +24,8 @@ class _AnagrammaticAppState extends State<AnagrammaticApp> {
     super.initState();
     options = Options(
       theme: darkTheme,
-      anagramSizeLowerBound: 1,
-      anagramSizeUpperBound: 20,
+      anagramSizeLowerBound: minimumAnagramLength,
+      anagramSizeUpperBound: maximumAnagramLength,
     );
   }
 
@@ -40,6 +41,18 @@ class _AnagrammaticAppState extends State<AnagrammaticApp> {
   }) {
     setState(() {
       options.anagramSizeLowerBound = lowerBound;
+      options.anagramSizeUpperBound = upperBound;
+    });
+  }
+
+  void updateAnagramSizeLowerBound(lowerBound) {
+    setState(() {
+      options.anagramSizeLowerBound = lowerBound;
+    });
+  }
+
+  void updateAnagramSizeUpperBound(upperBound) {
+    setState(() {
       options.anagramSizeUpperBound = upperBound;
     });
   }
@@ -61,7 +74,7 @@ class _AnagrammaticAppState extends State<AnagrammaticApp> {
 }
 
 class OptionsContainer extends InheritedWidget {
-  final _AnagrammaticAppState data;
+  final AnagrammaticAppState data;
 
   OptionsContainer({
     Key key,
