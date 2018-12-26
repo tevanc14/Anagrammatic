@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0] - 2018-12-26
+
+Changed
+
+- Moved from backdrop settings to individual page in favor of
+  performance over the convenience and looks
+
 ## [0.18.0] - 2018-12-25
 
 Added

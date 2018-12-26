@@ -1,7 +1,7 @@
+import 'package:anagrammatic/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/constants.dart';
-import 'package:anagrammatic/home.dart';
 import 'package:anagrammatic/options.dart';
 import 'package:anagrammatic/themes.dart';
 
@@ -63,11 +63,7 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       data: this,
       child: MaterialApp(
         theme: options.theme.data,
-        home: Home(
-          optionsPage: OptionsPage(
-            options: options,
-          ),
-        ),
+        home: Input(),
       ),
     );
   }

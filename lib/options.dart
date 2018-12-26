@@ -1,3 +1,4 @@
+import 'package:anagrammatic/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app.dart';
@@ -6,11 +7,6 @@ import 'package:anagrammatic/themes.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 16.0;
-
-// Currently keeping text one color, regardless of theme
-final TextStyle _whiteText = TextStyle(
-  color: Colors.white,
-);
 
 typedef LengthCounterValidityCallback = bool Function(int counter);
 
@@ -57,7 +53,6 @@ class _SettingLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: _whiteText,
     );
   }
 }
@@ -202,7 +197,6 @@ class _LengthCounterState extends State<_LengthCounter> {
       child: OutlineButton(
         child: Text(
           buttonText,
-          style: _whiteText,
         ),
         onPressed: () {
           onPressed();
@@ -222,7 +216,6 @@ class _LengthCounterState extends State<_LengthCounter> {
           Expanded(
             child: Text(
               widget.text,
-              style: _whiteText,
             ),
           ),
           _numberAdjustmentButton(
@@ -247,7 +240,6 @@ class _LengthCounterState extends State<_LengthCounter> {
               width: 16.0,
               child: Text(
                 '${widget.counter}',
-                style: _whiteText,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -299,32 +291,39 @@ class Options {
 }
 
 class OptionsPage extends StatelessWidget {
-  const OptionsPage({
+  OptionsPage({
     this.options,
   });
 
-  final Options options;
+  Options options;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _CategoryHeading(
-          text: 'Result organization',
-        ),
-        _MinimumLengthCounter(
-          options: options,
-        ),
-        _MaximumLengthCounter(
-          options: options,
-        ),
-        _CategoryHeading(
-          text: 'Display',
-        ),
-        _ThemeSwitch(
-          options: options,
-        ),
-      ],
+    options = AnagrammaticApp.of(context).options;
+
+    return Scaffold(
+      appBar: AnagrammaticAppBar(
+        hasSettings: false,
+      ),
+      body: Column(
+        children: <Widget>[
+          _CategoryHeading(
+            text: 'Result organization',
+          ),
+          _MinimumLengthCounter(
+            options: options,
+          ),
+          _MaximumLengthCounter(
+            options: options,
+          ),
+          _CategoryHeading(
+            text: 'Display',
+          ),
+          _ThemeSwitch(
+            options: options,
+          ),
+        ],
+      ),
     );
   }
 }
