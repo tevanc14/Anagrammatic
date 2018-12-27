@@ -1,3 +1,5 @@
+import 'package:anagrammatic/anagram.dart';
+import 'package:anagrammatic/sort_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app.dart';
@@ -116,7 +118,6 @@ class _ThemeSwitch extends StatelessWidget {
       value: options.theme == darkTheme,
       onChanged: (bool value) {
         AnagrammaticApp.of(context).updateOptions(
-            // value ? darkTheme : lightTheme,
             options.copyWith(theme: value ? darkTheme : lightTheme));
       },
     );
@@ -199,8 +200,10 @@ class _LengthSliderState extends State<LengthSlider> {
                   child: RangeSlider(
                     min: minimumAnagramLength.toDouble(),
                     max: maximumAnagramLength.toDouble(),
-                    lowerValue: widget.options.anagramLengthLowerBound.toDouble(),
-                    upperValue: widget.options.anagramLengthUpperBound.toDouble(),
+                    lowerValue:
+                        widget.options.anagramLengthLowerBound.toDouble(),
+                    upperValue:
+                        widget.options.anagramLengthUpperBound.toDouble(),
                     showValueIndicator: true,
                     valueIndicatorMaxDecimals: 0,
                     onChanged: (double newLowerValue, double newUpperValue) {
@@ -225,21 +228,85 @@ class _LengthSliderState extends State<LengthSlider> {
   }
 }
 
+class _SortTypeDropdown extends StatefulWidget {
+  _SortTypeDropdown({
+    this.options,
+  });
+
+  final Options options;
+
+  @override
+  _SortTypeDropdownState createState() {
+    return _SortTypeDropdownState();
+  }
+}
+
+class _SortTypeDropdownState extends State<_SortTypeDropdown> {
+  final EdgeInsets _dropdownItemPadding = EdgeInsets.symmetric(
+    horizontal: _horizontalPadding,
+  );
+  final String text = 'Sort';
+  final List<String> items = SortType.sortTypeStrings();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: _dropdownItemPadding,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: _SettingLabel(
+              text: text,
+            ),
+          ),
+          _SettingLabel(
+            text: widget.options.sortType,
+          ),
+          PopupMenuButton<String>(
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: _labelText.color,
+            ),
+            itemBuilder: (BuildContext context) {
+              return items.map((item) {
+                return PopupMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                  ),
+                );
+              }).toList();
+            },
+            onSelected: (String choice) {
+              setState(() {
+                widget.options.sortType = choice;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class Options {
   Options({
     this.theme,
     this.anagramLengthLowerBound,
     this.anagramLengthUpperBound,
+    this.sortType,
   });
 
   AnagrammaticTheme theme;
   int anagramLengthLowerBound;
   int anagramLengthUpperBound;
+  String sortType;
 
   Options copyWith({
     AnagrammaticTheme theme,
     int anagramLengthLowerBound,
     int anagramLengthUpperBound,
+    String sortType,
   }) {
     return Options(
       theme: theme ?? this.theme,
@@ -247,6 +314,7 @@ class Options {
           anagramLengthLowerBound ?? this.anagramLengthLowerBound,
       anagramLengthUpperBound:
           anagramLengthUpperBound ?? this.anagramLengthUpperBound,
+      sortType: sortType ?? this.sortType,
     );
   }
 }
@@ -260,10 +328,13 @@ class OptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         _CategoryHeading(
           text: 'Result organization',
+        ),
+        _SortTypeDropdown(
+          options: options,
         ),
         LengthSlider(
           options: options,

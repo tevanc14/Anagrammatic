@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.21.0] - 2018-12-27
+
+Added
+
+- Result sorting based on primary and secondary comparators
+
+Removed
+
+- app_bar.dart as it is no longer used
+- Unused transition property for Backdrop
+
 ## [0.20.1] - 2018-12-27
 
 Added

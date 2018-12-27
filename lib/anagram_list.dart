@@ -1,8 +1,10 @@
-import 'package:anagrammatic/app.dart';
 import 'package:flutter/material.dart';
 import 'package:anagrammatic/anagram.dart';
 import 'package:anagrammatic/anagram_generator.dart';
 import 'package:anagrammatic/anagram_tile.dart';
+import 'package:anagrammatic/app.dart';
+import 'package:anagrammatic/options.dart';
+import 'package:anagrammatic/sort_type.dart';
 
 class AnagramList extends StatefulWidget {
   final String characters;
@@ -31,6 +33,22 @@ class AnagramListState extends State<AnagramList> {
 
   List<Anagram> filterAnagrams(
     List<Anagram> anagrams,
+    Options options,
+  ) {
+    List<Anagram> lengthRestrictedAnagrams = restrictAnagramsByLength(
+      anagrams,
+      options.anagramLengthLowerBound,
+      options.anagramLengthUpperBound,
+    );
+
+    return sortAnagrams(
+      lengthRestrictedAnagrams,
+      SortType.getSortComparatorFromString(options.sortType),
+    );
+  }
+
+  List<Anagram> restrictAnagramsByLength(
+    List<Anagram> anagrams,
     int lowerBound,
     int upperBound,
   ) {
@@ -38,6 +56,13 @@ class AnagramListState extends State<AnagramList> {
       return anagram.word.length >= lowerBound &&
           anagram.word.length <= upperBound;
     }).toList();
+  }
+
+  List<Anagram> sortAnagrams(
+    List<Anagram> anagrams,
+    Comparator<Anagram> comparator,
+  ) {
+    return anagrams..sort(comparator);
   }
 
   List<Widget> buildListTiles(
@@ -65,7 +90,7 @@ class AnagramListState extends State<AnagramList> {
 
   @override
   Widget build(BuildContext context) {
-    var options = AnagrammaticApp.of(context).options;
+    Options options = AnagrammaticApp.of(context).options;
     return Scaffold(
       key: key,
       body: Container(
@@ -78,8 +103,7 @@ class AnagramListState extends State<AnagramList> {
 
                 _anagrams = filterAnagrams(
                   _anagrams,
-                  options.anagramLengthLowerBound,
-                  options.anagramLengthUpperBound,
+                  options,
                 );
 
                 if (_anagrams.length <= 0) {

@@ -192,7 +192,6 @@ class Backdrop extends StatefulWidget {
     this.frontLayer,
     this.backTitle,
     this.backLayer,
-    this.transition,
   });
 
   final Widget frontAction;
@@ -201,7 +200,6 @@ class Backdrop extends StatefulWidget {
   final Widget frontHeading;
   final Widget backTitle;
   final OptionsPage backLayer;
-  final transition;
 
   @override
   _BackdropState createState() => _BackdropState();

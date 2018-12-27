@@ -13,9 +13,7 @@ Future<List<Anagram>> generateAnagrams(String characters) async {
   }
 
   List<Anagram> anagramList = anagramLists.expand((x) => x).toList();
-  anagramList.sort((a, b) => a.word.compareTo(b.word));
-
-  return anagramList;
+  return anagramList..sort((a, b) => a.word.compareTo(b.word));
 }
 
 Future<List<Anagram>> generateAnagramsOfLength(

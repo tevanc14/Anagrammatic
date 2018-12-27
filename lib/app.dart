@@ -4,6 +4,7 @@ import 'package:anagrammatic/constants.dart';
 import 'package:anagrammatic/home.dart';
 import 'package:anagrammatic/options.dart';
 import 'package:anagrammatic/themes.dart';
+import 'package:anagrammatic/sort_type.dart';
 
 class AnagrammaticApp extends StatefulWidget {
   static AnagrammaticAppState of(BuildContext context) {
@@ -26,6 +27,7 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       theme: darkTheme,
       anagramLengthLowerBound: minimumAnagramLength,
       anagramLengthUpperBound: maximumAnagramLength,
+      sortType: SortType.getSortName(SortTypeName.alpha),
     );
   }
 
@@ -38,28 +40,6 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
   void upateTheme(theme) {
     setState(() {
       options.theme = theme;
-    });
-  }
-
-  void updateAnagramLengthBounds({
-    lowerBound,
-    upperBound,
-  }) {
-    setState(() {
-      options.anagramLengthLowerBound = lowerBound;
-      options.anagramLengthUpperBound = upperBound;
-    });
-  }
-
-  void updateAnagramLengthLowerBound(lowerBound) {
-    setState(() {
-      options.anagramLengthLowerBound = lowerBound;
-    });
-  }
-
-  void updateAnagramLengthUpperBound(upperBound) {
-    setState(() {
-      options.anagramLengthUpperBound = upperBound;
     });
   }
 
