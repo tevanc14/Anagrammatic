@@ -41,75 +41,64 @@ class InputState extends State<Input> {
       onTap: () {
         dismissKeyboard();
       },
-      child: Padding(
-        padding: const EdgeInsets.all(
-          8.0,
-        ),
-        child: Scaffold(
-          resizeToAvoidBottomPadding: false,
-          body: Form(
-            key: key,
-            child: ListView(
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 80.0,
-                      ),
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: Form(
+          key: key,
+          child: ListView(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 80.0,
+                      left: 40.0,
+                      right: 40.0,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40.0,
-                      ),
-                      child: TextFormField(
-                        controller: charactersTextController,
-                        inputFormatters: [
-                          CharacterInputFormatter(),
-                        ],
-                        autofocus: true,
-                        textAlign: TextAlign.center,
-                        maxLength: maximumAnagramLength,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: theme.textTheme.title.color,
-                        ),
-                        decoration: InputDecoration(
-                          labelText: 'Characters',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              24.0,
-                            ),
+                    child: TextFormField(
+                      controller: charactersTextController,
+                      inputFormatters: [
+                        CharacterInputFormatter(),
+                      ],
+                      autofocus: true,
+                      textAlign: TextAlign.center,
+                      maxLength: maximumAnagramLength,
+                      style: theme.textTheme.title,
+                      decoration: InputDecoration(
+                        labelText: 'Characters',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            24.0,
                           ),
                         ),
-                        validator: (value) {
-                          return validateTextField(value);
-                        },
-                        onFieldSubmitted: (value) {
-                          transferToAnagramList(context);
-                        },
                       ),
+                      validator: (value) {
+                        return validateTextField(value);
+                      },
+                      onFieldSubmitted: (value) {
+                        transferToAnagramList(context);
+                      },
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          floatingActionButton: showSubmitButton
-              ? FloatingActionButton(
-                  onPressed: () {
-                    transferToAnagramList(context);
-                  },
-                  tooltip: 'Generate anagrams',
-                  child: Icon(
-                    Icons.done,
                   ),
-                  backgroundColor: theme.primaryColor,
-                  foregroundColor: Colors.white,
-                )
-              : Container(),
+                ],
+              ),
+            ],
+          ),
         ),
+        floatingActionButton: showSubmitButton
+            ? FloatingActionButton(
+                onPressed: () {
+                  transferToAnagramList(context);
+                },
+                tooltip: 'Generate anagrams',
+                child: Icon(
+                  Icons.done,
+                ),
+                backgroundColor: theme.primaryColor,
+                foregroundColor: Colors.white,
+              )
+            : Container(),
       ),
     );
   }

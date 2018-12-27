@@ -40,6 +40,29 @@ class AnagramListState extends State<AnagramList> {
     }).toList();
   }
 
+  List<Widget> buildListTiles(
+    BuildContext context,
+    List<Anagram> anagrams,
+  ) {
+    Iterable<Widget> listTiles = _anagrams.map<Widget>(
+      (Anagram anagram) => AnagramTile(
+            anagram: anagram,
+          ),
+    );
+
+    return ListTile.divideTiles(
+      context: context,
+      tiles: listTiles,
+    ).toList();
+  }
+
+  Text noResultsText() {
+    return Text(
+      "No anagrams were found 😢",
+      style: Theme.of(context).textTheme.title,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var options = AnagrammaticApp.of(context).options;
@@ -59,29 +82,19 @@ class AnagramListState extends State<AnagramList> {
                   options.anagramLengthUpperBound,
                 );
 
-                print(_anagrams.length);
-
-                return ListView.builder(
-                  itemCount: _anagrams.length,
-                  itemBuilder: (context, index) {
-                    if (index.isOdd) {
-                      return Divider(
-                        color: Theme.of(context).textTheme.title.color,
-                      );
-                    }
-
-                    return AnagramTile(
-                      anagram: _anagrams[index],
-                    );
-                  },
-                );
+                if (_anagrams.length <= 0) {
+                  return noResultsText();
+                } else {
+                  print(_anagrams.length);
+                  return ListView(
+                    children: buildListTiles(
+                      context,
+                      _anagrams,
+                    ),
+                  );
+                }
               } else {
-                return const Text(
-                  "No anagrams were found 😢",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                  ),
-                );
+                return noResultsText();
               }
             } else if (generatedAnagrams.hasError) {
               return Text(

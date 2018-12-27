@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.20.1] - 2018-12-27
+
+Added
+
+- Display message when filtering results in 0 results
+
+Changed
+
+- Used ListTiles.divideTiles() to avoid implementing that logic
+- Consolidated multiple paddings in the input widget
+
 ## [0.20.0] - 2018-12-26
 
 Changed
