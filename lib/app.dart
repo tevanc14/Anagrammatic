@@ -1,7 +1,7 @@
-import 'package:anagrammatic/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/constants.dart';
+import 'package:anagrammatic/home.dart';
 import 'package:anagrammatic/options.dart';
 import 'package:anagrammatic/themes.dart';
 
@@ -24,36 +24,42 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
     super.initState();
     options = Options(
       theme: darkTheme,
-      anagramSizeLowerBound: minimumAnagramLength,
-      anagramSizeUpperBound: maximumAnagramLength,
+      anagramLengthLowerBound: minimumAnagramLength,
+      anagramLengthUpperBound: maximumAnagramLength,
     );
   }
 
-  void upateTheme({theme}) {
+  void updateOptions(Options newOptions) {
+    setState(() {
+      options = newOptions;
+    });
+  }
+
+  void upateTheme(theme) {
     setState(() {
       options.theme = theme;
     });
   }
 
-  void updateAnagramSizeBounds({
+  void updateAnagramLengthBounds({
     lowerBound,
     upperBound,
   }) {
     setState(() {
-      options.anagramSizeLowerBound = lowerBound;
-      options.anagramSizeUpperBound = upperBound;
+      options.anagramLengthLowerBound = lowerBound;
+      options.anagramLengthUpperBound = upperBound;
     });
   }
 
-  void updateAnagramSizeLowerBound(lowerBound) {
+  void updateAnagramLengthLowerBound(lowerBound) {
     setState(() {
-      options.anagramSizeLowerBound = lowerBound;
+      options.anagramLengthLowerBound = lowerBound;
     });
   }
 
-  void updateAnagramSizeUpperBound(upperBound) {
+  void updateAnagramLengthUpperBound(upperBound) {
     setState(() {
-      options.anagramSizeUpperBound = upperBound;
+      options.anagramLengthUpperBound = upperBound;
     });
   }
 
@@ -63,7 +69,11 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       data: this,
       child: MaterialApp(
         theme: options.theme.data,
-        home: Input(),
+        home: Home(
+          optionsPage: OptionsPage(
+            options: options,
+          ),
+        ),
       ),
     );
   }

@@ -1,7 +1,4 @@
 import 'package:anagrammatic/app.dart';
-import 'package:anagrammatic/app_bar.dart';
-import 'package:anagrammatic/constants.dart';
-import 'package:anagrammatic/options.dart';
 import 'package:flutter/material.dart';
 import 'package:anagrammatic/anagram.dart';
 import 'package:anagrammatic/anagram_generator.dart';
@@ -48,9 +45,6 @@ class AnagramListState extends State<AnagramList> {
     var options = AnagrammaticApp.of(context).options;
     return Scaffold(
       key: key,
-      appBar: AnagrammaticAppBar(
-        hasSettings: true,
-      ),
       body: Container(
         child: FutureBuilder<List<Anagram>>(
           future: generateAnagrams(widget.characters),
@@ -61,9 +55,11 @@ class AnagramListState extends State<AnagramList> {
 
                 _anagrams = filterAnagrams(
                   _anagrams,
-                  options.anagramSizeLowerBound,
-                  options.anagramSizeUpperBound,
+                  options.anagramLengthLowerBound,
+                  options.anagramLengthUpperBound,
                 );
+
+                print(_anagrams.length);
 
                 return ListView.builder(
                   itemCount: _anagrams.length,

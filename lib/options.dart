@@ -1,12 +1,17 @@
-import 'package:anagrammatic/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app.dart';
 import 'package:anagrammatic/constants.dart';
 import 'package:anagrammatic/themes.dart';
+import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 16.0;
+
+// Currently keeping text one color, regardless of theme
+final TextStyle _labelText = TextStyle(
+  color: Colors.white,
+);
 
 typedef LengthCounterValidityCallback = bool Function(int counter);
 
@@ -53,6 +58,7 @@ class _SettingLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      style: _labelText,
     );
   }
 }
@@ -109,154 +115,109 @@ class _ThemeSwitch extends StatelessWidget {
       text: 'Dark theme',
       value: options.theme == darkTheme,
       onChanged: (bool value) {
-        AnagrammaticApp.of(context).upateTheme(
-          theme: value ? darkTheme : lightTheme,
-        );
+        AnagrammaticApp.of(context).updateOptions(
+            // value ? darkTheme : lightTheme,
+            options.copyWith(theme: value ? darkTheme : lightTheme));
       },
     );
   }
 }
 
-class _MinimumLengthCounter extends StatelessWidget {
-  const _MinimumLengthCounter({
-    this.options,
-  });
-
-  final Options options;
-
-  bool isValid(int newValue) {
-    return newValue <= options.anagramSizeUpperBound &&
-        newValue >= minimumAnagramLength;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final AnagrammaticAppState appState = AnagrammaticApp.of(context);
-
-    return _LengthCounter(
-      text: 'Minimum length',
-      counter: options.anagramSizeLowerBound,
-      onChanged: appState.updateAnagramSizeLowerBound,
-      isValid: isValid,
-    );
-  }
-}
-
-class _MaximumLengthCounter extends StatelessWidget {
-  const _MaximumLengthCounter({
-    this.options,
-  });
-
-  final Options options;
-
-  bool isValid(int newValue) {
-    return newValue >= options.anagramSizeLowerBound &&
-        newValue <= maximumAnagramLength;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final AnagrammaticAppState appState = AnagrammaticApp.of(context);
-
-    return _LengthCounter(
-      text: 'Maximum length',
-      counter: options.anagramSizeUpperBound,
-      onChanged: appState.updateAnagramSizeUpperBound,
-      isValid: isValid,
-    );
-  }
-}
-
-class _LengthCounter extends StatefulWidget {
-  _LengthCounter({
+class _SliderValueDisplay extends StatelessWidget {
+  const _SliderValueDisplay({
     this.text,
-    this.counter,
-    this.onChanged,
-    this.isValid,
   });
 
   final String text;
-  int counter;
-  final ValueChanged<int> onChanged;
-  final LengthCounterValidityCallback isValid;
-
-  @override
-  _LengthCounterState createState() => _LengthCounterState();
-}
-
-// Needs a verify function argument to check if greater than zero
-// and either less than or greater than counterpart
-class _LengthCounterState extends State<_LengthCounter> {
-  _numberAdjustmentButton({
-    buttonText,
-    onPressed,
-  }) {
-    return ButtonTheme(
-      minWidth: 20.0,
-      height: 20.0,
-      child: OutlineButton(
-        child: Text(
-          buttonText,
-        ),
-        onPressed: () {
-          onPressed();
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: _horizontalPadding,
+    return SizedBox(
+      width: 16.0,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: _labelText,
       ),
-      child: Row(
+    );
+  }
+}
+
+class LengthSlider extends StatefulWidget {
+  const LengthSlider({
+    this.options,
+  });
+
+  final Options options;
+
+  @override
+  _LengthSliderState createState() => _LengthSliderState();
+}
+
+class _LengthSliderState extends State<LengthSlider> {
+  final EdgeInsets _sliderItemPadding = EdgeInsets.symmetric(
+    horizontal: _horizontalPadding,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    Color _sliderColor = _labelText.color;
+
+    return Padding(
+      padding: _sliderItemPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: Text(
-              widget.text,
-            ),
-          ),
-          _numberAdjustmentButton(
-            buttonText: '-',
-            onPressed: () {
-              setState(() {
-                int newValue = widget.counter - 1;
-                if (widget.isValid(newValue)) {
-                  widget.counter = newValue;
-                  widget.onChanged(
-                    newValue,
-                  );
-                }
-              });
-            },
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
+            padding: EdgeInsets.only(
+              top: _verticalPadding,
+              bottom: _verticalPadding * 3.25,
             ),
-            child: SizedBox(
-              width: 16.0,
-              child: Text(
-                '${widget.counter}',
-                textAlign: TextAlign.center,
-              ),
+            child: _SettingLabel(
+              text: 'Anagram length',
             ),
           ),
-          _numberAdjustmentButton(
-            buttonText: '+',
-            onPressed: () {
-              setState(() {
-                int newValue = widget.counter + 1;
-                if (widget.isValid(newValue)) {
-                  widget.counter = newValue;
-                  widget.onChanged(
-                    newValue,
-                  );
-                }
-              });
-            },
+          Row(
+            children: <Widget>[
+              _SliderValueDisplay(
+                text: '${widget.options.anagramLengthLowerBound}',
+              ),
+              Expanded(
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    overlayColor: Colors.white24,
+                    activeTickMarkColor: _sliderColor,
+                    activeTrackColor: _sliderColor,
+                    inactiveTrackColor: _sliderColor,
+                    thumbColor: _sliderColor,
+                    valueIndicatorColor: _sliderColor,
+                    valueIndicatorTextStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    showValueIndicator: ShowValueIndicator.always,
+                  ),
+                  child: RangeSlider(
+                    min: minimumAnagramLength.toDouble(),
+                    max: maximumAnagramLength.toDouble(),
+                    lowerValue: widget.options.anagramLengthLowerBound.toDouble(),
+                    upperValue: widget.options.anagramLengthUpperBound.toDouble(),
+                    showValueIndicator: true,
+                    valueIndicatorMaxDecimals: 0,
+                    onChanged: (double newLowerValue, double newUpperValue) {
+                      setState(() {
+                        widget.options.anagramLengthLowerBound =
+                            newLowerValue.toInt();
+                        widget.options.anagramLengthUpperBound =
+                            newUpperValue.toInt();
+                      });
+                    },
+                  ),
+                ),
+              ),
+              _SliderValueDisplay(
+                text: '${widget.options.anagramLengthUpperBound}',
+              ),
+            ],
           ),
         ],
       ),
@@ -267,25 +228,25 @@ class _LengthCounterState extends State<_LengthCounter> {
 class Options {
   Options({
     this.theme,
-    this.anagramSizeLowerBound,
-    this.anagramSizeUpperBound,
+    this.anagramLengthLowerBound,
+    this.anagramLengthUpperBound,
   });
 
   AnagrammaticTheme theme;
-  int anagramSizeLowerBound;
-  int anagramSizeUpperBound;
+  int anagramLengthLowerBound;
+  int anagramLengthUpperBound;
 
   Options copyWith({
     AnagrammaticTheme theme,
-    int anagramSizeLowerBound,
-    int anagramSizeUpperBound,
+    int anagramLengthLowerBound,
+    int anagramLengthUpperBound,
   }) {
     return Options(
       theme: theme ?? this.theme,
-      anagramSizeLowerBound:
-          anagramSizeLowerBound ?? this.anagramSizeLowerBound,
-      anagramSizeUpperBound:
-          anagramSizeUpperBound ?? this.anagramSizeUpperBound,
+      anagramLengthLowerBound:
+          anagramLengthLowerBound ?? this.anagramLengthLowerBound,
+      anagramLengthUpperBound:
+          anagramLengthUpperBound ?? this.anagramLengthUpperBound,
     );
   }
 }
@@ -295,35 +256,25 @@ class OptionsPage extends StatelessWidget {
     this.options,
   });
 
-  Options options;
+  final Options options;
 
   @override
   Widget build(BuildContext context) {
-    options = AnagrammaticApp.of(context).options;
-
-    return Scaffold(
-      appBar: AnagrammaticAppBar(
-        hasSettings: false,
-      ),
-      body: Column(
-        children: <Widget>[
-          _CategoryHeading(
-            text: 'Result organization',
-          ),
-          _MinimumLengthCounter(
-            options: options,
-          ),
-          _MaximumLengthCounter(
-            options: options,
-          ),
-          _CategoryHeading(
-            text: 'Display',
-          ),
-          _ThemeSwitch(
-            options: options,
-          ),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        _CategoryHeading(
+          text: 'Result organization',
+        ),
+        LengthSlider(
+          options: options,
+        ),
+        _CategoryHeading(
+          text: 'Display',
+        ),
+        _ThemeSwitch(
+          options: options,
+        ),
+      ],
     );
   }
 }

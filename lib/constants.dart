@@ -1,2 +1,2 @@
 final int minimumAnagramLength = 1;
-final int maximumAnagramLength = 20;
+final int maximumAnagramLength = 45;

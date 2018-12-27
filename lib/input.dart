@@ -1,13 +1,14 @@
-import 'package:anagrammatic/app.dart';
-import 'package:anagrammatic/app_bar.dart';
 import 'package:anagrammatic/constants.dart';
-import 'package:anagrammatic/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:anagrammatic/anagram_list.dart';
 
 class Input extends StatefulWidget {
-  Options options;
+  const Input({
+    this.transition,
+  });
+
+  final transition;
 
   @override
   State createState() {
@@ -40,72 +41,75 @@ class InputState extends State<Input> {
       onTap: () {
         dismissKeyboard();
       },
-      child: Scaffold(
-        appBar: AnagrammaticAppBar(
-          hasSettings: true,
+      child: Padding(
+        padding: const EdgeInsets.all(
+          8.0,
         ),
-        body: Form(
-          key: key,
-          child: ListView(
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 80.0,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0,
-                    ),
-                    child: TextFormField(
-                      controller: charactersTextController,
-                      inputFormatters: [
-                        CharacterInputFormatter(),
-                      ],
-                      autofocus: true,
-                      textAlign: TextAlign.center,
-                      maxLength: maximumAnagramLength,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: theme.textTheme.title.color,
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: Form(
+            key: key,
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 80.0,
                       ),
-                      decoration: InputDecoration(
-                        labelText: 'Characters',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            24.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                      ),
+                      child: TextFormField(
+                        controller: charactersTextController,
+                        inputFormatters: [
+                          CharacterInputFormatter(),
+                        ],
+                        autofocus: true,
+                        textAlign: TextAlign.center,
+                        maxLength: maximumAnagramLength,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: theme.textTheme.title.color,
+                        ),
+                        decoration: InputDecoration(
+                          labelText: 'Characters',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              24.0,
+                            ),
                           ),
                         ),
+                        validator: (value) {
+                          return validateTextField(value);
+                        },
+                        onFieldSubmitted: (value) {
+                          transferToAnagramList(context);
+                        },
                       ),
-                      validator: (value) {
-                        return validateTextField(value);
-                      },
-                      onFieldSubmitted: (value) {
-                        transferToAnagramList(context);
-                      },
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: showSubmitButton
-            ? FloatingActionButton(
-                onPressed: () {
-                  transferToAnagramList(context);
-                },
-                tooltip: 'Generate anagrams',
-                child: Icon(
-                  Icons.done,
+                  ],
                 ),
-                backgroundColor: theme.primaryColor,
-                foregroundColor: Colors.white,
-              )
-            : Container(),
+              ],
+            ),
+          ),
+          floatingActionButton: showSubmitButton
+              ? FloatingActionButton(
+                  onPressed: () {
+                    transferToAnagramList(context);
+                  },
+                  tooltip: 'Generate anagrams',
+                  child: Icon(
+                    Icons.done,
+                  ),
+                  backgroundColor: theme.primaryColor,
+                  foregroundColor: Colors.white,
+                )
+              : Container(),
+        ),
       ),
     );
   }
@@ -130,12 +134,9 @@ class InputState extends State<Input> {
 
   transferToAnagramList(BuildContext context) {
     if (key.currentState.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AnagramList(
-                characters: charactersTextController.text,
-              ),
+      widget.transition(
+        AnagramList(
+          characters: charactersTextController.text,
         ),
       );
     }

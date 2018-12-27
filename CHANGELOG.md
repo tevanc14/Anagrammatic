@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.20.0] - 2018-12-26
+
+Changed
+
+- Immediately reverted back to the backdrop model by
+  only propagating settings changes on menu exit
+- Increased the length limit to the longest word within
+  the current word list
+
 ## [0.19.0] - 2018-12-26
 
 Changed
