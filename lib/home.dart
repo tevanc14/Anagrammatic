@@ -1,4 +1,3 @@
-import 'package:anagrammatic/app.dart';
 import 'package:anagrammatic/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,12 +46,6 @@ class _HomeState extends State<Home> {
       showBackButton = false;
       shouldSystemBackExit = true;
       frontPage = _getInputWidget();
-    });
-  }
-
-  void theTranstition(BuildContext context, Options newOptions) {
-    setState(() {
-      AnagrammaticApp.of(context).options = newOptions;
     });
   }
 

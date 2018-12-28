@@ -2,10 +2,14 @@ import 'dart:async' show Future;
 
 import 'package:anagrammatic/anagram.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:path/path.dart' as path;
 
-Future<List<Anagram>> generateAnagrams(String characters) async {
-  String data = await loadWords();
-  List<String> words = data.split('\n');
+Future<List<Anagram>> generateAnagrams(
+  String characters,
+  bool useSimplerWordList,
+) async {
+  String fileName = getFileName(useSimplerWordList);
+  List<String> words = await loadWords(fileName);
   List<List<Anagram>> anagramLists = List();
 
   for (int i = 1; i <= characters.length; i++) {
@@ -17,7 +21,10 @@ Future<List<Anagram>> generateAnagrams(String characters) async {
 }
 
 Future<List<Anagram>> generateAnagramsOfLength(
-    List<String> words, String characters, int length) async {
+  List<String> words,
+  String characters,
+  int length,
+) async {
   String uppercaseCharacters = characters.toUpperCase();
   List<Anagram> anagramList = List();
   for (String word in words) {
@@ -30,7 +37,11 @@ Future<List<Anagram>> generateAnagramsOfLength(
   return anagramList;
 }
 
-bool containsCharacters(String word, String characters, int length) {
+bool containsCharacters(
+  String word,
+  String characters,
+  int length,
+) {
   if (word.length != length) {
     return false;
   } else {
@@ -44,7 +55,18 @@ bool containsCharacters(String word, String characters, int length) {
   }
 }
 
-Future<String> loadWords() async {
-  final String wordsFilename = 'assets/words.txt';
-  return await rootBundle.loadString(wordsFilename);
+Future<List<String>> loadWords(String fileName) async {
+  final String wordsFilename = fileName;
+  String wordsString = await rootBundle.loadString(wordsFilename);
+  return wordsString.split('\n');
+}
+
+String getFileName(bool useSimplerWordList) {
+  String assetsFolder = 'assets';
+  String extensiveWordListFileName = path.join(assetsFolder, 'all_words.txt');
+  String simplerWordListFileName = path.join(assetsFolder, 'simpler_words.txt');
+
+  return useSimplerWordList
+      ? simplerWordListFileName
+      : extensiveWordListFileName;
 }

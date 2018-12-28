@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.24.0] - 2018-12-28
+
+Added
+
+- Choice between a simple and complex word lists
+
 ## [0.23.0] - 2018-12-28
 
 Added

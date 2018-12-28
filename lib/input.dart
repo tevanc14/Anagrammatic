@@ -1,4 +1,5 @@
 import 'package:anagrammatic/anagram_length_bounds.dart';
+import 'package:anagrammatic/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:anagrammatic/anagram_list.dart';

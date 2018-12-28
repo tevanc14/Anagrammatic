@@ -30,6 +30,7 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       anagramLengthUpperBound: AnagramLengthBounds.maximumAnagramLength,
       sortType: SortType.getDefault(),
       textScaleFactor: TextScaleFactor.getDefault(),
+      useSimplerWordList: true,
     );
   }
 

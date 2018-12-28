@@ -4,7 +4,6 @@ import 'package:anagrammatic/anagram_generator.dart';
 import 'package:anagrammatic/anagram_tile.dart';
 import 'package:anagrammatic/app.dart';
 import 'package:anagrammatic/options.dart';
-import 'package:anagrammatic/sort_type.dart';
 
 class AnagramList extends StatefulWidget {
   final String characters;
@@ -96,7 +95,10 @@ class AnagramListState extends State<AnagramList> {
       key: key,
       body: Container(
         child: FutureBuilder<List<Anagram>>(
-          future: generateAnagrams(widget.characters),
+          future: generateAnagrams(
+            widget.characters,
+            options.useSimplerWordList,
+          ),
           builder: (context, generatedAnagrams) {
             if (generatedAnagrams.hasData) {
               if (generatedAnagrams.data.length > 0) {
