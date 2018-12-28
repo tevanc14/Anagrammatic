@@ -161,7 +161,7 @@ class _WordListSwitchState extends State<_WordListSwitch> {
   @override
   Widget build(BuildContext context) {
     return _BooleanItem(
-      text: 'Use simpler word list',
+      text: 'Simpler word list',
       value: widget.options.useSimplerWordList,
       onChanged: (bool value) {
         setState(() {

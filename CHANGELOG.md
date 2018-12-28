@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.2] - 2018-12-28
+
+Changed
+
+- Shortened word list switch label to be more concise and fit text
+  with huge scaling
+
 ## [0.24.1] - 2018-12-28
 
 Changed
