@@ -1,6 +1,17 @@
 # Changelog
 
-## [0.21.2] - 2018-12-28
+## [0.23.0] - 2018-12-28
+
+Added
+
+- Text scaling option
+
+Changed
+
+- Changed dropdown classes to something logical instead of a crazed,
+  enumerated mess
+
+## [0.22.0] - 2018-12-28
 
 Added
 

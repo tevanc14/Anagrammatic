@@ -1,5 +1,6 @@
 import 'package:anagrammatic/anagram_length_bounds.dart';
 import 'package:anagrammatic/sort_type.dart';
+import 'package:anagrammatic/text_scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app.dart';
@@ -13,8 +14,6 @@ final double _verticalPadding = 16.0;
 final TextStyle _labelText = TextStyle(
   color: Colors.white,
 );
-
-typedef LengthCounterValidityCallback = bool Function(int counter);
 
 class _CategoryHeading extends StatelessWidget {
   _CategoryHeading({
@@ -123,6 +122,66 @@ class _ThemeSwitch extends StatelessWidget {
   }
 }
 
+class _TextScaleDropdown extends StatefulWidget {
+  _TextScaleDropdown({
+    this.options,
+  });
+
+  final Options options;
+
+  @override
+  _TextScaleDropdownState createState() => _TextScaleDropdownState();
+}
+
+class _TextScaleDropdownState extends State<_TextScaleDropdown> {
+  final EdgeInsets _dropdownItemPadding = EdgeInsets.symmetric(
+    horizontal: _horizontalPadding,
+  );
+  final String text = 'Text size';
+  final List<TextScaleFactor> items = TextScaleFactor.getAllTextScaleFactors();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: _dropdownItemPadding,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: _SettingLabel(
+              text: text,
+            ),
+          ),
+          _SettingLabel(
+            text: widget.options.textScaleFactor.displayName,
+          ),
+          PopupMenuButton<TextScaleFactor>(
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: _labelText.color,
+            ),
+            itemBuilder: (BuildContext context) {
+              return items.map((item) {
+                return PopupMenuItem<TextScaleFactor>(
+                  value: item,
+                  child: Text(
+                    item.displayName,
+                  ),
+                );
+              }).toList();
+            },
+            onSelected: (TextScaleFactor choice) {
+              setState(() {
+                AnagrammaticApp.of(context).updateOptions(
+                    widget.options.copyWith(textScaleFactor: choice));
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _SliderValueDisplay extends StatelessWidget {
   const _SliderValueDisplay({
     this.text,
@@ -133,7 +192,7 @@ class _SliderValueDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 16.0,
+      width: 36.0,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -143,8 +202,8 @@ class _SliderValueDisplay extends StatelessWidget {
   }
 }
 
-class LengthSlider extends StatefulWidget {
-  const LengthSlider({
+class _LengthSlider extends StatefulWidget {
+  const _LengthSlider({
     this.options,
   });
 
@@ -154,7 +213,7 @@ class LengthSlider extends StatefulWidget {
   _LengthSliderState createState() => _LengthSliderState();
 }
 
-class _LengthSliderState extends State<LengthSlider> {
+class _LengthSliderState extends State<_LengthSlider> {
   final EdgeInsets _sliderItemPadding = EdgeInsets.symmetric(
     horizontal: _horizontalPadding,
   );
@@ -245,7 +304,7 @@ class _SortTypeDropdownState extends State<_SortTypeDropdown> {
     horizontal: _horizontalPadding,
   );
   final String text = 'Sort';
-  final List<String> items = SortType.sortTypeStrings();
+  final List<SortType> items = SortType.getAllSortTypes();
 
   @override
   Widget build(BuildContext context) {
@@ -259,24 +318,24 @@ class _SortTypeDropdownState extends State<_SortTypeDropdown> {
             ),
           ),
           _SettingLabel(
-            text: widget.options.sortType,
+            text: widget.options.sortType.displayName,
           ),
-          PopupMenuButton<String>(
+          PopupMenuButton<SortType>(
             icon: Icon(
               Icons.arrow_drop_down,
               color: _labelText.color,
             ),
             itemBuilder: (BuildContext context) {
               return items.map((item) {
-                return PopupMenuItem<String>(
+                return PopupMenuItem<SortType>(
                   value: item,
                   child: Text(
-                    item,
+                    item.displayName,
                   ),
                 );
               }).toList();
             },
-            onSelected: (String choice) {
+            onSelected: (SortType choice) {
               setState(() {
                 widget.options.sortType = choice;
               });
@@ -294,18 +353,21 @@ class Options {
     this.anagramLengthLowerBound,
     this.anagramLengthUpperBound,
     this.sortType,
+    this.textScaleFactor,
   });
 
   AnagrammaticTheme theme;
   int anagramLengthLowerBound;
   int anagramLengthUpperBound;
-  String sortType;
+  SortType sortType;
+  TextScaleFactor textScaleFactor;
 
   Options copyWith({
     AnagrammaticTheme theme,
     int anagramLengthLowerBound,
     int anagramLengthUpperBound,
-    String sortType,
+    SortType sortType,
+    TextScaleFactor textScaleFactor,
   }) {
     return Options(
       theme: theme ?? this.theme,
@@ -314,6 +376,7 @@ class Options {
       anagramLengthUpperBound:
           anagramLengthUpperBound ?? this.anagramLengthUpperBound,
       sortType: sortType ?? this.sortType,
+      textScaleFactor: textScaleFactor ?? this.textScaleFactor,
     );
   }
 }
@@ -335,13 +398,16 @@ class OptionsPage extends StatelessWidget {
         _SortTypeDropdown(
           options: options,
         ),
-        LengthSlider(
+        _LengthSlider(
           options: options,
         ),
         _CategoryHeading(
           text: 'Display',
         ),
         _ThemeSwitch(
+          options: options,
+        ),
+        _TextScaleDropdown(
           options: options,
         ),
       ],

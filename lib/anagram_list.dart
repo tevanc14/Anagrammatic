@@ -43,7 +43,7 @@ class AnagramListState extends State<AnagramList> {
 
     return sortAnagrams(
       lengthRestrictedAnagrams,
-      SortType.getSortComparatorFromString(options.sortType),
+      options.sortType.comparator,
     );
   }
 
@@ -85,6 +85,7 @@ class AnagramListState extends State<AnagramList> {
     return Text(
       "No anagrams were found 😢",
       style: Theme.of(context).textTheme.title,
+      textAlign: TextAlign.center,
     );
   }
 
@@ -109,7 +110,6 @@ class AnagramListState extends State<AnagramList> {
                 if (_anagrams.length <= 0) {
                   return noResultsText();
                 } else {
-                  print(_anagrams.length);
                   return ListView(
                     children: buildListTiles(
                       context,

@@ -1,4 +1,5 @@
 import 'package:anagrammatic/anagram_length_bounds.dart';
+import 'package:anagrammatic/text_scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/home.dart';
@@ -27,7 +28,8 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       theme: darkTheme,
       anagramLengthLowerBound: AnagramLengthBounds.minimumAnagramLength,
       anagramLengthUpperBound: AnagramLengthBounds.maximumAnagramLength,
-      sortType: SortType.getSortName(SortTypeName.alpha),
+      sortType: SortType.getDefault(),
+      textScaleFactor: TextScaleFactor.getDefault(),
     );
   }
 
@@ -37,10 +39,17 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
     });
   }
 
-  void upateTheme(theme) {
-    setState(() {
-      options.theme = theme;
-    });
+  Widget _applyTextScaleFactor(Widget child) {
+    return Builder(
+      builder: (BuildContext context) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaleFactor: options.textScaleFactor.scaleFactor,
+          ),
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -49,6 +58,12 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       data: this,
       child: MaterialApp(
         theme: options.theme.data,
+        builder: (BuildContext context, Widget child) {
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: _applyTextScaleFactor(child),
+          );
+        },
         home: Home(
           optionsPage: OptionsPage(
             options: options,
