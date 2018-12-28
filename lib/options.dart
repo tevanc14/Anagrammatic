@@ -35,7 +35,7 @@ class _OptionsItem extends StatelessWidget {
 }
 
 class _CategoryHeading extends StatelessWidget {
-  _CategoryHeading({
+  const _CategoryHeading({
     this.text,
   });
 
@@ -441,7 +441,7 @@ class OptionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        _CategoryHeading(
+        const _CategoryHeading(
           text: 'Result organization',
         ),
         _SortTypeDropdown(
@@ -453,8 +453,8 @@ class OptionsPage extends StatelessWidget {
         _WordListSwitch(
           options: options,
         ),
-        Divider(),
-        _CategoryHeading(
+        const Divider(),
+        const _CategoryHeading(
           text: 'Display',
         ),
         _ThemeSwitch(
@@ -463,7 +463,14 @@ class OptionsPage extends StatelessWidget {
         _TextScaleDropdown(
           options: options,
         ),
-      ],
+      ]..add(
+          // Unsure how to manipulate the viewable area to cooperate with scrolling
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 100.0,
+            ),
+          ),
+        ),
     );
   }
 }

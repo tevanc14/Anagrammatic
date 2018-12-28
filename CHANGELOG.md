@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.24.1] - 2018-12-28
+
+Changed
+
+- Threw padding at the bottom of the options page to enable scrolling.
+  The better alternative is manipulate the backLayer height so the viewable
+  area is what is shown when scrolling.
+
 ## [0.24.0] - 2018-12-28
 
 Added

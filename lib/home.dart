@@ -69,11 +69,11 @@ class _HomeState extends State<Home> {
       curve: Curves.fastOutSlowIn,
     );
 
-    return WillPopScope(
-      child: Scaffold(
-        backgroundColor: theme.primaryColor,
-        body: SafeArea(
-          bottom: false,
+    return Scaffold(
+      backgroundColor: theme.primaryColor,
+      body: SafeArea(
+        bottom: false,
+        child: WillPopScope(
           child: Backdrop(
             frontAction: AnimatedSwitcher(
               duration: frontLayerSwitchDuration,
@@ -110,15 +110,15 @@ class _HomeState extends State<Home> {
             ),
             backLayer: widget.optionsPage,
           ),
+          onWillPop: () {
+            if (shouldSystemBackExit) {
+              SystemNavigator.pop();
+            } else {
+              _inputTransition();
+            }
+          },
         ),
       ),
-      onWillPop: () {
-        if (shouldSystemBackExit) {
-          SystemNavigator.pop();
-        } else {
-          _inputTransition();
-        }
-      },
     );
   }
 }

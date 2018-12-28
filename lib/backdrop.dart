@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
 const double _frontHeadingHeight = 32.0; // front layer rounded rectangle
-const double _frontClosedHeight = 184.0; // front layer height when closed
+const double _frontClosedHeight = 92.0; // front layer height when closed
 const double _backAppBarHeight = 56.0; // back layer (options) appbar height
 
 // The size of the front layer heading's left and right corners.
