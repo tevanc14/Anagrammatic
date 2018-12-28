@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.21.1] - 2018-12-27
+
+Added
+
+- Transition logic when pressing Android system back button
+
+Changed
+
+- Display (someday) a logo in place of back button on options page.
+  This will simplify user flow by limiting navigation routes out of the
+  options page.
+
 ## [0.21.0] - 2018-12-27
 
 Added

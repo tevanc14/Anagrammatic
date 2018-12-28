@@ -1,6 +1,7 @@
 import 'package:anagrammatic/app.dart';
 import 'package:anagrammatic/options.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/backdrop.dart';
 import 'package:anagrammatic/input.dart';
@@ -25,6 +26,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Widget frontPage;
   bool showBackButton = false;
+  bool shouldSystemBackExit = true;
 
   Input _getInputWidget() {
     return Input(
@@ -35,6 +37,7 @@ class _HomeState extends State<Home> {
   void _listTransition(Widget newPage) {
     setState(() {
       showBackButton = true;
+      shouldSystemBackExit = false;
       frontPage = newPage;
     });
   }
@@ -42,6 +45,7 @@ class _HomeState extends State<Home> {
   void _inputTransition() {
     setState(() {
       showBackButton = false;
+      shouldSystemBackExit = true;
       frontPage = _getInputWidget();
     });
   }
@@ -61,7 +65,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.brightness == Brightness.dark;
     const Curve switchOutCurve = Interval(
       0.4,
       1.0,
@@ -73,47 +76,56 @@ class _HomeState extends State<Home> {
       curve: Curves.fastOutSlowIn,
     );
 
-    return Scaffold(
-      backgroundColor: theme.primaryColor,
-      body: SafeArea(
-        bottom: false,
-        child: Backdrop(
-          backTitle: const Text(
-            'Options',
-          ),
-          backLayer: widget.optionsPage,
-          frontAction: AnimatedSwitcher(
-            duration: frontLayerSwitchDuration,
-            switchOutCurve: switchOutCurve,
-            switchInCurve: switchInCurve,
-            child: showBackButton
-                ? IconButton(
-                    icon: const BackButtonIcon(),
-                    tooltip: 'Back',
-                    onPressed: () => _inputTransition(),
-                  )
-                // TODO: Insert logo here
-                : const Text(
-                    '',
-                  ),
-          ),
-          frontTitle: AnimatedSwitcher(
-            duration: frontLayerSwitchDuration,
-            child: Text(
-              widget.title,
+    return WillPopScope(
+      child: Scaffold(
+        backgroundColor: theme.primaryColor,
+        body: SafeArea(
+          bottom: false,
+          child: Backdrop(
+            frontAction: AnimatedSwitcher(
+              duration: frontLayerSwitchDuration,
+              switchOutCurve: switchOutCurve,
+              switchInCurve: switchInCurve,
+              child: showBackButton
+                  ? IconButton(
+                      icon: const BackButtonIcon(),
+                      tooltip: 'Back',
+                      onPressed: () => _inputTransition(),
+                    )
+                  // TODO: Insert logo here
+                  : Container(),
             ),
-          ),
-          frontHeading: Container(
-            height: 24.0,
-          ),
-          frontLayer: AnimatedSwitcher(
-            duration: frontLayerSwitchDuration,
-            switchOutCurve: switchOutCurve,
-            switchInCurve: switchInCurve,
-            child: frontPage,
+            frontTitle: AnimatedSwitcher(
+              duration: frontLayerSwitchDuration,
+              child: Text(
+                widget.title,
+              ),
+            ),
+            frontHeading: Container(
+              height: 24.0,
+            ),
+            frontLayer: AnimatedSwitcher(
+              duration: frontLayerSwitchDuration,
+              switchOutCurve: switchOutCurve,
+              switchInCurve: switchInCurve,
+              child: frontPage,
+            ),
+            // TODO: Insert logo here (Possibly animate)
+            backAction: Container(),
+            backTitle: const Text(
+              'Options',
+            ),
+            backLayer: widget.optionsPage,
           ),
         ),
       ),
+      onWillPop: () {
+        if (shouldSystemBackExit) {
+          SystemNavigator.pop();
+        } else {
+          _inputTransition();
+        }
+      },
     );
   }
 }

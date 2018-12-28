@@ -190,14 +190,16 @@ class Backdrop extends StatefulWidget {
     this.frontTitle,
     this.frontHeading,
     this.frontLayer,
+    this.backAction,
     this.backTitle,
     this.backLayer,
   });
 
   final Widget frontAction;
   final Widget frontTitle;
-  final Widget frontLayer;
   final Widget frontHeading;
+  final Widget frontLayer;
+  final Widget backAction;
   final Widget backTitle;
   final OptionsPage backLayer;
 
@@ -328,7 +330,7 @@ class _BackdropState extends State<Backdrop>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           _BackAppBar(
-            leading: widget.frontAction,
+            leading: widget.backAction,
             title: _CrossFadeTransition(
               progress: _controller,
               alignment: AlignmentDirectional.centerStart,
@@ -351,11 +353,12 @@ class _BackdropState extends State<Backdrop>
             ),
           ),
           Expanded(
-              child: Visibility(
-            child: widget.backLayer,
-            visible: _controller.status != AnimationStatus.completed,
-            maintainState: true,
-          )),
+            child: Visibility(
+              child: widget.backLayer,
+              visible: _controller.status != AnimationStatus.completed,
+              maintainState: true,
+            ),
+          ),
         ],
       ),
       // Front layer
