@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
               switchInCurve: switchInCurve,
               child: frontPage,
             ),
-            // TODO: Insert logo here (Possibly animate)
+            // TODO: Insert logo here
             backAction: Container(),
             backTitle: const Text(
               'Options',

@@ -14,7 +14,7 @@ const double _frontClosedHeight = 184.0; // front layer height when closed
 const double _backAppBarHeight = 56.0; // back layer (options) appbar height
 
 // The size of the front layer heading's left and right corners.
-final Animatable<BorderRadius> _kFrontHeadingBevelRadius = BorderRadiusTween(
+final Animatable<BorderRadius> _frontHeadingBevelRadius = BorderRadiusTween(
   begin: const BorderRadius.only(
     topLeft: Radius.circular(12.0),
     topRight: Radius.circular(12.0),
@@ -308,21 +308,22 @@ class _BackdropState extends State<Backdrop>
   }
 
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
-    final Animation<RelativeRect> frontRelativeRect =
-        _controller.drive(RelativeRectTween(
-      begin: RelativeRect.fromLTRB(
-        0.0,
-        constraints.biggest.height - _frontClosedHeight,
-        0.0,
-        0.0,
+    final Animation<RelativeRect> frontRelativeRect = _controller.drive(
+      RelativeRectTween(
+        begin: RelativeRect.fromLTRB(
+          0.0,
+          constraints.biggest.height - _frontClosedHeight,
+          0.0,
+          0.0,
+        ),
+        end: const RelativeRect.fromLTRB(
+          0.0,
+          _backAppBarHeight,
+          0.0,
+          0.0,
+        ),
       ),
-      end: const RelativeRect.fromLTRB(
-        0.0,
-        _backAppBarHeight,
-        0.0,
-        0.0,
-      ),
-    ));
+    );
 
     final List<Widget> layers = <Widget>[
       // Back layer
@@ -330,7 +331,15 @@ class _BackdropState extends State<Backdrop>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           _BackAppBar(
-            leading: widget.backAction,
+            leading: _CrossFadeTransition(
+              progress: _controller,
+              child0: Semantics(
+                child: widget.frontAction,
+              ),
+              child1: Semantics(
+                child: widget.backAction,
+              ),
+            ),
             title: _CrossFadeTransition(
               progress: _controller,
               alignment: AlignmentDirectional.centerStart,
@@ -373,7 +382,7 @@ class _BackdropState extends State<Backdrop>
               clipper: ShapeBorderClipper(
                 shape: RoundedRectangleBorder(
                   borderRadius:
-                      _kFrontHeadingBevelRadius.transform(_controller.value),
+                      _frontHeadingBevelRadius.transform(_controller.value),
                 ),
               ),
               clipBehavior: Clip.antiAlias,

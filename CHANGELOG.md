@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.21.2] - 2018-12-28
+
+Added
+
+- Back button in app bar which was mistakenly removed
+
+Changed
+
+- Moved anagram length constants into own class and file to avoid
+- having a messy constants file.
+
 ## [0.21.1] - 2018-12-27
 
 Added

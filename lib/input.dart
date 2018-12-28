@@ -1,4 +1,4 @@
-import 'package:anagrammatic/constants.dart';
+import 'package:anagrammatic/anagram_length_bounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:anagrammatic/anagram_list.dart';
@@ -63,7 +63,7 @@ class InputState extends State<Input> {
                       ],
                       autofocus: true,
                       textAlign: TextAlign.center,
-                      maxLength: maximumAnagramLength,
+                      maxLength: AnagramLengthBounds.maximumAnagramLength,
                       style: theme.textTheme.title,
                       decoration: InputDecoration(
                         labelText: 'Characters',

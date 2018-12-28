@@ -1,9 +1,8 @@
-import 'package:anagrammatic/anagram.dart';
+import 'package:anagrammatic/anagram_length_bounds.dart';
 import 'package:anagrammatic/sort_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app.dart';
-import 'package:anagrammatic/constants.dart';
 import 'package:anagrammatic/themes.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
@@ -198,8 +197,8 @@ class _LengthSliderState extends State<LengthSlider> {
                     showValueIndicator: ShowValueIndicator.always,
                   ),
                   child: RangeSlider(
-                    min: minimumAnagramLength.toDouble(),
-                    max: maximumAnagramLength.toDouble(),
+                    min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
+                    max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
                     lowerValue:
                         widget.options.anagramLengthLowerBound.toDouble(),
                     upperValue:
