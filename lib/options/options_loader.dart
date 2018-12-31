@@ -1,13 +1,14 @@
-import 'package:anagrammatic/anagram_length_bounds.dart';
-import 'package:anagrammatic/options.dart';
-import 'package:anagrammatic/sort_type.dart';
-import 'package:anagrammatic/text_scaling.dart';
-import 'package:anagrammatic/themes.dart';
-import 'package:anagrammatic/word_list.dart';
+import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
+import 'package:anagrammatic/options/options.dart';
+import 'package:anagrammatic/options/sort_type.dart';
+import 'package:anagrammatic/options/text_scaling.dart';
+import 'package:anagrammatic/options/themes.dart';
+import 'package:anagrammatic/options/word_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingLoader {
+class OptionsLoader {
   final _defaultOptions = Options(
+    isOpen: false,
     theme: darkTheme,
     anagramLengthLowerBound: AnagramLengthBounds.minimumAnagramLength,
     anagramLengthUpperBound: AnagramLengthBounds.maximumAnagramLength,
@@ -20,10 +21,10 @@ class SettingLoader {
 
   Future<Options> readOptions() async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      SharedPreferences preferences = await SharedPreferences.getInstance();
 
-      bool isDarkTheme = prefs.getBool(themeParameterName);
-      int textScaleFactorId = prefs.getInt(textScaleParameterName);
+      bool isDarkTheme = preferences.getBool(themeParameterName);
+      int textScaleFactorId = preferences.getInt(textScaleParameterName);
 
       return getDefaultOptions().copyWith(
         theme: isDarkTheme ? darkTheme : lightTheme,
@@ -35,13 +36,13 @@ class SettingLoader {
   }
 
   Future writeOptions(Options options) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
 
     bool isDarkTheme = options.theme == darkTheme;
     int textScaleFactorId = options.textScaleFactor.identifier;
 
-    prefs.setBool(themeParameterName, isDarkTheme);
-    prefs.setInt(textScaleParameterName, textScaleFactorId);
+    preferences.setBool(themeParameterName, isDarkTheme);
+    preferences.setInt(textScaleParameterName, textScaleFactorId);
   }
 
   Options getDefaultOptions() {

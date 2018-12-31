@@ -1,7 +1,7 @@
-import 'package:anagrammatic/anagram_length_bounds.dart';
+import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:anagrammatic/anagram_list.dart';
+import 'package:anagrammatic/anagram/anagram_list.dart';
 
 class Input extends StatefulWidget {
   final transition;

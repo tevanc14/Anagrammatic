@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.2] - 2018-12-31
+
+Changed
+
+- Can't hit transparent back button from options menu
+- Restructured files
+
 ## [0.26.1] - 2018-12-31
 
 Changed

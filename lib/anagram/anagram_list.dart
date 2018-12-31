@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:anagrammatic/anagram.dart';
-import 'package:anagrammatic/anagram_generator.dart';
-import 'package:anagrammatic/anagram_tile.dart';
-import 'package:anagrammatic/app.dart';
-import 'package:anagrammatic/options.dart';
+import 'package:anagrammatic/anagram/anagram.dart';
+import 'package:anagrammatic/anagram/anagram_generator.dart';
+import 'package:anagrammatic/anagram/anagram_tile.dart';
+import 'package:anagrammatic/app_flow/app.dart';
+import 'package:anagrammatic/options/options.dart';
 
 class AnagramList extends StatefulWidget {
   final String characters;
@@ -127,10 +127,10 @@ class AnagramListState extends State<AnagramList> {
                 '${generatedAnagrams.error}',
                 textAlign: TextAlign.center,
               );
+            } else {
+              // By default, show a loading spinner
+              return CircularProgressIndicator();
             }
-
-            // By default, show a loading spinner
-            return CircularProgressIndicator();
           },
         ),
         alignment: FractionalOffset.center,

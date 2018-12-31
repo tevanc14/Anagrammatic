@@ -1,7 +1,7 @@
 import 'dart:async' show Future;
 
-import 'package:anagrammatic/anagram.dart';
-import 'package:anagrammatic/word_list.dart';
+import 'package:anagrammatic/anagram/anagram.dart';
+import 'package:anagrammatic/options/word_list.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 Future<List<Anagram>> generateAnagrams(

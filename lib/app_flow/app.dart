@@ -1,8 +1,8 @@
-import 'package:anagrammatic/setting_loader.dart';
+import 'package:anagrammatic/options/options_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:anagrammatic/home.dart';
-import 'package:anagrammatic/options.dart';
+import 'package:anagrammatic/app_flow/home.dart';
+import 'package:anagrammatic/options/options.dart';
 
 class AnagrammaticApp extends StatefulWidget {
   static AnagrammaticAppState of(BuildContext context) {
@@ -17,7 +17,7 @@ class AnagrammaticApp extends StatefulWidget {
 
 class AnagrammaticAppState extends State<AnagrammaticApp> {
   Options options;
-  SettingLoader _settingLoader = SettingLoader();
+  OptionsLoader _settingLoader = OptionsLoader();
 
   @override
   void initState() {
@@ -58,10 +58,7 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       child: MaterialApp(
         theme: options.theme.data,
         builder: (BuildContext context, Widget child) {
-          return Directionality(
-            textDirection: TextDirection.ltr,
-            child: _applyTextScaleFactor(child),
-          );
+          return _applyTextScaleFactor(child);
         },
         home: Home(
           optionsPage: OptionsPage(

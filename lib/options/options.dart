@@ -1,11 +1,11 @@
-import 'package:anagrammatic/anagram_length_bounds.dart';
-import 'package:anagrammatic/sort_type.dart';
-import 'package:anagrammatic/text_scaling.dart';
-import 'package:anagrammatic/word_list.dart';
+import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
+import 'package:anagrammatic/options/sort_type.dart';
+import 'package:anagrammatic/options/text_scaling.dart';
+import 'package:anagrammatic/options/word_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:anagrammatic/app.dart';
-import 'package:anagrammatic/themes.dart';
+import 'package:anagrammatic/app_flow/app.dart';
+import 'package:anagrammatic/options/themes.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 final double _horizontalPadding = 28.0;
@@ -415,6 +415,7 @@ class _SortTypeDropdownState extends State<_SortTypeDropdown> {
 }
 
 class Options {
+  bool isOpen;
   AnagrammaticTheme theme;
   int anagramLengthLowerBound;
   int anagramLengthUpperBound;
@@ -423,6 +424,7 @@ class Options {
   WordList wordList;
 
   Options({
+    this.isOpen,
     this.theme,
     this.anagramLengthLowerBound,
     this.anagramLengthUpperBound,
@@ -440,6 +442,7 @@ class Options {
     WordList wordList,
   }) {
     return Options(
+      isOpen: isOpen ?? this.isOpen,
       theme: theme ?? this.theme,
       anagramLengthLowerBound:
           anagramLengthLowerBound ?? this.anagramLengthLowerBound,

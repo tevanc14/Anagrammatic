@@ -4,8 +4,8 @@
 
 import 'dart:math' as math;
 
-import 'package:anagrammatic/app.dart';
-import 'package:anagrammatic/options.dart';
+import 'package:anagrammatic/app_flow/app.dart';
+import 'package:anagrammatic/options/options.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
@@ -192,7 +192,7 @@ class Backdrop extends StatefulWidget {
   final Widget backAction;
   final Widget backTitle;
   final OptionsPage backLayer;
-  
+
   const Backdrop({
     this.frontAction,
     this.frontTitle,
@@ -236,11 +236,7 @@ class _BackdropState extends State<Backdrop>
       value: 1.0,
       vsync: this,
     )..addStatusListener((animationState) {
-        if (animationState == AnimationStatus.completed) {
-          setState(() {
-            AnagrammaticApp.of(context).updateOptions(widget.backLayer.options);
-          });
-        }
+        _onToggle(animationState);
       });
     _frontOpacity = _controller.drive(_frontOpacityTween);
   }
@@ -259,6 +255,25 @@ class _BackdropState extends State<Backdrop>
       0.0,
       renderBox.size.height - _backAppBarHeight - _frontClosedHeight,
     );
+  }
+
+  void _clearFocus() {
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+  void _onToggle(AnimationStatus animationState) {
+    AnagrammaticAppState appState = AnagrammaticApp.of(context);
+
+    if (animationState == AnimationStatus.completed) {
+      setState(() {
+        appState.updateOptions(widget.backLayer.options);
+      });
+    }
+
+    if (animationState == AnimationStatus.dismissed ||
+        animationState == AnimationStatus.completed) {
+      appState.options.isOpen ^= true;
+    }
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
@@ -294,11 +309,11 @@ class _BackdropState extends State<Backdrop>
       );
     }
 
-    FocusScope.of(context).requestFocus(FocusNode());
+    _clearFocus();
   }
 
   void _toggleFrontLayer() {
-    FocusScope.of(context).requestFocus(FocusNode());
+    _clearFocus();
     final AnimationStatus status = _controller.status;
     final bool isOpen = status == AnimationStatus.completed ||
         status == AnimationStatus.forward;

@@ -1,4 +1,4 @@
-import 'package:anagrammatic/anagram.dart';
+import 'package:anagrammatic/anagram/anagram.dart';
 
 class SortType {
   final String displayName;
