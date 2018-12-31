@@ -1,12 +1,8 @@
-import 'package:anagrammatic/anagram_length_bounds.dart';
-import 'package:anagrammatic/text_scaling.dart';
-import 'package:anagrammatic/word_list.dart';
+import 'package:anagrammatic/setting_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/home.dart';
 import 'package:anagrammatic/options.dart';
-import 'package:anagrammatic/themes.dart';
-import 'package:anagrammatic/sort_type.dart';
 
 class AnagrammaticApp extends StatefulWidget {
   static AnagrammaticAppState of(BuildContext context) {
@@ -21,24 +17,25 @@ class AnagrammaticApp extends StatefulWidget {
 
 class AnagrammaticAppState extends State<AnagrammaticApp> {
   Options options;
+  SettingLoader _settingLoader = SettingLoader();
 
   @override
   void initState() {
     super.initState();
-    options = Options(
-      theme: darkTheme,
-      anagramLengthLowerBound: AnagramLengthBounds.minimumAnagramLength,
-      anagramLengthUpperBound: AnagramLengthBounds.maximumAnagramLength,
-      sortType: SortType.getDefault(),
-      textScaleFactor: TextScaleFactor.getDefault(),
-      wordList: WordList.getDefault(),
-    );
+    options = _settingLoader.getDefaultOptions();
+    _settingLoader.readOptions().then((Options readOptions) {
+      setState(() {
+        options = readOptions;
+      });
+    });
   }
 
   void updateOptions(Options newOptions) {
     setState(() {
       options = newOptions;
     });
+
+    _settingLoader.writeOptions(options);
   }
 
   Widget _applyTextScaleFactor(Widget child) {

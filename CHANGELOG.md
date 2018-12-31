@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.26.0] - 2018-12-31
+
+Added
+
+- Write display settings to shared preferences to persist across instances
+
 ## [0.25.0] - 2018-12-31
 
 Added

@@ -1,35 +1,42 @@
 class TextScaleFactor {
   final String displayName;
   final double scaleFactor;
+  final int identifier;
 
   const TextScaleFactor({
     this.displayName,
     this.scaleFactor,
+    this.identifier,
   });
 
   static final TextScaleFactor _systemDefault = TextScaleFactor(
     displayName: 'System Default',
     scaleFactor: null,
+    identifier: 0,
   );
 
   static final TextScaleFactor _small = TextScaleFactor(
     displayName: 'Small',
     scaleFactor: 0.8,
+    identifier: 1,
   );
 
   static final TextScaleFactor _normal = TextScaleFactor(
     displayName: 'Normal',
     scaleFactor: 1.0,
+    identifier: 2,
   );
 
   static final TextScaleFactor _large = TextScaleFactor(
     displayName: 'Large',
     scaleFactor: 1.3,
+    identifier: 3,
   );
 
   static final TextScaleFactor _huge = TextScaleFactor(
     displayName: 'Huge',
     scaleFactor: 2.0,
+    identifier: 4,
   );
 
   static List<TextScaleFactor> _allTextScaleFactors = <TextScaleFactor>[
@@ -46,5 +53,10 @@ class TextScaleFactor {
 
   static TextScaleFactor getDefault() {
     return _systemDefault;
+  }
+
+  static TextScaleFactor getByIdentifier(int id) {
+    return getAllTextScaleFactors().firstWhere(
+        (TextScaleFactor textScaleFactor) => textScaleFactor.identifier == id);
   }
 }
