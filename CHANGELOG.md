@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1] - 2018-12-31
+
+Changed
+
+- Increased the maximum anagram length
+- Changed the no results text
+
 ## [0.26.0] - 2018-12-31
 
 Added

@@ -82,7 +82,7 @@ class AnagramListState extends State<AnagramList> {
 
   Text noResultsText() {
     return Text(
-      'No anagrams were found 😢',
+      'No anagrams were found 😢\nPossibly try upping the complexity in the options menu',
       style: Theme.of(context).textTheme.title,
       textAlign: TextAlign.center,
     );
