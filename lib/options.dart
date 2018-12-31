@@ -1,6 +1,7 @@
 import 'package:anagrammatic/anagram_length_bounds.dart';
 import 'package:anagrammatic/sort_type.dart';
 import 'package:anagrammatic/text_scaling.dart';
+import 'package:anagrammatic/word_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app.dart';
@@ -16,11 +17,11 @@ final TextStyle _labelText = TextStyle(
 );
 
 class _OptionsItem extends StatelessWidget {
+  final Widget child;
+
   const _OptionsItem({
     this.child,
   });
-
-  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +36,11 @@ class _OptionsItem extends StatelessWidget {
 }
 
 class _CategoryHeading extends StatelessWidget {
+  final String text;
+
   const _CategoryHeading({
     this.text,
   });
-
-  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +62,11 @@ class _CategoryHeading extends StatelessWidget {
 }
 
 class _SettingLabel extends StatelessWidget {
+  final String text;
+
   const _SettingLabel({
     this.text,
   });
-
-  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -77,17 +78,17 @@ class _SettingLabel extends StatelessWidget {
 }
 
 class _BooleanItem extends StatelessWidget {
+  final String text;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  final Widget infoButton;
+
   _BooleanItem({
     this.text,
     this.value,
     this.onChanged,
     this.infoButton,
   });
-
-  final String text;
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final Widget infoButton;
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +126,11 @@ class _BooleanItem extends StatelessWidget {
 }
 
 class _ThemeSwitch extends StatelessWidget {
+  final Options options;
+
   const _ThemeSwitch({
     this.options,
   });
-
-  final Options options;
 
   @override
   Widget build(BuildContext context) {
@@ -144,48 +145,69 @@ class _ThemeSwitch extends StatelessWidget {
   }
 }
 
-class _WordListSwitch extends StatefulWidget {
-  const _WordListSwitch({
+class _WordListComplexityDropdown extends StatefulWidget {
+  final Options options;
+
+  _WordListComplexityDropdown({
     this.options,
   });
 
-  final Options options;
-
   @override
-  _WordListSwitchState createState() {
-    return new _WordListSwitchState();
-  }
+  _WordListComplexityDropdownState createState() =>
+      _WordListComplexityDropdownState();
 }
 
-class _WordListSwitchState extends State<_WordListSwitch> {
+class _WordListComplexityDropdownState
+    extends State<_WordListComplexityDropdown> {
+  final String text = 'Complexity';
+  final List<WordList> items = WordList.getAllWordLists();
+
   @override
   Widget build(BuildContext context) {
-    return _BooleanItem(
-      text: 'Simpler word list',
-      value: widget.options.useSimplerWordList,
-      onChanged: (bool value) {
-        setState(() {
-          widget.options.useSimplerWordList = value;
-        });
-      },
-      infoButton: IconButton(
-        icon: Icon(
-          Icons.info,
-          color: _labelText.color,
-        ),
-        tooltip: 'Generate fewer, but more common anagrams',
-        onPressed: () {},
+    return _OptionsItem(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: _SettingLabel(
+              text: text,
+            ),
+          ),
+          _SettingLabel(
+            text: widget.options.wordList.displayName,
+          ),
+          PopupMenuButton<WordList>(
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: _labelText.color,
+            ),
+            itemBuilder: (BuildContext context) {
+              return items.map((item) {
+                return PopupMenuItem<WordList>(
+                  value: item,
+                  child: Text(
+                    item.displayName,
+                  ),
+                );
+              }).toList();
+            },
+            onSelected: (WordList choice) {
+              setState(() {
+                widget.options.wordList = choice;
+              });
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
 class _TextScaleDropdown extends StatefulWidget {
+  final Options options;
+
   _TextScaleDropdown({
     this.options,
   });
-
-  final Options options;
 
   @override
   _TextScaleDropdownState createState() => _TextScaleDropdownState();
@@ -237,11 +259,11 @@ class _TextScaleDropdownState extends State<_TextScaleDropdown> {
 }
 
 class _SliderValueDisplay extends StatelessWidget {
+  final String text;
+
   const _SliderValueDisplay({
     this.text,
   });
-
-  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -257,11 +279,11 @@ class _SliderValueDisplay extends StatelessWidget {
 }
 
 class _LengthSlider extends StatefulWidget {
+  final Options options;
+
   const _LengthSlider({
     this.options,
   });
-
-  final Options options;
 
   @override
   _LengthSliderState createState() => _LengthSliderState();
@@ -282,7 +304,7 @@ class _LengthSliderState extends State<_LengthSlider> {
               bottom: _verticalPadding * 6.5,
             ),
             child: _SettingLabel(
-              text: 'Anagram length',
+              text: 'Length',
             ),
           ),
           Row(
@@ -336,11 +358,11 @@ class _LengthSliderState extends State<_LengthSlider> {
 }
 
 class _SortTypeDropdown extends StatefulWidget {
+  final Options options;
+
   _SortTypeDropdown({
     this.options,
   });
-
-  final Options options;
 
   @override
   _SortTypeDropdownState createState() {
@@ -393,21 +415,21 @@ class _SortTypeDropdownState extends State<_SortTypeDropdown> {
 }
 
 class Options {
+  AnagrammaticTheme theme;
+  int anagramLengthLowerBound;
+  int anagramLengthUpperBound;
+  SortType sortType;
+  TextScaleFactor textScaleFactor;
+  WordList wordList;
+
   Options({
     this.theme,
     this.anagramLengthLowerBound,
     this.anagramLengthUpperBound,
     this.sortType,
     this.textScaleFactor,
-    this.useSimplerWordList,
+    this.wordList,
   });
-
-  AnagrammaticTheme theme;
-  int anagramLengthLowerBound;
-  int anagramLengthUpperBound;
-  SortType sortType;
-  TextScaleFactor textScaleFactor;
-  bool useSimplerWordList;
 
   Options copyWith({
     AnagrammaticTheme theme,
@@ -415,7 +437,7 @@ class Options {
     int anagramLengthUpperBound,
     SortType sortType,
     TextScaleFactor textScaleFactor,
-    bool useSimplerWordList,
+    WordList wordList,
   }) {
     return Options(
       theme: theme ?? this.theme,
@@ -425,24 +447,24 @@ class Options {
           anagramLengthUpperBound ?? this.anagramLengthUpperBound,
       sortType: sortType ?? this.sortType,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-      useSimplerWordList: useSimplerWordList ?? this.useSimplerWordList,
+      wordList: wordList ?? this.wordList,
     );
   }
 }
 
 class OptionsPage extends StatelessWidget {
+  final Options options;
+
   OptionsPage({
     this.options,
   });
-
-  final Options options;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
         const _CategoryHeading(
-          text: 'Result organization',
+          text: 'Anagram results',
         ),
         _SortTypeDropdown(
           options: options,
@@ -450,7 +472,7 @@ class OptionsPage extends StatelessWidget {
         _LengthSlider(
           options: options,
         ),
-        _WordListSwitch(
+        _WordListComplexityDropdown(
           options: options,
         ),
         const Divider(),

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.25.0] - 2018-12-31
+
+Added
+
+- More extensive word list choices
+
+Changed
+
+- Moved word list choice to a dropdown as it's far more intuitive
+- Started using SCOWL word lists for more consistent complexity scaling
+- Made constructor-property ordering more consistent
+- All double quotes to single quotes
+
 ## [0.24.2] - 2018-12-28
 
 Changed

@@ -1,13 +1,13 @@
 import 'package:anagrammatic/anagram.dart';
 
 class SortType {
+  final String displayName;
+  final Comparator<Anagram> comparator;
+  
   const SortType({
     this.displayName,
     this.comparator,
   });
-
-  final String displayName;
-  final Comparator<Anagram> comparator;
 
   static Comparator<Anagram> _alphaComparator =
       (a, b) => a.word.compareTo(b.word);
@@ -18,35 +18,43 @@ class SortType {
   static Comparator<Anagram> _lengthReverseComparator =
       (a, b) => b.word.length.compareTo(a.word.length);
 
+  static final SortType _alpha = SortType(
+    displayName: 'A-Z',
+    comparator: combineComparators(
+      _alphaComparator,
+      _lengthComparator,
+    ),
+  );
+
+  static final SortType _alphaReverse = SortType(
+    displayName: 'Z-A',
+    comparator: combineComparators(
+      _alphaReverseComparator,
+      _lengthComparator,
+    ),
+  );
+
+  static final SortType _length = SortType(
+    displayName: 'Length (Ascending)',
+    comparator: combineComparators(
+      _lengthComparator,
+      _alphaComparator,
+    ),
+  );
+
+  static final SortType _lengthReverse = SortType(
+    displayName: 'Length (Descending)',
+    comparator: combineComparators(
+      _lengthReverseComparator,
+      _alphaComparator,
+    ),
+  );
+
   static List<SortType> _allSortTypes = <SortType>[
-    SortType(
-      displayName: 'A-Z',
-      comparator: combineComparators(
-        _alphaComparator,
-        _lengthComparator,
-      ),
-    ),
-    SortType(
-      displayName: 'Z-A',
-      comparator: combineComparators(
-        _alphaReverseComparator,
-        _lengthComparator,
-      ),
-    ),
-    SortType(
-      displayName: 'Length (Ascending)',
-      comparator: combineComparators(
-        _lengthComparator,
-        _alphaComparator,
-      ),
-    ),
-    SortType(
-      displayName: 'Length (Descending)',
-      comparator: combineComparators(
-        _lengthReverseComparator,
-        _alphaComparator,
-      ),
-    ),
+    _alpha,
+    _alphaReverse,
+    _length,
+    _lengthReverse,
   ];
 
   static Comparator<Anagram> combineComparators(
@@ -65,6 +73,6 @@ class SortType {
   }
 
   static SortType getDefault() {
-    return _allSortTypes[0];
+    return _alpha;
   }
 }

@@ -11,12 +11,11 @@ const Duration frontLayerSwitchDuration = Duration(
 
 class Home extends StatefulWidget {
   final String title = 'Anagrammatic';
+  final OptionsPage optionsPage;
 
   Home({
     this.optionsPage,
   });
-
-  final OptionsPage optionsPage;
 
   @override
   _HomeState createState() => _HomeState();
@@ -42,6 +41,7 @@ class _HomeState extends State<Home> {
   }
 
   void _inputTransition() {
+    print('pop');
     setState(() {
       showBackButton = false;
       shouldSystemBackExit = true;

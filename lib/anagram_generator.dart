@@ -1,15 +1,14 @@
 import 'dart:async' show Future;
 
 import 'package:anagrammatic/anagram.dart';
+import 'package:anagrammatic/word_list.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:path/path.dart' as path;
 
 Future<List<Anagram>> generateAnagrams(
   String characters,
-  bool useSimplerWordList,
+  WordList wordList,
 ) async {
-  String fileName = getFileName(useSimplerWordList);
-  List<String> words = await loadWords(fileName);
+  List<String> words = await loadWords(wordList.fileName);
   List<List<Anagram>> anagramLists = List();
 
   for (int i = 1; i <= characters.length; i++) {
@@ -59,14 +58,4 @@ Future<List<String>> loadWords(String fileName) async {
   final String wordsFilename = fileName;
   String wordsString = await rootBundle.loadString(wordsFilename);
   return wordsString.split('\n');
-}
-
-String getFileName(bool useSimplerWordList) {
-  String assetsFolder = 'assets';
-  String extensiveWordListFileName = path.join(assetsFolder, 'all_words.txt');
-  String simplerWordListFileName = path.join(assetsFolder, 'simpler_words.txt');
-
-  return useSimplerWordList
-      ? simplerWordListFileName
-      : extensiveWordListFileName;
 }

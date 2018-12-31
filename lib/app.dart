@@ -1,5 +1,6 @@
 import 'package:anagrammatic/anagram_length_bounds.dart';
 import 'package:anagrammatic/text_scaling.dart';
+import 'package:anagrammatic/word_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/home.dart';
@@ -30,7 +31,7 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       anagramLengthUpperBound: AnagramLengthBounds.maximumAnagramLength,
       sortType: SortType.getDefault(),
       textScaleFactor: TextScaleFactor.getDefault(),
-      useSimplerWordList: true,
+      wordList: WordList.getDefault(),
     );
   }
 

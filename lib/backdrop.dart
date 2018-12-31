@@ -76,6 +76,10 @@ class _TappableWhileStatusIsState extends State<_TappableWhileStatusIs> {
 }
 
 class _CrossFadeTransition extends AnimatedWidget {
+  final AlignmentGeometry alignment;
+  final Widget child0;
+  final Widget child1;
+
   const _CrossFadeTransition({
     Key key,
     this.alignment = Alignment.center,
@@ -83,10 +87,6 @@ class _CrossFadeTransition extends AnimatedWidget {
     this.child0,
     this.child1,
   }) : super(key: key, listenable: progress);
-
-  final AlignmentGeometry alignment;
-  final Widget child0;
-  final Widget child1;
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +133,10 @@ class _CrossFadeTransition extends AnimatedWidget {
 }
 
 class _BackAppBar extends StatelessWidget {
+  final Widget leading;
+  final Widget title;
+  final Widget trailing;
+
   const _BackAppBar({
     Key key,
     this.leading = const SizedBox(width: 56.0),
@@ -141,10 +145,6 @@ class _BackAppBar extends StatelessWidget {
   })  : assert(leading != null),
         assert(title != null),
         super(key: key);
-
-  final Widget leading;
-  final Widget title;
-  final Widget trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -185,6 +185,14 @@ class _BackAppBar extends StatelessWidget {
 }
 
 class Backdrop extends StatefulWidget {
+  final Widget frontAction;
+  final Widget frontTitle;
+  final Widget frontHeading;
+  final Widget frontLayer;
+  final Widget backAction;
+  final Widget backTitle;
+  final OptionsPage backLayer;
+  
   const Backdrop({
     this.frontAction,
     this.frontTitle,
@@ -194,14 +202,6 @@ class Backdrop extends StatefulWidget {
     this.backTitle,
     this.backLayer,
   });
-
-  final Widget frontAction;
-  final Widget frontTitle;
-  final Widget frontHeading;
-  final Widget frontLayer;
-  final Widget backAction;
-  final Widget backTitle;
-  final OptionsPage backLayer;
 
   @override
   _BackdropState createState() => _BackdropState();
@@ -334,9 +334,11 @@ class _BackdropState extends State<Backdrop>
             leading: _CrossFadeTransition(
               progress: _controller,
               child0: Semantics(
+                namesRoute: true,
                 child: widget.frontAction,
               ),
               child1: Semantics(
+                namesRoute: true,
                 child: widget.backAction,
               ),
             ),

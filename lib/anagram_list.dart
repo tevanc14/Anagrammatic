@@ -82,7 +82,7 @@ class AnagramListState extends State<AnagramList> {
 
   Text noResultsText() {
     return Text(
-      "No anagrams were found 😢",
+      'No anagrams were found 😢',
       style: Theme.of(context).textTheme.title,
       textAlign: TextAlign.center,
     );
@@ -97,7 +97,7 @@ class AnagramListState extends State<AnagramList> {
         child: FutureBuilder<List<Anagram>>(
           future: generateAnagrams(
             widget.characters,
-            options.useSimplerWordList,
+            options.wordList,
           ),
           builder: (context, generatedAnagrams) {
             if (generatedAnagrams.hasData) {
@@ -124,7 +124,7 @@ class AnagramListState extends State<AnagramList> {
               }
             } else if (generatedAnagrams.hasError) {
               return Text(
-                "${generatedAnagrams.error}",
+                '${generatedAnagrams.error}',
                 textAlign: TextAlign.center,
               );
             }
