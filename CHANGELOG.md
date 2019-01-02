@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.27.0] - 2019-01-01
+
+Added
+
+- Result count
+
+Changed
+
+- Some work on spreading theme across different elements
+
+Removed
+
+- LICENSE file as I don't believe it is needed for using components
+  from Flutter Gallery
+
 ## [0.26.2] - 2018-12-31
 
 Changed

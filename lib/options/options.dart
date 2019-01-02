@@ -10,6 +10,7 @@ import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
+final Color _optionsAccentColor = const Color(0xFF39CEFD);
 
 // Currently keeping text one color, regardless of theme
 final TextStyle _labelText = TextStyle(
@@ -37,9 +38,11 @@ class _OptionsItem extends StatelessWidget {
 
 class _CategoryHeading extends StatelessWidget {
   final String text;
+  final IconData iconData;
 
   const _CategoryHeading({
     this.text,
+    this.iconData,
   });
 
   @override
@@ -47,12 +50,22 @@ class _CategoryHeading extends StatelessWidget {
     return _OptionsItem(
       child: Row(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 8.0,
+            ),
+            child: Icon(
+              iconData,
+              color: _optionsAccentColor,
+            ),
+          ),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                color: optionsAccentColor,
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .subhead
+                  .copyWith(color: _optionsAccentColor),
             ),
           ),
         ],
@@ -114,7 +127,7 @@ class _BooleanItem extends StatelessWidget {
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeColor: optionsAccentColor,
+                activeColor: _optionsAccentColor,
                 activeTrackColor: isDark ? Colors.white30 : Colors.black26,
               ),
             ],
@@ -468,6 +481,7 @@ class OptionsPage extends StatelessWidget {
       children: <Widget>[
         const _CategoryHeading(
           text: 'Anagram results',
+          iconData: Icons.filter_list,
         ),
         _SortTypeDropdown(
           options: options,
@@ -481,6 +495,7 @@ class OptionsPage extends StatelessWidget {
         const Divider(),
         const _CategoryHeading(
           text: 'Display',
+          iconData: Icons.palette,
         ),
         _ThemeSwitch(
           options: options,

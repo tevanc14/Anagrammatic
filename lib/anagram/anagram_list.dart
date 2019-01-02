@@ -22,7 +22,7 @@ class AnagramListState extends State<AnagramList> {
   final key = GlobalKey<AnagramListState>();
   List<Anagram> _anagrams = List();
 
-  String resultCountLabel(List<Anagram> anagrams) {
+  String _resultCountLabel(List<Anagram> anagrams) {
     if (anagrams.length == 1) {
       return '${anagrams.length} result';
     } else {
@@ -30,23 +30,23 @@ class AnagramListState extends State<AnagramList> {
     }
   }
 
-  List<Anagram> filterAnagrams(
+  List<Anagram> _filterAnagrams(
     List<Anagram> anagrams,
     Options options,
   ) {
-    List<Anagram> lengthRestrictedAnagrams = restrictAnagramsByLength(
+    List<Anagram> lengthRestrictedAnagrams = _restrictAnagramsByLength(
       anagrams,
       options.anagramLengthLowerBound,
       options.anagramLengthUpperBound,
     );
 
-    return sortAnagrams(
+    return _sortAnagrams(
       lengthRestrictedAnagrams,
       options.sortType.comparator,
     );
   }
 
-  List<Anagram> restrictAnagramsByLength(
+  List<Anagram> _restrictAnagramsByLength(
     List<Anagram> anagrams,
     int lowerBound,
     int upperBound,
@@ -57,14 +57,14 @@ class AnagramListState extends State<AnagramList> {
     }).toList();
   }
 
-  List<Anagram> sortAnagrams(
+  List<Anagram> _sortAnagrams(
     List<Anagram> anagrams,
     Comparator<Anagram> comparator,
   ) {
     return anagrams..sort(comparator);
   }
 
-  List<Widget> buildListTiles(
+  List<Widget> _buildAnagramTiles(
     BuildContext context,
     List<Anagram> anagrams,
   ) {
@@ -80,7 +80,7 @@ class AnagramListState extends State<AnagramList> {
     ).toList();
   }
 
-  Text noResultsText() {
+  Text _noResultsText() {
     return Text(
       'No anagrams were found 😢\nPossibly try upping the complexity in the options menu',
       style: Theme.of(context).textTheme.title,
@@ -104,23 +104,38 @@ class AnagramListState extends State<AnagramList> {
               if (generatedAnagrams.data.length > 0) {
                 _anagrams = generatedAnagrams.data;
 
-                _anagrams = filterAnagrams(
+                _anagrams = _filterAnagrams(
                   _anagrams,
                   options,
                 );
 
                 if (_anagrams.length <= 0) {
-                  return noResultsText();
+                  return _noResultsText();
                 } else {
-                  return ListView(
-                    children: buildListTiles(
-                      context,
-                      _anagrams,
-                    ),
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(
+                          8.0,
+                        ),
+                        child: Text(
+                          _resultCountLabel(_anagrams),
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView(
+                          children: _buildAnagramTiles(
+                            context,
+                            _anagrams,
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 }
               } else {
-                return noResultsText();
+                return _noResultsText();
               }
             } else if (generatedAnagrams.hasError) {
               return Text(

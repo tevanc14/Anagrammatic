@@ -5,7 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 class AnagramTile extends StatefulWidget {
   final Anagram anagram;
 
-  AnagramTile({@required this.anagram,});
+  AnagramTile({
+    @required this.anagram,
+  });
 
   @override
   State createState() {
@@ -19,9 +21,7 @@ class AnagramTileState extends State<AnagramTile> {
     return ListTile(
       title: Text(
         widget.anagram.word,
-        style: TextStyle(
-          fontSize: 20.0,
-        ),
+        style: Theme.of(context).textTheme.headline,
       ),
       trailing: IconButton(
         icon: Icon(
