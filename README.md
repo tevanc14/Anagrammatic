@@ -1,3 +1,3 @@
-# anagrammatic
+# Anagrammatic
 
-Generate anagrams for given characters and length
+Generate anagrams for given characters

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.27.1] - 2019-01-02
+
+Removed
+
+- Value indicator on length slider
+
 ## [0.27.0] - 2019-01-01
 
 Added

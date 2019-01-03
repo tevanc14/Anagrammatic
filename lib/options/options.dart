@@ -313,8 +313,7 @@ class _LengthSliderState extends State<_LengthSlider> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              top: _verticalPadding,
-              bottom: _verticalPadding * 6.5,
+              bottom: _verticalPadding * 2,
             ),
             child: _SettingLabel(
               text: 'Length',
@@ -333,11 +332,6 @@ class _LengthSliderState extends State<_LengthSlider> {
                     activeTrackColor: _sliderColor,
                     inactiveTrackColor: _sliderColor,
                     thumbColor: _sliderColor,
-                    valueIndicatorColor: _sliderColor,
-                    valueIndicatorTextStyle: TextStyle(
-                      color: Colors.black,
-                    ),
-                    showValueIndicator: ShowValueIndicator.always,
                   ),
                   child: RangeSlider(
                     min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
@@ -346,8 +340,6 @@ class _LengthSliderState extends State<_LengthSlider> {
                         widget.options.anagramLengthLowerBound.toDouble(),
                     upperValue:
                         widget.options.anagramLengthUpperBound.toDouble(),
-                    showValueIndicator: true,
-                    valueIndicatorMaxDecimals: 0,
                     onChanged: (double newLowerValue, double newUpperValue) {
                       setState(() {
                         widget.options.anagramLengthLowerBound =
