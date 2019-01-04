@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.28.0] - 2019-01-03
+
+Changed
+
+- Separated out the length range slider for two individual sliders
+  until either the range slider is fully functional or a better
+  alternative is available
+- Altered the "No results" text
+
+Removed
+
+- Huge text scaling (made things unusable in other capacities when used)
+
 ## [0.27.1] - 2019-01-02
 
 Removed

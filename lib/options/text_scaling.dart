@@ -33,18 +33,11 @@ class TextScaleFactor {
     identifier: 3,
   );
 
-  static final TextScaleFactor _huge = TextScaleFactor(
-    displayName: 'Huge',
-    scaleFactor: 2.0,
-    identifier: 4,
-  );
-
   static List<TextScaleFactor> _allTextScaleFactors = <TextScaleFactor>[
     _systemDefault,
     _small,
     _normal,
     _large,
-    _huge,
   ];
 
   static List<TextScaleFactor> getAllTextScaleFactors() {

@@ -6,14 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app_flow/app.dart';
 import 'package:anagrammatic/options/themes.dart';
-import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
 final Color _optionsAccentColor = const Color(0xFF39CEFD);
 
 // Currently keeping text one color, regardless of theme
-final TextStyle _labelText = TextStyle(
+final TextStyle _optionLabelText = TextStyle(
   color: Colors.white,
 );
 
@@ -76,16 +75,18 @@ class _CategoryHeading extends StatelessWidget {
 
 class _SettingLabel extends StatelessWidget {
   final String text;
+  final TextAlign textAlign;
 
   const _SettingLabel({
     this.text,
+    this.textAlign = TextAlign.start,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: _labelText,
+      style: _optionLabelText,
     );
   }
 }
@@ -191,7 +192,7 @@ class _WordListComplexityDropdownState
           PopupMenuButton<WordList>(
             icon: Icon(
               Icons.arrow_drop_down,
-              color: _labelText.color,
+              color: _optionLabelText.color,
             ),
             itemBuilder: (BuildContext context) {
               return items.map((item) {
@@ -246,7 +247,7 @@ class _TextScaleDropdownState extends State<_TextScaleDropdown> {
           PopupMenuButton<TextScaleFactor>(
             icon: Icon(
               Icons.arrow_drop_down,
-              color: _labelText.color,
+              color: _optionLabelText.color,
             ),
             itemBuilder: (BuildContext context) {
               return items.map((item) {
@@ -271,10 +272,10 @@ class _TextScaleDropdownState extends State<_TextScaleDropdown> {
   }
 }
 
-class _SliderValueDisplay extends StatelessWidget {
+class _LengthSliderValueDisplay extends StatelessWidget {
   final String text;
 
-  const _SliderValueDisplay({
+  const _LengthSliderValueDisplay({
     this.text,
   });
 
@@ -285,79 +286,177 @@ class _SliderValueDisplay extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: _labelText,
+        style: _optionLabelText,
       ),
     );
   }
 }
 
-class _LengthSlider extends StatefulWidget {
+class _LengthSliderLabel extends StatelessWidget {
+  final String text;
+
+  const _LengthSliderLabel({
+    this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 108.0,
+      child: _SettingLabel(
+        text: text,
+        textAlign: TextAlign.start,
+      ),
+    );
+  }
+}
+
+class _LengthSlider extends StatelessWidget {
+  final String labelText;
+  final String displayText;
+  final Slider slider;
+
+  _LengthSlider({
+    this.labelText,
+    this.displayText,
+    this.slider,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color _sliderColor = _optionLabelText.color;
+
+    return _OptionsItem(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: _horizontalPadding,
+        ),
+        child: Row(
+          children: <Widget>[
+            _LengthSliderLabel(
+              text: labelText,
+            ),
+            _LengthSliderValueDisplay(
+              text: displayText,
+            ),
+            Expanded(
+              child: SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  overlayColor: Colors.white24,
+                  activeTickMarkColor: _sliderColor,
+                  activeTrackColor: _sliderColor,
+                  inactiveTrackColor: _sliderColor,
+                  thumbColor: _sliderColor,
+                ),
+                child: slider,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MinLengthSlider extends StatefulWidget {
   final Options options;
 
-  const _LengthSlider({
+  _MinLengthSlider({
     this.options,
   });
 
   @override
-  _LengthSliderState createState() => _LengthSliderState();
+  _MinLengthSliderState createState() {
+    return new _MinLengthSliderState();
+  }
 }
 
-class _LengthSliderState extends State<_LengthSlider> {
+class _MinLengthSliderState extends State<_MinLengthSlider> {
   @override
   Widget build(BuildContext context) {
-    Color _sliderColor = _labelText.color;
-
-    return _OptionsItem(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: _verticalPadding * 2,
-            ),
-            child: _SettingLabel(
-              text: 'Length',
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              _SliderValueDisplay(
-                text: '${widget.options.anagramLengthLowerBound}',
-              ),
-              Expanded(
-                child: SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    overlayColor: Colors.white24,
-                    activeTickMarkColor: _sliderColor,
-                    activeTrackColor: _sliderColor,
-                    inactiveTrackColor: _sliderColor,
-                    thumbColor: _sliderColor,
-                  ),
-                  child: RangeSlider(
-                    min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
-                    max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
-                    lowerValue:
-                        widget.options.anagramLengthLowerBound.toDouble(),
-                    upperValue:
-                        widget.options.anagramLengthUpperBound.toDouble(),
-                    onChanged: (double newLowerValue, double newUpperValue) {
-                      setState(() {
-                        widget.options.anagramLengthLowerBound =
-                            newLowerValue.toInt();
-                        widget.options.anagramLengthUpperBound =
-                            newUpperValue.toInt();
-                      });
-                    },
-                  ),
-                ),
-              ),
-              _SliderValueDisplay(
-                text: '${widget.options.anagramLengthUpperBound}',
-              ),
-            ],
-          ),
-        ],
+    return _LengthSlider(
+      labelText: 'Minimum',
+      displayText: '${widget.options.anagramLengthLowerBound}',
+      slider: Slider(
+        value: widget.options.anagramLengthLowerBound.toDouble(),
+        min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
+        max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
+        onChanged: (double newValue) {
+          if (newValue <= widget.options.anagramLengthUpperBound) {
+            setState(() {
+              widget.options.anagramLengthLowerBound = newValue.ceil();
+            });
+          }
+        },
       ),
+    );
+  }
+}
+
+class _MaxLengthSlider extends StatefulWidget {
+  final Options options;
+
+  _MaxLengthSlider({
+    this.options,
+  });
+
+  @override
+  _MaxLengthSliderState createState() {
+    return new _MaxLengthSliderState();
+  }
+}
+
+class _MaxLengthSliderState extends State<_MaxLengthSlider> {
+  @override
+  Widget build(BuildContext context) {
+    return _LengthSlider(
+      labelText: 'Maximum',
+      displayText: '${widget.options.anagramLengthUpperBound}',
+      slider: Slider(
+        value: widget.options.anagramLengthUpperBound.toDouble(),
+        min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
+        max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
+        onChanged: (double newValue) {
+          if (newValue >= widget.options.anagramLengthLowerBound) {
+            setState(() {
+              widget.options.anagramLengthUpperBound = newValue.floor();
+            });
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _LengthSliders extends StatefulWidget {
+  final Options options;
+
+  _LengthSliders({
+    this.options,
+  });
+
+  @override
+  _LengthSlidersState createState() => _LengthSlidersState();
+}
+
+class _LengthSlidersState extends State<_LengthSliders> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _OptionsItem(
+          child: _SettingLabel(
+            text: 'Length',
+          ),
+        ),
+        _MinLengthSlider(
+          options: widget.options,
+        ),
+        _MaxLengthSlider(
+          options: widget.options,
+        ),
+      ],
     );
   }
 }
@@ -395,7 +494,7 @@ class _SortTypeDropdownState extends State<_SortTypeDropdown> {
           PopupMenuButton<SortType>(
             icon: Icon(
               Icons.arrow_drop_down,
-              color: _labelText.color,
+              color: _optionLabelText.color,
             ),
             itemBuilder: (BuildContext context) {
               return items.map((item) {
@@ -478,7 +577,7 @@ class OptionsPage extends StatelessWidget {
         _SortTypeDropdown(
           options: options,
         ),
-        _LengthSlider(
+        _LengthSliders(
           options: options,
         ),
         _WordListComplexityDropdown(
