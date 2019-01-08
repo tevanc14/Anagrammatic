@@ -1,12 +1,14 @@
+import 'package:anagrammatic/anagram/anagram_details.dart';
 import 'package:flutter/material.dart';
 import 'package:anagrammatic/anagram/anagram.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AnagramTile extends StatefulWidget {
   final Anagram anagram;
+  final String characters;
 
   AnagramTile({
     @required this.anagram,
+    @required this.characters,
   });
 
   @override
@@ -18,28 +20,26 @@ class AnagramTile extends StatefulWidget {
 class AnagramTileState extends State<AnagramTile> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        widget.anagram.word,
-        style: Theme.of(context).textTheme.headline,
-      ),
-      trailing: IconButton(
-        icon: Icon(
-          Icons.chevron_right,
+    return GestureDetector(
+      child: ListTile(
+        title: Text(
+          widget.anagram.word,
+          style: Theme.of(context).textTheme.headline,
         ),
-        onPressed: () {
-          launchURL(widget.anagram.word);
-        },
       ),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext builderContext) {
+            return Dialog(
+              child: AnagramDetails(
+                anagram: widget.anagram,
+                characters: widget.characters,
+              ),
+            );
+          },
+        );
+      },
     );
-  }
-
-  launchURL(String word) async {
-    var url = 'https://www.google.com/search?q=define+' + word;
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }

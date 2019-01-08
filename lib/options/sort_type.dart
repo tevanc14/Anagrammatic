@@ -3,7 +3,7 @@ import 'package:anagrammatic/anagram/anagram.dart';
 class SortType {
   final String displayName;
   final Comparator<Anagram> comparator;
-  
+
   const SortType({
     this.displayName,
     this.comparator,
@@ -35,7 +35,7 @@ class SortType {
   );
 
   static final SortType _length = SortType(
-    displayName: 'Length (Ascending)',
+    displayName: 'Length (Small -> Big)',
     comparator: combineComparators(
       _lengthComparator,
       _alphaComparator,
@@ -43,7 +43,7 @@ class SortType {
   );
 
   static final SortType _lengthReverse = SortType(
-    displayName: 'Length (Descending)',
+    displayName: 'Length (Big -> Small)',
     comparator: combineComparators(
       _lengthReverseComparator,
       _alphaComparator,
@@ -51,10 +51,10 @@ class SortType {
   );
 
   static List<SortType> _allSortTypes = <SortType>[
+    _lengthReverse,
+    _length,
     _alpha,
     _alphaReverse,
-    _length,
-    _lengthReverse,
   ];
 
   static Comparator<Anagram> combineComparators(
@@ -73,6 +73,6 @@ class SortType {
   }
 
   static SortType getDefault() {
-    return _alpha;
+    return _lengthReverse;
   }
 }

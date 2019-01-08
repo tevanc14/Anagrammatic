@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.29.0] - 2019-01-08
+
+Added
+
+- Truncate results to a fixed number
+- Dialog details page
+
+Changed
+
+- Display names of sort types
+- Default to reverse length sort type
+
 ## [0.28.0] - 2019-01-03
 
 Changed

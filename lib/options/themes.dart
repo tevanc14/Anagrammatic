@@ -21,18 +21,42 @@ final AnagrammaticTheme lightTheme = AnagrammaticTheme._(
 
 final Color _errorColor = const Color(0xFFB00020);
 
-final String _fontFamily = 'Roboto';
-
 TextTheme _buildTextTheme(TextTheme base) {
+  final String fontFamily = 'Roboto';
+
   return base.copyWith(
-    title: base.title.copyWith(
-      fontFamily: _fontFamily,
+    display4: base.display4.copyWith(
+      fontFamily: fontFamily,
+    ),
+    display3: base.display3.copyWith(
+      fontFamily: fontFamily,
+    ),
+    display2: base.display2.copyWith(
+      fontFamily: fontFamily,
+    ),
+    display1: base.display1.copyWith(
+      fontFamily: fontFamily,
     ),
     headline: base.headline.copyWith(
-      fontFamily: _fontFamily,
+      fontFamily: fontFamily,
+    ),
+    title: base.title.copyWith(
+      fontFamily: fontFamily,
     ),
     subhead: base.subhead.copyWith(
-      fontFamily: _fontFamily,
+      fontFamily: fontFamily,
+    ),
+    body2: base.body2.copyWith(
+      fontFamily: fontFamily,
+    ),
+    body1: base.body1.copyWith(
+      fontFamily: fontFamily,
+    ),
+    caption: base.caption.copyWith(
+      fontFamily: fontFamily,
+    ),
+    button: base.button.copyWith(
+      fontFamily: fontFamily,
     ),
   );
 }
@@ -42,6 +66,10 @@ ThemeData _buildDarkTheme() {
   Color secondaryColor = Colors.grey[600];
   Color backgroundColor = const Color(0xFF202124);
   final ThemeData base = ThemeData.dark();
+  final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
+    primary: primaryColor,
+    secondary: secondaryColor,
+  );
   return base.copyWith(
     primaryColor: primaryColor,
     buttonColor: primaryColor,
@@ -51,6 +79,10 @@ ThemeData _buildDarkTheme() {
     scaffoldBackgroundColor: backgroundColor,
     backgroundColor: backgroundColor,
     errorColor: _errorColor,
+    buttonTheme: ButtonThemeData(
+      colorScheme: colorScheme,
+      textTheme: ButtonTextTheme.primary,
+    ),
     textTheme: _buildTextTheme(base.textTheme),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildTextTheme(base.accentTextTheme),
@@ -61,6 +93,10 @@ ThemeData _buildLightTheme() {
   const Color primaryColor = Color(0xFF0175c2);
   const Color secondaryColor = Color(0xFF13B9FD);
   final ThemeData base = ThemeData.light();
+  final ColorScheme colorScheme = const ColorScheme.light().copyWith(
+    primary: primaryColor,
+    secondary: secondaryColor,
+  );
   return base.copyWith(
     primaryColor: primaryColor,
     buttonColor: primaryColor,
@@ -72,6 +108,10 @@ ThemeData _buildLightTheme() {
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: Colors.white,
     errorColor: _errorColor,
+    buttonTheme: ButtonThemeData(
+      colorScheme: colorScheme,
+      textTheme: ButtonTextTheme.primary,
+    ),
     textTheme: _buildTextTheme(base.textTheme),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildTextTheme(base.accentTextTheme),

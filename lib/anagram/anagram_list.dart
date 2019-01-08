@@ -21,56 +21,58 @@ class AnagramList extends StatefulWidget {
 class AnagramListState extends State<AnagramList> {
   final key = GlobalKey<AnagramListState>();
   List<Anagram> _anagrams = List();
+  List<Anagram> _showAnagrams = List();
+  int _maxDisplayCount = 1000;
 
-  String _resultCountLabel(List<Anagram> anagrams) {
-    if (anagrams.length == 1) {
-      return '${anagrams.length} result';
+  String _resultCountLabel() {
+    if (_anagrams.length == 1) {
+      return '${_anagrams.length} result';
+    } else if (_anagrams.length > _maxDisplayCount) {
+      return '${_anagrams.length} results, ${_showAnagrams.length} shown';
     } else {
-      return '${anagrams.length} results';
+      return '${_anagrams.length} results';
     }
   }
 
-  List<Anagram> _filterAnagrams(
-    List<Anagram> anagrams,
+  _filterAnagrams(
     Options options,
   ) {
-    List<Anagram> lengthRestrictedAnagrams = _restrictAnagramsByLength(
-      anagrams,
+    _restrictAnagramsByLength(
       options.anagramLengthLowerBound,
       options.anagramLengthUpperBound,
     );
 
-    return _sortAnagrams(
-      lengthRestrictedAnagrams,
+    _sortAnagrams(
       options.sortType.comparator,
     );
+
+    _truncateResults();
   }
 
-  List<Anagram> _restrictAnagramsByLength(
-    List<Anagram> anagrams,
+  _restrictAnagramsByLength(
     int lowerBound,
     int upperBound,
   ) {
-    return anagrams.where((anagram) {
+    _anagrams = _anagrams.where((anagram) {
       return anagram.word.length >= lowerBound &&
           anagram.word.length <= upperBound;
     }).toList();
   }
 
-  List<Anagram> _sortAnagrams(
-    List<Anagram> anagrams,
+  _sortAnagrams(
     Comparator<Anagram> comparator,
   ) {
-    return anagrams..sort(comparator);
+    _anagrams..sort(comparator);
   }
 
   List<Widget> _buildAnagramTiles(
     BuildContext context,
-    List<Anagram> anagrams,
+    String characters,
   ) {
-    Iterable<Widget> listTiles = _anagrams.map<Widget>(
+    Iterable<Widget> listTiles = _showAnagrams.map<Widget>(
       (Anagram anagram) => AnagramTile(
             anagram: anagram,
+            characters: characters,
           ),
     );
 
@@ -78,6 +80,10 @@ class AnagramListState extends State<AnagramList> {
       context: context,
       tiles: listTiles,
     ).toList();
+  }
+
+  _truncateResults() {
+    _showAnagrams = _anagrams.take(_maxDisplayCount).toList();
   }
 
   Text _noResultsText() {
@@ -104,12 +110,11 @@ class AnagramListState extends State<AnagramList> {
               if (generatedAnagrams.data.length > 0) {
                 _anagrams = generatedAnagrams.data;
 
-                _anagrams = _filterAnagrams(
-                  _anagrams,
+                _filterAnagrams(
                   options,
                 );
 
-                if (_anagrams.length <= 0) {
+                if (_showAnagrams.length <= 0) {
                   return _noResultsText();
                 } else {
                   return Column(
@@ -119,7 +124,7 @@ class AnagramListState extends State<AnagramList> {
                           8.0,
                         ),
                         child: Text(
-                          _resultCountLabel(_anagrams),
+                          _resultCountLabel(),
                           style: Theme.of(context).textTheme.title,
                         ),
                       ),
@@ -127,7 +132,7 @@ class AnagramListState extends State<AnagramList> {
                         child: ListView(
                           children: _buildAnagramTiles(
                             context,
-                            _anagrams,
+                            widget.characters,
                           ),
                         ),
                       ),

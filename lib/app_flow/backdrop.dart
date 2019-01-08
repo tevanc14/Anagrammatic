@@ -206,7 +206,7 @@ class Backdrop extends StatefulWidget {
 class _BackdropState extends State<Backdrop>
     with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
-  AnimationController _controller;
+  AnimationController _animationController;
   Animation<double> _frontOpacity;
 
   static final Animatable<double> _frontOpacityTween = Tween<double>(
@@ -225,7 +225,7 @@ class _BackdropState extends State<Backdrop>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _animationController = AnimationController(
       duration: const Duration(
         milliseconds: 300,
       ),
@@ -234,12 +234,12 @@ class _BackdropState extends State<Backdrop>
     )..addStatusListener((animationState) {
         _onToggle(animationState);
       });
-    _frontOpacity = _controller.drive(_frontOpacityTween);
+    _frontOpacity = _animationController.drive(_frontOpacityTween);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -273,35 +273,35 @@ class _BackdropState extends State<Backdrop>
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
-    _controller.value -=
+    _animationController.value -=
         details.primaryDelta / (_backdropHeight ?? details.primaryDelta);
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    if (_controller.isAnimating ||
-        _controller.status == AnimationStatus.completed) {
+    if (_animationController.isAnimating ||
+        _animationController.status == AnimationStatus.completed) {
       return;
     }
 
     final double flingVelocity =
         details.velocity.pixelsPerSecond.dy / _backdropHeight;
     if (flingVelocity < 0.0) {
-      _controller.fling(
+      _animationController.fling(
         velocity: math.max(
           2.0,
           -flingVelocity,
         ),
       );
     } else if (flingVelocity > 0.0) {
-      _controller.fling(
+      _animationController.fling(
         velocity: math.min(
           -2.0,
           -flingVelocity,
         ),
       );
     } else {
-      _controller.fling(
-        velocity: _controller.value < 0.5 ? -2.0 : 2.0,
+      _animationController.fling(
+        velocity: _animationController.value < 0.5 ? -2.0 : 2.0,
       );
     }
 
@@ -310,16 +310,16 @@ class _BackdropState extends State<Backdrop>
 
   void _toggleFrontLayer() {
     _clearFocus();
-    final AnimationStatus status = _controller.status;
+    final AnimationStatus status = _animationController.status;
     final bool isOpen = status == AnimationStatus.completed ||
         status == AnimationStatus.forward;
-    _controller.fling(
+    _animationController.fling(
       velocity: isOpen ? -2.0 : 2.0,
     );
   }
 
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
-    final Animation<RelativeRect> frontRelativeRect = _controller.drive(
+    final Animation<RelativeRect> frontRelativeRect = _animationController.drive(
       RelativeRectTween(
         begin: RelativeRect.fromLTRB(
           0.0,
@@ -343,7 +343,7 @@ class _BackdropState extends State<Backdrop>
         children: <Widget>[
           _BackAppBar(
             leading: _CrossFadeTransition(
-              progress: _controller,
+              progress: _animationController,
               child0: Semantics(
                 namesRoute: true,
                 child: widget.frontAction,
@@ -354,7 +354,7 @@ class _BackdropState extends State<Backdrop>
               ),
             ),
             title: _CrossFadeTransition(
-              progress: _controller,
+              progress: _animationController,
               alignment: AlignmentDirectional.centerStart,
               child0: Semantics(
                 namesRoute: true,
@@ -370,14 +370,14 @@ class _BackdropState extends State<Backdrop>
               tooltip: 'Toggle options page',
               icon: AnimatedIcon(
                 icon: AnimatedIcons.close_menu,
-                progress: _controller,
+                progress: _animationController,
               ),
             ),
           ),
           Expanded(
             child: Visibility(
               child: widget.backLayer,
-              visible: _controller.status != AnimationStatus.completed,
+              visible: _animationController.status != AnimationStatus.completed,
               maintainState: true,
             ),
           ),
@@ -387,7 +387,7 @@ class _BackdropState extends State<Backdrop>
       PositionedTransition(
         rect: frontRelativeRect,
         child: AnimatedBuilder(
-          animation: _controller,
+          animation: _animationController,
           builder: (BuildContext context, Widget child) {
             return PhysicalShape(
               elevation: 12.0,
@@ -395,7 +395,7 @@ class _BackdropState extends State<Backdrop>
               clipper: ShapeBorderClipper(
                 shape: RoundedRectangleBorder(
                   borderRadius:
-                      _frontHeadingBevelRadius.transform(_controller.value),
+                      _frontHeadingBevelRadius.transform(_animationController.value),
                 ),
               ),
               clipBehavior: Clip.antiAlias,
@@ -404,7 +404,7 @@ class _BackdropState extends State<Backdrop>
           },
           child: _TappableWhileStatusIs(
             AnimationStatus.completed,
-            controller: _controller,
+            controller: _animationController,
             child: FadeTransition(
               opacity: _frontOpacity,
               child: widget.frontLayer,
