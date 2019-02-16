@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.29.1] - 2019-02-16
+
+Changed
+
+- Vertically spaced out the action buttons in the detail dialog
+
 ## [0.29.0] - 2019-01-08
 
 Added

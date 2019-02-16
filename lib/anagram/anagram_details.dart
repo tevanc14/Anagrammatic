@@ -49,51 +49,18 @@ class _AnagramDetailsState extends State<AnagramDetails> {
         padding: EdgeInsets.all(
           _padding,
         ),
-        child: ListView(
+        child: Column(
           children: <Widget>[
-            _wordTitle(),
-            _InfoRow(
-              label: 'Length',
-              value: widget.anagram.word.length.toString(),
-            ),
-            ExpansionPanelList(
-              expansionCallback: (
-                int index,
-                bool isExpanded,
-              ) {
-                setState(() {
-                  _expansionItems[index].isExpanded =
-                      !_expansionItems[index].isExpanded;
-                });
-              },
-              children: _expansionItems.map(_createExpansionPanel).toList(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FlatButton(
-                  child: Text(
-                    'BACK',
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                ),
-                RaisedButton(
-                  child: Text('DEFINE'),
-                  onPressed: () {
-                    _launchURL(widget.anagram.word);
-                  },
-                ),
-              ],
-            ),
+            _anagramTitle(),
+            _anagramDetails(),
+            _actionButtons(),
           ],
         ),
       ),
     );
   }
 
-  Widget _wordTitle() {
+  Widget _anagramTitle() {
     return Padding(
       padding: EdgeInsets.only(
         bottom: _padding,
@@ -103,6 +70,53 @@ class _AnagramDetailsState extends State<AnagramDetails> {
         style: Theme.of(context).textTheme.display1,
         textAlign: TextAlign.center,
       ),
+    );
+  }
+
+  Widget _anagramDetails() {
+    return Expanded(
+      child: ListView(
+        children: <Widget>[
+          _InfoRow(
+            label: 'Length',
+            value: widget.anagram.word.length.toString(),
+          ),
+          ExpansionPanelList(
+            expansionCallback: (
+              int index,
+              bool isExpanded,
+            ) {
+              setState(() {
+                _expansionItems[index].isExpanded =
+                    !_expansionItems[index].isExpanded;
+              });
+            },
+            children: _expansionItems.map(_createExpansionPanel).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _actionButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        FlatButton(
+          child: Text(
+            'BACK',
+          ),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+        RaisedButton(
+          child: Text('DEFINE'),
+          onPressed: () {
+            _launchURL(widget.anagram.word);
+          },
+        ),
+      ],
     );
   }
 
