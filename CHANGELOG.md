@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.30.0] - 2019-02-16
+
+Added
+
+- Save word list choice to preferences storage
+
+Changed
+
+- Back button in details dialog switched to OutlineButton
+
 ## [0.29.1] - 2019-02-16
 
 Changed

@@ -102,7 +102,7 @@ class _AnagramDetailsState extends State<AnagramDetails> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        FlatButton(
+        OutlineButton(
           child: Text(
             'BACK',
           ),

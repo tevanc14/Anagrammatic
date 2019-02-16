@@ -18,6 +18,7 @@ class OptionsLoader {
   );
   final String themeParameterName = 'isDarkTheme';
   final String textScaleParameterName = 'textScaleFactor';
+  final String wordListParameterName = 'wordList';
 
   Future<Options> readOptions() async {
     try {
@@ -25,10 +26,12 @@ class OptionsLoader {
 
       bool isDarkTheme = preferences.getBool(themeParameterName);
       int textScaleFactorId = preferences.getInt(textScaleParameterName);
+      int wordListId = preferences.getInt(wordListParameterName);
 
       return getDefaultOptions().copyWith(
         theme: isDarkTheme ? darkTheme : lightTheme,
         textScaleFactor: TextScaleFactor.getByIdentifier(textScaleFactorId),
+        wordList: WordList.getByIdentifier(wordListId),
       );
     } catch (e) {
       return getDefaultOptions();
@@ -40,9 +43,11 @@ class OptionsLoader {
 
     bool isDarkTheme = options.theme == darkTheme;
     int textScaleFactorId = options.textScaleFactor.identifier;
+    int wordListId = options.wordList.identifier;
 
     preferences.setBool(themeParameterName, isDarkTheme);
     preferences.setInt(textScaleParameterName, textScaleFactorId);
+    preferences.setInt(wordListParameterName, wordListId);
   }
 
   Options getDefaultOptions() {
