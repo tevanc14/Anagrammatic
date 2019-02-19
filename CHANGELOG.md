@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.31.0] - 2019-02-18
+
+Added
+
+- Wildcard character (*) for input
+- Set overlay color (to correct the toolbar icon color on ios)
+
+Changed
+
+- Spacing on "no results" screen
+
 ## [0.30.0] - 2019-02-16
 
 Added

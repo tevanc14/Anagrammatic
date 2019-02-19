@@ -35,7 +35,7 @@ class WordList {
     identifier: 2,
   );
 
-  static List<WordList> _allWordLists = <WordList>[
+  static final List<WordList> _allWordLists = <WordList>[
     _small,
     _default,
     _insane,

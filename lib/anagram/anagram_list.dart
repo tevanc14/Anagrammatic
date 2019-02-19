@@ -86,11 +86,16 @@ class AnagramListState extends State<AnagramList> {
     _showAnagrams = _anagrams.take(_maxDisplayCount).toList();
   }
 
-  Text _noResultsText() {
-    return Text(
-      'No anagrams were found with the current settings\n\n😢',
-      style: Theme.of(context).textTheme.title,
-      textAlign: TextAlign.center,
+  Widget _noResultsText() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 64.0,
+      ),
+      child: Text(
+        'No anagrams were found with the current settings\n\n😢',
+        style: Theme.of(context).textTheme.title,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 

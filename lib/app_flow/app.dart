@@ -1,5 +1,6 @@
 import 'package:anagrammatic/options/options_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app_flow/home.dart';
 import 'package:anagrammatic/options/options.dart';
@@ -51,8 +52,14 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
     );
   }
 
+  void _applyOverlayColor() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+  }
+
   @override
   Widget build(BuildContext context) {
+    _applyOverlayColor();
+
     return OptionsContainer(
       data: this,
       child: MaterialApp(

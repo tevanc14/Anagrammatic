@@ -4,6 +4,8 @@ import 'package:anagrammatic/anagram/anagram.dart';
 import 'package:anagrammatic/options/word_list.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+final wildcardCharacter = '*';
+
 Future<List<Anagram>> generateAnagrams(
   String characters,
   WordList wordList,
@@ -46,9 +48,14 @@ bool containsCharacters(
   } else {
     for (String character in word.split('')) {
       if (!characters.contains(character)) {
-        return false;
+        if (characters.contains(wildcardCharacter)) {
+          characters = characters.replaceFirst(wildcardCharacter, '');
+        } else {
+          return false;
+        }
+      } else {
+        characters = characters.replaceFirst(character, '');
       }
-      characters = characters.replaceFirst(character, '');
     }
     return true;
   }
