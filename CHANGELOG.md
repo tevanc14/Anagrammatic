@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.32.0] - 2019-02-25
+
+Added
+
+- Help text on input screen
+
+Changed
+
+- Rounded corners of details dialog
+
 ## [0.31.0] - 2019-02-18
 
 Added

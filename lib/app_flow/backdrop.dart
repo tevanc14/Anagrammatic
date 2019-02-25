@@ -5,7 +5,7 @@ import 'package:anagrammatic/options/options.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
-const double _frontHeadingHeight = 32.0; // front layer rounded rectangle
+const double frontHeadingHeight = 32.0; // front layer rounded rectangle
 const double _frontClosedHeight = 92.0; // front layer height when closed
 const double _backAppBarHeight = 56.0; // back layer (options) appbar height
 
@@ -16,8 +16,8 @@ final Animatable<BorderRadius> _frontHeadingBevelRadius = BorderRadiusTween(
     topRight: Radius.circular(12.0),
   ),
   end: const BorderRadius.only(
-    topLeft: Radius.circular(_frontHeadingHeight),
-    topRight: Radius.circular(_frontHeadingHeight),
+    topLeft: Radius.circular(frontHeadingHeight),
+    topRight: Radius.circular(frontHeadingHeight),
   ),
 );
 
@@ -319,7 +319,8 @@ class _BackdropState extends State<Backdrop>
   }
 
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
-    final Animation<RelativeRect> frontRelativeRect = _animationController.drive(
+    final Animation<RelativeRect> frontRelativeRect =
+        _animationController.drive(
       RelativeRectTween(
         begin: RelativeRect.fromLTRB(
           0.0,
@@ -394,8 +395,8 @@ class _BackdropState extends State<Backdrop>
               color: Theme.of(context).canvasColor,
               clipper: ShapeBorderClipper(
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      _frontHeadingBevelRadius.transform(_animationController.value),
+                  borderRadius: _frontHeadingBevelRadius
+                      .transform(_animationController.value),
                 ),
               ),
               clipBehavior: Clip.antiAlias,

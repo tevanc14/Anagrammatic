@@ -1,4 +1,3 @@
-import 'package:anagrammatic/anagram/anagram_generator.dart';
 import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +20,7 @@ class InputState extends State<Input> {
   final key = GlobalKey<FormState>();
   final charactersTextController = TextEditingController();
   bool showSubmitButton = false;
+  bool showInfoText = false;
 
   @override
   void initState() {
@@ -55,28 +55,18 @@ class InputState extends State<Input> {
             child: ListView(
               children: <Widget>[
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     _textField(theme),
+                    _infoButton(),
+                    _infoText(),
                   ],
                 ),
               ],
             ),
           ),
         ),
-        floatingActionButton: showSubmitButton
-            ? FloatingActionButton(
-                onPressed: () {
-                  _transferToAnagramList(context);
-                },
-                tooltip: 'Generate anagrams',
-                child: Icon(
-                  Icons.done,
-                ),
-                backgroundColor: theme.primaryColor,
-                foregroundColor: Colors.white,
-              )
-            : Container(),
+        floatingActionButton: _submitButton(theme),
       ),
     );
   }
@@ -92,12 +82,13 @@ class InputState extends State<Input> {
       maxLength: AnagramLengthBounds.maximumAnagramLength,
       style: theme.textTheme.title,
       decoration: InputDecoration(
-        labelText: 'Characters',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             24.0,
           ),
         ),
+        counterText: '',
+        labelText: 'Characters',
       ),
       validator: (value) {
         return _validateTextField(value);
@@ -106,6 +97,85 @@ class InputState extends State<Input> {
         _transferToAnagramList(context);
       },
     );
+  }
+
+  Widget _infoButton() {
+    return IconButton(
+      onPressed: () {
+        _infoButtonPressed();
+      },
+      icon: Icon(
+        showInfoText ? Icons.clear : Icons.info,
+      ),
+      tooltip: showInfoText ? 'Hide input assistance' : 'Show input assistance',
+    );
+  }
+
+  _infoButtonPressed() {
+    setState(() {
+      showInfoText = !showInfoText;
+    });
+
+    if (showInfoText) {
+      _dismissKeyboard();
+    }
+  }
+
+  Widget _infoText() {
+    if (showInfoText) {
+      return _buildInfoText();
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildInfoText() {
+    List<String> infoTextStrings = [
+      'Use an asterisk (*) for an unknown character',
+      'Maximum length of ${AnagramLengthBounds.maximumAnagramLength} characters'
+    ];
+    List<Widget> infoTextTiles = [];
+    infoTextStrings.forEach((infoTextString) {
+      infoTextTiles.add(
+        ListTile(
+          leading: Text(
+            '•',
+          ),
+          title: Text(
+            infoTextString,
+          ),
+        ),
+      );
+    });
+
+    return Flexible(
+      child: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          Column(
+            children: infoTextTiles,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _submitButton(ThemeData theme) {
+    if (showSubmitButton) {
+      return FloatingActionButton(
+        onPressed: () {
+          _transferToAnagramList(context);
+        },
+        tooltip: 'Generate anagrams',
+        child: Icon(
+          Icons.done,
+        ),
+        backgroundColor: theme.primaryColor,
+        foregroundColor: Colors.white,
+      );
+    } else {
+      return Container();
+    }
   }
 
   String _validateTextField(value) {

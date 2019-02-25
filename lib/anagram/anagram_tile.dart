@@ -1,6 +1,8 @@
-import 'package:anagrammatic/anagram/anagram_details.dart';
 import 'package:flutter/material.dart';
+
 import 'package:anagrammatic/anagram/anagram.dart';
+import 'package:anagrammatic/app_flow/backdrop.dart';
+import 'package:anagrammatic/anagram/anagram_details.dart';
 
 class AnagramTile extends StatefulWidget {
   final Anagram anagram;
@@ -32,6 +34,14 @@ class AnagramTileState extends State<AnagramTile> {
           context: context,
           builder: (BuildContext builderContext) {
             return Dialog(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  style: BorderStyle.none,
+                ),
+                borderRadius: BorderRadius.circular(
+                  frontHeadingHeight,
+                ),
+              ),
               child: AnagramDetails(
                 anagram: widget.anagram,
                 characters: widget.characters,

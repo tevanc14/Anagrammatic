@@ -44,18 +44,16 @@ class _AnagramDetailsState extends State<AnagramDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(
-          _padding,
-        ),
-        child: Column(
-          children: <Widget>[
-            _anagramTitle(),
-            _anagramDetails(),
-            _actionButtons(),
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.all(
+        _padding,
+      ),
+      child: Column(
+        children: <Widget>[
+          _anagramTitle(),
+          _anagramDetails(),
+          _actionButtons(),
+        ],
       ),
     );
   }
