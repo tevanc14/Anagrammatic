@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-double _padding = 16.0;
+double _padding = 24.0;
 
 typedef ExpansionItemBodyBuilder = Widget Function(ExpansionItem item);
 
@@ -79,17 +79,22 @@ class _AnagramDetailsState extends State<AnagramDetails> {
             label: 'Length',
             value: widget.anagram.word.length.toString(),
           ),
-          ExpansionPanelList(
-            expansionCallback: (
-              int index,
-              bool isExpanded,
-            ) {
-              setState(() {
-                _expansionItems[index].isExpanded =
-                    !_expansionItems[index].isExpanded;
-              });
-            },
-            children: _expansionItems.map(_createExpansionPanel).toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4.0,
+            ),
+            child: ExpansionPanelList(
+              expansionCallback: (
+                int index,
+                bool isExpanded,
+              ) {
+                setState(() {
+                  _expansionItems[index].isExpanded =
+                      !_expansionItems[index].isExpanded;
+                });
+              },
+              children: _expansionItems.map(_createExpansionPanel).toList(),
+            ),
           ),
         ],
       ),

@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.33.0] - 2019-02-25
+
+Changed
+
+- New range slider library for length restrictions
+- Added padding to detail expansion panels to prevent bug of going outside container
+- Cleaned up pubspec
+
 ## [0.32.0] - 2019-02-25
 
 Added

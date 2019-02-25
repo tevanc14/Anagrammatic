@@ -1,11 +1,14 @@
-import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
-import 'package:anagrammatic/options/sort_type.dart';
-import 'package:anagrammatic/options/text_scaling.dart';
-import 'package:anagrammatic/options/word_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
+
+import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
 import 'package:anagrammatic/app_flow/app.dart';
+import 'package:anagrammatic/options/sort_type.dart';
 import 'package:anagrammatic/options/themes.dart';
+import 'package:anagrammatic/options/text_scaling.dart';
+import 'package:anagrammatic/options/word_list.dart';
+import 'package:intl/intl.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
@@ -292,154 +295,18 @@ class _LengthSliderValueDisplay extends StatelessWidget {
   }
 }
 
-class _LengthSliderLabel extends StatelessWidget {
-  final String text;
-
-  const _LengthSliderLabel({
-    this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 108.0,
-      child: _SettingLabel(
-        text: text,
-        textAlign: TextAlign.start,
-      ),
-    );
-  }
-}
-
-class _LengthSlider extends StatelessWidget {
-  final String labelText;
-  final String displayText;
-  final Slider slider;
-
-  _LengthSlider({
-    this.labelText,
-    this.displayText,
-    this.slider,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Color _sliderColor = _optionLabelText.color;
-
-    return _OptionsItem(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: _horizontalPadding,
-        ),
-        child: Row(
-          children: <Widget>[
-            _LengthSliderLabel(
-              text: labelText,
-            ),
-            _LengthSliderValueDisplay(
-              text: displayText,
-            ),
-            Expanded(
-              child: SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  overlayColor: Colors.white24,
-                  activeTickMarkColor: _sliderColor,
-                  activeTrackColor: _sliderColor,
-                  inactiveTrackColor: _sliderColor,
-                  thumbColor: _sliderColor,
-                ),
-                child: slider,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MinLengthSlider extends StatefulWidget {
+class _LengthRangeSlider extends StatefulWidget {
   final Options options;
 
-  _MinLengthSlider({
+  _LengthRangeSlider({
     this.options,
   });
 
   @override
-  _MinLengthSliderState createState() {
-    return new _MinLengthSliderState();
-  }
+  _LengthRangeSliderState createState() => _LengthRangeSliderState();
 }
 
-class _MinLengthSliderState extends State<_MinLengthSlider> {
-  @override
-  Widget build(BuildContext context) {
-    return _LengthSlider(
-      labelText: 'Minimum',
-      displayText: '${widget.options.anagramLengthLowerBound}',
-      slider: Slider(
-        value: widget.options.anagramLengthLowerBound.toDouble(),
-        min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
-        max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
-        onChanged: (double newValue) {
-          if (newValue <= widget.options.anagramLengthUpperBound) {
-            setState(() {
-              widget.options.anagramLengthLowerBound = newValue.ceil();
-            });
-          }
-        },
-      ),
-    );
-  }
-}
-
-class _MaxLengthSlider extends StatefulWidget {
-  final Options options;
-
-  _MaxLengthSlider({
-    this.options,
-  });
-
-  @override
-  _MaxLengthSliderState createState() {
-    return new _MaxLengthSliderState();
-  }
-}
-
-class _MaxLengthSliderState extends State<_MaxLengthSlider> {
-  @override
-  Widget build(BuildContext context) {
-    return _LengthSlider(
-      labelText: 'Maximum',
-      displayText: '${widget.options.anagramLengthUpperBound}',
-      slider: Slider(
-        value: widget.options.anagramLengthUpperBound.toDouble(),
-        min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
-        max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
-        onChanged: (double newValue) {
-          if (newValue >= widget.options.anagramLengthLowerBound) {
-            setState(() {
-              widget.options.anagramLengthUpperBound = newValue.floor();
-            });
-          }
-        },
-      ),
-    );
-  }
-}
-
-class _LengthSliders extends StatefulWidget {
-  final Options options;
-
-  _LengthSliders({
-    this.options,
-  });
-
-  @override
-  _LengthSlidersState createState() => _LengthSlidersState();
-}
-
-class _LengthSlidersState extends State<_LengthSliders> {
+class _LengthRangeSliderState extends State<_LengthRangeSlider> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -450,14 +317,54 @@ class _LengthSlidersState extends State<_LengthSliders> {
             text: 'Length',
           ),
         ),
-        _MinLengthSlider(
-          options: widget.options,
-        ),
-        _MaxLengthSlider(
-          options: widget.options,
+        _OptionsItem(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 24.0,
+            ),
+            child: Row(
+              children: <Widget>[
+                Flexible(
+                  child: _buildSlider(),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
+  }
+
+  Widget _buildSlider() {
+    return FlutterSlider(
+      values: [
+        AnagramLengthBounds.minimumAnagramLength.toDouble(),
+        AnagramLengthBounds.maximumAnagramLength.toDouble(),
+      ],
+      min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
+      // TODO: Check if this bug still exists
+      max: AnagramLengthBounds.maximumAnagramLength.toDouble() + 1,
+      rangeSlider: true,
+      tooltip: FlutterSliderTooltip(
+        alwaysShowTooltip: true,
+        numberFormat: _numberFormat(),
+      ),
+      trackBar: FlutterSliderTrackBar(
+        activeTrackBarColor: _optionLabelText.color,
+        leftInactiveTrackBarColor: _optionLabelText.color.withOpacity(0.2),
+        rightInactiveTrackBarColor: _optionLabelText.color.withOpacity(0.2),
+      ),
+      onDragCompleted: (lowerValue, upperValue) {
+        widget.options.anagramLengthLowerBound = lowerValue.toInt();
+        widget.options.anagramLengthUpperBound = upperValue.toInt();
+      },
+    );
+  }
+
+  NumberFormat _numberFormat() {
+    final NumberFormat numberFormat = NumberFormat();
+    numberFormat.maximumFractionDigits = 0;
+    return numberFormat;
   }
 }
 
@@ -577,7 +484,7 @@ class OptionsPage extends StatelessWidget {
         _SortTypeDropdown(
           options: options,
         ),
-        _LengthSliders(
+        _LengthRangeSlider(
           options: options,
         ),
         _WordListComplexityDropdown(
