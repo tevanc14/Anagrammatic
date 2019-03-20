@@ -9,6 +9,14 @@ class TextScaleFactor {
     this.identifier,
   });
 
+  bool operator ==(other) {
+    return (identifier == other.identifier);
+  }
+
+  int get hashCode {
+    return identifier;
+  }
+
   static final TextScaleFactor _systemDefault = TextScaleFactor(
     displayName: 'System Default',
     scaleFactor: null,

@@ -16,7 +16,7 @@ class OptionsLoader {
     textScaleFactor: TextScaleFactor.getDefault(),
     wordList: WordList.getDefault(),
   );
-  final String themeParameterName = 'isDarkTheme';
+  final String themeParameterName = 'theme';
   final String textScaleParameterName = 'textScaleFactor';
   final String wordListParameterName = 'wordList';
 
@@ -24,12 +24,12 @@ class OptionsLoader {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
 
-      bool isDarkTheme = preferences.getBool(themeParameterName);
+      int themeId = preferences.getInt(themeParameterName);
       int textScaleFactorId = preferences.getInt(textScaleParameterName);
       int wordListId = preferences.getInt(wordListParameterName);
 
       return getDefaultOptions().copyWith(
-        theme: isDarkTheme ? darkTheme : lightTheme,
+        theme: AnagrammaticTheme.getByIdentifier(themeId),
         textScaleFactor: TextScaleFactor.getByIdentifier(textScaleFactorId),
         wordList: WordList.getByIdentifier(wordListId),
       );
@@ -41,11 +41,11 @@ class OptionsLoader {
   Future writeOptions(Options options) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    bool isDarkTheme = options.theme == darkTheme;
+    int themeId = options.theme.identifier;
     int textScaleFactorId = options.textScaleFactor.identifier;
     int wordListId = options.wordList.identifier;
 
-    preferences.setBool(themeParameterName, isDarkTheme);
+    preferences.setInt(themeParameterName, themeId);
     preferences.setInt(textScaleParameterName, textScaleFactorId);
     preferences.setInt(wordListParameterName, wordListId);
   }

@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 const double frontHeadingHeight = 32.0; // front layer rounded rectangle
 const double _frontClosedHeight = 92.0; // front layer height when closed
 const double _backAppBarHeight = 56.0; // back layer (options) appbar height
+const double _frontBorderRadius = 12.0;
 
 // The size of the front layer heading's left and right corners.
 final Animatable<BorderRadius> _frontHeadingBevelRadius = BorderRadiusTween(
   begin: const BorderRadius.only(
-    topLeft: Radius.circular(12.0),
-    topRight: Radius.circular(12.0),
+    topLeft: Radius.circular(_frontBorderRadius),
+    topRight: Radius.circular(_frontBorderRadius),
   ),
   end: const BorderRadius.only(
     topLeft: Radius.circular(frontHeadingHeight),

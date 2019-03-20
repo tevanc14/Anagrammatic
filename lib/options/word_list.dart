@@ -17,6 +17,14 @@ class WordList {
     );
   }
 
+  bool operator ==(other) {
+    return (identifier == other.identifier);
+  }
+
+  int get hashCode {
+    return identifier;
+  }
+
   static final WordList _small = WordList(
     displayName: 'Simple',
     fileName: '35.txt',

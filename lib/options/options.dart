@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
-
 import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
 import 'package:anagrammatic/app_flow/app.dart';
 import 'package:anagrammatic/options/sort_type.dart';
 import 'package:anagrammatic/options/themes.dart';
 import 'package:anagrammatic/options/text_scaling.dart';
 import 'package:anagrammatic/options/word_list.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:intl/intl.dart';
+import 'package:quiver/core.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
@@ -209,7 +209,9 @@ class _WordListComplexityDropdownState
             },
             onSelected: (WordList choice) {
               setState(() {
-                widget.options.wordList = choice;
+                if (widget.options.wordList != choice) {
+                  widget.options.wordList = choice;
+                }
               });
             },
           ),
@@ -264,32 +266,16 @@ class _TextScaleDropdownState extends State<_TextScaleDropdown> {
             },
             onSelected: (TextScaleFactor choice) {
               setState(() {
-                AnagrammaticApp.of(context).updateOptions(
-                    widget.options.copyWith(textScaleFactor: choice));
+                if (widget.options.textScaleFactor != choice) {
+                  AnagrammaticApp.of(context)
+                      .updateOptions(widget.options.copyWith(
+                    textScaleFactor: choice,
+                  ));
+                }
               });
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _LengthSliderValueDisplay extends StatelessWidget {
-  final String text;
-
-  const _LengthSliderValueDisplay({
-    this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 36.0,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: _optionLabelText,
       ),
     );
   }
@@ -336,13 +322,15 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
   }
 
   Widget _buildSlider() {
+    final double opacity = 0.2;
+
     return FlutterSlider(
       values: [
         AnagramLengthBounds.minimumAnagramLength.toDouble(),
         AnagramLengthBounds.maximumAnagramLength.toDouble(),
       ],
       min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
-      // TODO: Check if this bug still exists
+      // Library requires this plus one, unsure why
       max: AnagramLengthBounds.maximumAnagramLength.toDouble() + 1,
       rangeSlider: true,
       tooltip: FlutterSliderTooltip(
@@ -351,12 +339,16 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
       ),
       trackBar: FlutterSliderTrackBar(
         activeTrackBarColor: _optionLabelText.color,
-        leftInactiveTrackBarColor: _optionLabelText.color.withOpacity(0.2),
-        rightInactiveTrackBarColor: _optionLabelText.color.withOpacity(0.2),
+        leftInactiveTrackBarColor: _optionLabelText.color.withOpacity(opacity),
+        rightInactiveTrackBarColor: _optionLabelText.color.withOpacity(opacity),
       ),
-      onDragCompleted: (lowerValue, upperValue) {
-        widget.options.anagramLengthLowerBound = lowerValue.toInt();
-        widget.options.anagramLengthUpperBound = upperValue.toInt();
+      touchZone: 1,
+      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+        if (handlerIndex == 0) {
+          widget.options.anagramLengthLowerBound = lowerValue.toInt();
+        } else if (handlerIndex == 1) {
+          widget.options.anagramLengthUpperBound = upperValue.toInt();
+        }
       },
     );
   }
@@ -414,9 +406,11 @@ class _SortTypeDropdownState extends State<_SortTypeDropdown> {
               }).toList();
             },
             onSelected: (SortType choice) {
-              setState(() {
-                widget.options.sortType = choice;
-              });
+              if (widget.options.sortType != choice) {
+                setState(() {
+                  widget.options.sortType = choice;
+                });
+              }
             },
           ),
         ],
@@ -462,6 +456,30 @@ class Options {
       sortType: sortType ?? this.sortType,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
       wordList: wordList ?? this.wordList,
+    );
+  }
+
+  bool operator ==(other) {
+    return (theme == other.theme &&
+        anagramLengthLowerBound == other.anagramLengthLowerBound &&
+        anagramLengthUpperBound == other.anagramLengthUpperBound &&
+        sortType == other.sortType &&
+        textScaleFactor == other.textScaleFactor &&
+        wordList == other.wordList);
+  }
+
+  int get hashCode {
+    return hash2(
+      hash3(
+        theme,
+        anagramLengthLowerBound,
+        anagramLengthUpperBound,
+      ),
+      hash3(
+        sortType,
+        textScaleFactor,
+        wordList,
+      ),
     );
   }
 }

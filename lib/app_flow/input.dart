@@ -58,8 +58,8 @@ class InputState extends State<Input> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     _textField(theme),
-                    _infoButton(),
-                    _infoText(),
+                    // _infoButton(),
+                    // _infoText(),
                   ],
                 ),
               ],
@@ -214,8 +214,12 @@ class InputState extends State<Input> {
 class CharacterInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.contains(RegExp('[^a-zA-Z\*]'))) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final RegExp regExp = RegExp('[^a-zA-Z]');
+    // final RegExp regExp = RegExp('[^a-zA-Z\*]');
+    if (newValue.text.contains(regExp)) {
       return oldValue;
     } else {
       return TextEditingValue(

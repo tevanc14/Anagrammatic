@@ -2,18 +2,19 @@ name: anagrammatic
 description: Generate detailed anagrams with customizable criteria
 authors:
   - Tevan Carrell <tevanc14@gmail.com>
-version: 0.33.0
+version: 0.33.1
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  cupertino_icons: ^0.1.2
   flutter:
     sdk: flutter
-  flutter_xlider: ^1.0.0
+  flutter_xlider: ^2.1.0
+  quiver: ">=2.0.0 <3.0.0"
   shared_preferences: ^0.4.3
   url_launcher: ^4.0.1
-  cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
@@ -21,7 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
   assets:
     - assets/
     - assets/scowl_word_lists/

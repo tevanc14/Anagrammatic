@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.33.1] - 2019-03-19
+
+Changed
+
+- Only update options if altered
+- Update range slider library
+- Included identifier in option classes for easy storage
+
 ## [0.33.0] - 2019-02-25
 
 Changed

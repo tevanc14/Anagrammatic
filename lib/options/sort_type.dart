@@ -3,11 +3,21 @@ import 'package:anagrammatic/anagram/anagram.dart';
 class SortType {
   final String displayName;
   final Comparator<Anagram> comparator;
+  final int identifier;
 
   const SortType({
     this.displayName,
     this.comparator,
+    this.identifier,
   });
+
+  bool operator ==(other) {
+    return (identifier == other.identifier);
+  }
+
+  int get hashCode {
+    return identifier;
+  }
 
   static Comparator<Anagram> _alphaComparator =
       (a, b) => a.word.compareTo(b.word);
@@ -24,6 +34,7 @@ class SortType {
       _alphaComparator,
       _lengthComparator,
     ),
+    identifier: 0,
   );
 
   static final SortType _alphaReverse = SortType(
@@ -32,6 +43,7 @@ class SortType {
       _alphaReverseComparator,
       _lengthComparator,
     ),
+    identifier: 1,
   );
 
   static final SortType _length = SortType(
@@ -40,6 +52,7 @@ class SortType {
       _lengthComparator,
       _alphaComparator,
     ),
+    identifier: 2,
   );
 
   static final SortType _lengthReverse = SortType(
@@ -48,6 +61,7 @@ class SortType {
       _lengthReverseComparator,
       _alphaComparator,
     ),
+    identifier: 3,
   );
 
   static List<SortType> _allSortTypes = <SortType>[

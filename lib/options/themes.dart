@@ -4,19 +4,46 @@ class AnagrammaticTheme {
   const AnagrammaticTheme._(
     this.name,
     this.data,
+    this.identifier,
   );
 
   final String name;
   final ThemeData data;
+  final int identifier;
+
+  bool operator ==(other) {
+    return (identifier == other.identifier);
+  }
+
+  int get hashCode {
+    return identifier;
+  }
+
+  static List<AnagrammaticTheme> _allThemes = <AnagrammaticTheme>[
+    darkTheme,
+    lightTheme,
+  ];
+
+  static List<AnagrammaticTheme> getAllTextScaleFactors() {
+    return _allThemes;
+  }
+
+  static AnagrammaticTheme getByIdentifier(int id) {
+    return getAllTextScaleFactors().firstWhere(
+        (AnagrammaticTheme anagrammaticTheme) =>
+            anagrammaticTheme.identifier == id);
+  }
 }
 
 final AnagrammaticTheme darkTheme = AnagrammaticTheme._(
   'Dark',
   _buildDarkTheme(),
+  0,
 );
 final AnagrammaticTheme lightTheme = AnagrammaticTheme._(
   'Light',
   _buildLightTheme(),
+  1,
 );
 
 final Color _errorColor = const Color(0xFFB00020);

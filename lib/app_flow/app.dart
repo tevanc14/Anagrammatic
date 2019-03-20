@@ -1,9 +1,9 @@
+import 'package:anagrammatic/app_flow/home.dart';
+import 'package:anagrammatic/options/options.dart';
 import 'package:anagrammatic/options/options_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:anagrammatic/app_flow/home.dart';
-import 'package:anagrammatic/options/options.dart';
 
 class AnagrammaticApp extends StatefulWidget {
   static AnagrammaticAppState of(BuildContext context) {
