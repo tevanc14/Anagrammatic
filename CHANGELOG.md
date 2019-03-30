@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.34.0] - 2019-03-30
+
+Added
+
+- In progress Android launch icon
+- Anagrammatic logo in app bar
+
+Changed
+
+- Font to RobotoCondensed
+- Center title in app bar
+- Colors to match Anagrammatic branding
+
 ## [0.33.1] - 2019-03-19
 
 Changed

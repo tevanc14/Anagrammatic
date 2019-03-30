@@ -152,7 +152,9 @@ class _BackAppBar extends StatelessWidget {
         child: leading,
       ),
       Expanded(
-        child: title,
+        child: Center(
+          child: title,
+        ),
       ),
     ];
 
@@ -174,7 +176,9 @@ class _BackAppBar extends StatelessWidget {
         style: theme.primaryTextTheme.title,
         child: SizedBox(
           height: _backAppBarHeight,
-          child: Row(children: children),
+          child: Row(
+            children: children,
+          ),
         ),
       ),
     );
@@ -355,16 +359,12 @@ class _BackdropState extends State<Backdrop>
                 child: widget.backAction,
               ),
             ),
-            title: _CrossFadeTransition(
-              progress: _animationController,
-              alignment: AlignmentDirectional.centerStart,
-              child0: Semantics(
-                namesRoute: true,
-                child: widget.frontTitle,
-              ),
-              child1: Semantics(
-                namesRoute: true,
-                child: widget.backTitle,
+            title: Center(
+              child: _CrossFadeTransition(
+                progress: _animationController,
+                alignment: AlignmentDirectional.center,
+                child0: widget.frontTitle,
+                child1: widget.backTitle,
               ),
             ),
             trailing: IconButton(

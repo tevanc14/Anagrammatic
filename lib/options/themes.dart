@@ -49,7 +49,7 @@ final AnagrammaticTheme lightTheme = AnagrammaticTheme._(
 final Color _errorColor = const Color(0xFFB00020);
 
 TextTheme _buildTextTheme(TextTheme base) {
-  final String fontFamily = 'Roboto';
+  final String fontFamily = 'RobotoCondensed';
 
   return base.copyWith(
     display4: base.display4.copyWith(
@@ -89,9 +89,9 @@ TextTheme _buildTextTheme(TextTheme base) {
 }
 
 ThemeData _buildDarkTheme() {
-  Color primaryColor = Colors.blueGrey[700];
-  Color secondaryColor = Colors.grey[600];
-  Color backgroundColor = const Color(0xFF202124);
+  Color primaryColor = const Color(0xFFFF1744);
+  Color secondaryColor = const Color(0xFFFFEE58);
+  Color backgroundColor = const Color(0xFF222530);
   final ThemeData base = ThemeData.dark();
   final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
     primary: primaryColor,
@@ -117,8 +117,9 @@ ThemeData _buildDarkTheme() {
 }
 
 ThemeData _buildLightTheme() {
-  const Color primaryColor = Color(0xFF0175c2);
-  const Color secondaryColor = Color(0xFF13B9FD);
+  Color primaryColor = const Color(0xFFFF1744);
+  Color secondaryColor = const Color(0xFFFFEE58);
+  Color backgroundColor = const Color(0xFFFAFAFA);
   final ThemeData base = ThemeData.light();
   final ColorScheme colorScheme = const ColorScheme.light().copyWith(
     primary: primaryColor,
@@ -131,9 +132,9 @@ ThemeData _buildLightTheme() {
     splashColor: Colors.white24,
     splashFactory: InkRipple.splashFactory,
     accentColor: secondaryColor,
-    canvasColor: Colors.white,
-    scaffoldBackgroundColor: Colors.white,
-    backgroundColor: Colors.white,
+    canvasColor: backgroundColor,
+    scaffoldBackgroundColor: backgroundColor,
+    backgroundColor: backgroundColor,
     errorColor: _errorColor,
     buttonTheme: ButtonThemeData(
       colorScheme: colorScheme,

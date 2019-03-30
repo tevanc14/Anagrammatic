@@ -2,7 +2,7 @@ name: anagrammatic
 description: Generate detailed anagrams with customizable criteria
 authors:
   - Tevan Carrell <tevanc14@gmail.com>
-version: 0.33.1
+version: 0.34.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -21,7 +21,16 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-  uses-material-design: true
   assets:
     - assets/
     - assets/scowl_word_lists/
+  fonts:
+    - family: RobotoCondensed
+      fonts:
+        - asset: assets/fonts/RobotoCondensed-Bold.ttf
+        - asset: assets/fonts/RobotoCondensed-BoldItalic.ttf
+        - asset: assets/fonts/RobotoCondensed-Italic.ttf
+        - asset: assets/fonts/RobotoCondensed-Light.ttf
+        - asset: assets/fonts/RobotoCondensed-LightItalic.ttf
+        - asset: assets/fonts/RobotoCondensed-Regular.ttf
+  uses-material-design: true

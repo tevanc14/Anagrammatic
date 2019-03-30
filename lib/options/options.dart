@@ -12,7 +12,6 @@ import 'package:quiver/core.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
-final Color _optionsAccentColor = const Color(0xFF39CEFD);
 
 // Currently keeping text one color, regardless of theme
 final TextStyle _optionLabelText = TextStyle(
@@ -49,6 +48,8 @@ class _CategoryHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color textColor = Theme.of(context).accentColor;
+
     return _OptionsItem(
       child: Row(
         children: <Widget>[
@@ -58,16 +59,15 @@ class _CategoryHeading extends StatelessWidget {
             ),
             child: Icon(
               iconData,
-              color: _optionsAccentColor,
+              color: textColor,
             ),
           ),
           Expanded(
             child: Text(
               text,
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: _optionsAccentColor),
+              style: Theme.of(context).textTheme.subhead.copyWith(
+                    color: textColor,
+                  ),
             ),
           ),
         ],
@@ -109,7 +109,10 @@ class _BooleanItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final ThemeData themeData = Theme.of(context);
+    final bool isDark = themeData.brightness == Brightness.dark;
+    final Color color = themeData.accentColor;
+
     return _OptionsItem(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,7 +134,7 @@ class _BooleanItem extends StatelessWidget {
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeColor: _optionsAccentColor,
+                activeColor: color,
                 activeTrackColor: isDark ? Colors.white30 : Colors.black26,
               ),
             ],
@@ -508,7 +511,11 @@ class OptionsPage extends StatelessWidget {
         _WordListComplexityDropdown(
           options: options,
         ),
-        const Divider(),
+        const Divider(
+          color: const Color(
+            0x1F000000,
+          ),
+        ),
         const _CategoryHeading(
           text: 'Display',
           iconData: Icons.palette,

@@ -23,6 +23,7 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
   @override
   void initState() {
     super.initState();
+    _applyOverlayColor();
     options = _settingLoader.getDefaultOptions();
     _settingLoader.readOptions().then((Options readOptions) {
       setState(() {
@@ -58,8 +59,6 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
 
   @override
   Widget build(BuildContext context) {
-    _applyOverlayColor();
-
     return OptionsContainer(
       data: this,
       child: MaterialApp(

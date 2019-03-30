@@ -68,7 +68,11 @@ class AnagramListState extends State<AnagramList> {
           );
         } else {
           // By default, show a loading spinner
-          return CircularProgressIndicator();
+          return CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Theme.of(context).primaryColor,
+            ),
+          );
         }
       },
     );

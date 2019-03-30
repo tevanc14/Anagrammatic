@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:anagrammatic/app_flow/backdrop.dart';
 import 'package:anagrammatic/app_flow/input.dart';
 
+import 'package:path/path.dart' as path;
+
 const Duration frontLayerSwitchDuration = Duration(
   milliseconds: 300,
 );
@@ -87,8 +89,7 @@ class _HomeState extends State<Home> {
                       tooltip: 'Back',
                       onPressed: () => _inputTransition(),
                     )
-                  // TODO: Insert logo here
-                  : Container(),
+                  : AnagrammaticLogo(),
             ),
             frontTitle: AnimatedSwitcher(
               duration: frontLayerSwitchDuration,
@@ -105,9 +106,8 @@ class _HomeState extends State<Home> {
               switchInCurve: switchInCurve,
               child: frontPage,
             ),
-            // TODO: Insert logo here
-            backAction: Container(),
-            backTitle: const Text(
+            backAction: AnagrammaticLogo(),
+            backTitle: Text(
               'Options',
             ),
             backLayer: widget.optionsPage,
@@ -121,6 +121,34 @@ class _HomeState extends State<Home> {
           },
         ),
       ),
+    );
+  }
+}
+
+class AnagrammaticLogo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final double dimension = 34.0;
+
+    return Center(
+      child: Container(
+        width: dimension,
+        height: dimension,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              _assetPath(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _assetPath() {
+    return path.join(
+      'assets',
+      'logo.png',
     );
   }
 }
