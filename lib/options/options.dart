@@ -158,8 +158,9 @@ class _ThemeSwitch extends StatelessWidget {
       text: 'Dark theme',
       value: options.theme == darkTheme,
       onChanged: (bool value) {
-        AnagrammaticApp.of(context).updateOptions(
-            options.copyWith(theme: value ? darkTheme : lightTheme));
+        AnagrammaticApp.of(context).updateOptions(options.copyWith(
+          theme: value ? darkTheme : lightTheme,
+        ));
       },
     );
   }

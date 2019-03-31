@@ -89,8 +89,8 @@ TextTheme _buildTextTheme(TextTheme base) {
 }
 
 ThemeData _buildDarkTheme() {
-  Color primaryColor = const Color(0xFFFF1744);
-  Color secondaryColor = const Color(0xFFFFEE58);
+  Color primaryColor = const Color(0xFFD50000);
+  Color secondaryColor = const Color(0xFFFFF176);
   Color backgroundColor = const Color(0xFF222530);
   final ThemeData base = ThemeData.dark();
   final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
@@ -117,8 +117,8 @@ ThemeData _buildDarkTheme() {
 }
 
 ThemeData _buildLightTheme() {
-  Color primaryColor = const Color(0xFFFF1744);
-  Color secondaryColor = const Color(0xFFFFEE58);
+  Color primaryColor = const Color(0xFFD50000);
+  Color secondaryColor = const Color(0xFFFFF176);
   Color backgroundColor = const Color(0xFFFAFAFA);
   final ThemeData base = ThemeData.light();
   final ColorScheme colorScheme = const ColorScheme.light().copyWith(

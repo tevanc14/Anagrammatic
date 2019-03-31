@@ -52,17 +52,20 @@ class InputState extends State<Input> {
           ),
           child: Form(
             key: key,
-            child: ListView(
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    _textField(theme),
-                    // _infoButton(),
-                    // _infoText(),
-                  ],
-                ),
-              ],
+            child: ScrollConfiguration(
+              behavior: NoOverscrollBehavior(),
+              child: ListView(
+                children: <Widget>[
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _textField(theme),
+                      // _infoButton(),
+                      // _infoText(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -227,5 +230,16 @@ class CharacterInputFormatter extends TextInputFormatter {
         selection: newValue.selection,
       );
     }
+  }
+}
+
+class NoOverscrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+    BuildContext context,
+    Widget child,
+    AxisDirection axisDirection,
+  ) {
+    return child;
   }
 }

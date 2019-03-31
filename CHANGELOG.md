@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.34.1] - 2019-03-30
+
+Changed
+
+- Theme colors (darkened red and lightened yellow)
+
+Removed
+
+- Overscroll on input page
+
 ## [0.34.0] - 2019-03-30
 
 Added

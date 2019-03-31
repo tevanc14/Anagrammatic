@@ -36,7 +36,10 @@ build/
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
-**/android/key.properties
+**/android/**/.project
+**/android/**/.classpath
+**/android/**/.settings/
+**/android/**/key.properties
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
