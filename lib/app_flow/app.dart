@@ -63,7 +63,10 @@ class AnagrammaticAppState extends State<AnagrammaticApp> {
       data: this,
       child: MaterialApp(
         theme: options.theme.data,
-        builder: (BuildContext context, Widget child) {
+        builder: (
+          BuildContext context,
+          Widget child,
+        ) {
           return _applyTextScaleFactor(child);
         },
         home: Home(

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.35.0] - 2019-03-31
+
+Added
+
+- iOS launch icons (tentative)
+
+Changed
+
+- Theme colors (lightened red)
+
 ## [0.34.1] - 2019-03-30
 
 Changed

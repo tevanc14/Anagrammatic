@@ -75,6 +75,7 @@ class InputState extends State<Input> {
   }
 
   Widget _textField(ThemeData theme) {
+    // TODO: Change focus outline color to text color
     return TextFormField(
       controller: charactersTextController,
       inputFormatters: [

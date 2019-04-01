@@ -47,6 +47,8 @@ final AnagrammaticTheme lightTheme = AnagrammaticTheme._(
 );
 
 final Color _errorColor = const Color(0xFFB00020);
+final Color _primaryColor = const Color(0xFFF01937);
+final Color _accentColor = const Color(0xFFFFF176);
 
 TextTheme _buildTextTheme(TextTheme base) {
   final String fontFamily = 'RobotoCondensed';
@@ -89,19 +91,17 @@ TextTheme _buildTextTheme(TextTheme base) {
 }
 
 ThemeData _buildDarkTheme() {
-  Color primaryColor = const Color(0xFFD50000);
-  Color secondaryColor = const Color(0xFFFFF176);
   Color backgroundColor = const Color(0xFF222530);
   final ThemeData base = ThemeData.dark();
   final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
-    primary: primaryColor,
-    secondary: secondaryColor,
+    primary: _primaryColor,
+    secondary: _accentColor,
   );
   return base.copyWith(
-    primaryColor: primaryColor,
-    buttonColor: primaryColor,
+    primaryColor: _primaryColor,
+    buttonColor: _primaryColor,
     indicatorColor: Colors.white,
-    accentColor: secondaryColor,
+    accentColor: _accentColor,
     canvasColor: backgroundColor,
     scaffoldBackgroundColor: backgroundColor,
     backgroundColor: backgroundColor,
@@ -117,21 +117,19 @@ ThemeData _buildDarkTheme() {
 }
 
 ThemeData _buildLightTheme() {
-  Color primaryColor = const Color(0xFFD50000);
-  Color secondaryColor = const Color(0xFFFFF176);
   Color backgroundColor = const Color(0xFFFAFAFA);
   final ThemeData base = ThemeData.light();
   final ColorScheme colorScheme = const ColorScheme.light().copyWith(
-    primary: primaryColor,
-    secondary: secondaryColor,
+    primary: _primaryColor,
+    secondary: _accentColor,
   );
   return base.copyWith(
-    primaryColor: primaryColor,
-    buttonColor: primaryColor,
+    primaryColor: _primaryColor,
+    buttonColor: _primaryColor,
     indicatorColor: Colors.white,
     splashColor: Colors.white24,
     splashFactory: InkRipple.splashFactory,
-    accentColor: secondaryColor,
+    accentColor: _accentColor,
     canvasColor: backgroundColor,
     scaffoldBackgroundColor: backgroundColor,
     backgroundColor: backgroundColor,

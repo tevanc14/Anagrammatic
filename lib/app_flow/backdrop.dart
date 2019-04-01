@@ -350,14 +350,8 @@ class _BackdropState extends State<Backdrop>
           _BackAppBar(
             leading: _CrossFadeTransition(
               progress: _animationController,
-              child0: Semantics(
-                namesRoute: true,
-                child: widget.frontAction,
-              ),
-              child1: Semantics(
-                namesRoute: true,
-                child: widget.backAction,
-              ),
+              child0: widget.frontAction,
+              child1: widget.backAction,
             ),
             title: Center(
               child: _CrossFadeTransition(
@@ -444,6 +438,8 @@ class _BackdropState extends State<Backdrop>
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: _buildStack);
+    return LayoutBuilder(
+      builder: _buildStack,
+    );
   }
 }
