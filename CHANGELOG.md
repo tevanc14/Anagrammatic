@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.35.1] - 2019-04-02
+
+Changed
+
+- Input border color to match text color
+
 ## [0.35.0] - 2019-03-31
 
 Added

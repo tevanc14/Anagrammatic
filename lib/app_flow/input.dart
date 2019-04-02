@@ -75,7 +75,8 @@ class InputState extends State<Input> {
   }
 
   Widget _textField(ThemeData theme) {
-    // TODO: Change focus outline color to text color
+    final BorderRadius borderRadius = BorderRadius.circular(24.0);
+
     return TextFormField(
       controller: charactersTextController,
       inputFormatters: [
@@ -86,13 +87,18 @@ class InputState extends State<Input> {
       maxLength: AnagramLengthBounds.maximumAnagramLength,
       style: theme.textTheme.title,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(
-            24.0,
-          ),
-        ),
         counterText: '',
         labelText: 'Characters',
+        labelStyle: theme.textTheme.title,
+        border: OutlineInputBorder(
+          borderRadius: borderRadius,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: theme.textTheme.title.color,
+          ),
+          borderRadius: borderRadius,
+        ),
       ),
       validator: (value) {
         return _validateTextField(value);
