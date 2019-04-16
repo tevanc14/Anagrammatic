@@ -8,19 +8,6 @@ import 'package:flutter/material.dart';
 const double frontHeadingHeight = 32.0; // front layer rounded rectangle
 const double _frontClosedHeight = 92.0; // front layer height when closed
 const double _backAppBarHeight = 56.0; // back layer (options) appbar height
-const double _frontBorderRadius = 12.0;
-
-// The size of the front layer heading's left and right corners.
-final Animatable<BorderRadius> _frontHeadingBevelRadius = BorderRadiusTween(
-  begin: const BorderRadius.only(
-    topLeft: Radius.circular(_frontBorderRadius),
-    topRight: Radius.circular(_frontBorderRadius),
-  ),
-  end: const BorderRadius.only(
-    topLeft: Radius.circular(frontHeadingHeight),
-    topRight: Radius.circular(frontHeadingHeight),
-  ),
-);
 
 class _TappableWhileStatusIs extends StatefulWidget {
   const _TappableWhileStatusIs(
@@ -323,7 +310,10 @@ class _BackdropState extends State<Backdrop>
     );
   }
 
-  Widget _buildStack(BuildContext context, BoxConstraints constraints) {
+  Widget _buildStack(
+    BuildContext context,
+    BoxConstraints constraints,
+  ) {
     final Animation<RelativeRect> frontRelativeRect =
         _animationController.drive(
       RelativeRectTween(
@@ -345,7 +335,6 @@ class _BackdropState extends State<Backdrop>
     final List<Widget> layers = <Widget>[
       // Back layer
       Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           _BackAppBar(
             leading: _CrossFadeTransition(
@@ -384,14 +373,19 @@ class _BackdropState extends State<Backdrop>
         rect: frontRelativeRect,
         child: AnimatedBuilder(
           animation: _animationController,
-          builder: (BuildContext context, Widget child) {
+          builder: (
+            BuildContext context,
+            Widget child,
+          ) {
             return PhysicalShape(
               elevation: 12.0,
               color: Theme.of(context).canvasColor,
               clipper: ShapeBorderClipper(
                 shape: RoundedRectangleBorder(
-                  borderRadius: _frontHeadingBevelRadius
-                      .transform(_animationController.value),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(frontHeadingHeight),
+                    topRight: Radius.circular(frontHeadingHeight),
+                  ),
                 ),
               ),
               clipBehavior: Clip.antiAlias,

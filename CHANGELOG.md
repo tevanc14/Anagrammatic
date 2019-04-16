@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.35.2] - 2019-04-15
+
+Changed
+
+- Don't resize the home widget to avoid showing background color when opening keyboard
+
 ## [0.35.1] - 2019-04-02
 
 Changed

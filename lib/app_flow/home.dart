@@ -74,9 +74,9 @@ class _HomeState extends State<Home> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: theme.primaryColor,
       body: SafeArea(
-        bottom: false,
         child: WillPopScope(
           child: Backdrop(
             frontAction: AnimatedSwitcher(
@@ -86,7 +86,6 @@ class _HomeState extends State<Home> {
               child: showBackButton
                   ? IconButton(
                       icon: const BackButtonIcon(),
-                      tooltip: 'Back',
                       onPressed: () => _inputTransition(),
                     )
                   : AnagrammaticLogo(),
