@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.36.0] - 2019-04-16
+
+Added
+
+- A messy version of a paginated anagram list. Need to clean up the results label at least
+
 ## [0.35.2] - 2019-04-15
 
 Changed
