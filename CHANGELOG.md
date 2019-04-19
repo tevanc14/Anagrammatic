@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.37.1] - 2019-04-19
+
+Changed
+
+- Fixed the result counter label
+- Size of page indicator dots
+
 ## [0.37.0] - 2019-04-19
 
 Added

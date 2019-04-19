@@ -22,7 +22,6 @@ class AnagramList extends StatefulWidget {
 }
 
 class AnagramListState extends State<AnagramList> {
-  List<Anagram> _unfilteredAnagrams = List();
   List<Anagram> _filteredAnagrams = List();
 
   @override
@@ -49,9 +48,8 @@ class AnagramListState extends State<AnagramList> {
       ) {
         if (generatedAnagrams.hasData) {
           if (generatedAnagrams.data.length > 0) {
-            _unfilteredAnagrams = generatedAnagrams.data;
             _filteredAnagrams = _filterAnagrams(
-              _unfilteredAnagrams,
+              generatedAnagrams.data,
               options,
             );
 
@@ -66,7 +64,7 @@ class AnagramListState extends State<AnagramList> {
                     ),
                     child: Text(
                       _resultCountLabel(
-                        _unfilteredAnagrams,
+                        _filteredAnagrams,
                       ),
                       style: Theme.of(context).textTheme.title,
                     ),
@@ -160,6 +158,7 @@ class _AnagramPages extends StatefulWidget {
 
 class _AnagramPagesState extends State<_AnagramPages> {
   final int _numPerPage = 20;
+  final double _dotIndicatorContainerHeight = 50.0;
   final _controller = PageController();
   final _duration = const Duration(milliseconds: 300);
   final _curve = Curves.ease;
@@ -175,18 +174,23 @@ class _AnagramPagesState extends State<_AnagramPages> {
 
     return Stack(
       children: <Widget>[
-        PageView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          controller: _controller,
-          itemCount: pages.length,
-          itemBuilder: (
-            BuildContext context,
-            int index,
-          ) {
-            return _buildAnagramList(
-              pages[index % pages.length],
-            );
-          },
+        Padding(
+          padding: EdgeInsets.only(
+            bottom: _dotIndicatorContainerHeight,
+          ),
+          child: PageView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
+            controller: _controller,
+            itemCount: pages.length,
+            itemBuilder: (
+              BuildContext context,
+              int index,
+            ) {
+              return _buildAnagramList(
+                pages[index % pages.length],
+              );
+            },
+          ),
         ),
         _buildDotsIndicator(
           pages,
@@ -201,8 +205,8 @@ class _AnagramPagesState extends State<_AnagramPages> {
       left: 0.0,
       right: 0.0,
       child: Container(
-        height: 35.0,
-        color: Colors.grey[800].withOpacity(0.5),
+        height: _dotIndicatorContainerHeight,
+        color: Colors.grey[800].withOpacity(0.35),
         padding: const EdgeInsets.all(
           10.0,
         ),

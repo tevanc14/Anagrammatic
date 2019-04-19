@@ -26,13 +26,13 @@ class DotsIndicator extends AnimatedWidget {
   final Color color;
 
   // The base size of the dots
-  static const double _dotSize = 8.0;
+  static const double _dotSize = 12.0;
 
   // The increase in the size of the selected dot
   static const double _maxZoom = 2.0;
 
   // The distance between the center of each dot
-  static const double _dotSpacing = 25.0;
+  static const double _dotSpacing = 37.5;
 
   Widget _buildDot(int index) {
     double selectedness = Curves.easeOut.transform(
