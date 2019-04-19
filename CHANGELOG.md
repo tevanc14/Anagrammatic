@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.37.0] - 2019-04-19
+
+Added
+
+- A cleaned up version of a paginated anagram list (dot indicators do not scroll as I want yet)
+
+Changed
+
+- Cleaned up the anagram list widget structure
+- Renamed `app_flow` to `view` because it is way less weird
+- Separated out `dots_indicator` into its own file
+
 ## [0.36.0] - 2019-04-16
 
 Added

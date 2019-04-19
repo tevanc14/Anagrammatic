@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:anagrammatic/app_flow/app.dart';
-import 'package:anagrammatic/options/options.dart';
+import 'package:anagrammatic/view/app.dart';
+import 'package:anagrammatic/view/options.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 

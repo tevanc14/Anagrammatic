@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anagrammatic/anagram/anagram.dart';
-import 'package:anagrammatic/app_flow/backdrop.dart';
+import 'package:anagrammatic/view/backdrop.dart';
 import 'package:anagrammatic/anagram/anagram_details.dart';
 
 class AnagramTile extends StatefulWidget {

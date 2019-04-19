@@ -1,5 +1,5 @@
-import 'package:anagrammatic/app_flow/home.dart';
-import 'package:anagrammatic/options/options.dart';
+import 'package:anagrammatic/view/home.dart';
+import 'package:anagrammatic/view/options.dart';
 import 'package:anagrammatic/options/options_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

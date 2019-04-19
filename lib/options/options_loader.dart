@@ -1,5 +1,5 @@
 import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
-import 'package:anagrammatic/options/options.dart';
+import 'package:anagrammatic/view/options.dart';
 import 'package:anagrammatic/options/sort_type.dart';
 import 'package:anagrammatic/options/text_scaling.dart';
 import 'package:anagrammatic/options/themes.dart';

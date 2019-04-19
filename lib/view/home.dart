@@ -1,10 +1,10 @@
-import 'package:anagrammatic/app_flow/app.dart';
-import 'package:anagrammatic/options/options.dart';
+import 'package:anagrammatic/view/app.dart';
+import 'package:anagrammatic/view/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:anagrammatic/app_flow/backdrop.dart';
-import 'package:anagrammatic/app_flow/input.dart';
+import 'package:anagrammatic/view/backdrop.dart';
+import 'package:anagrammatic/view/input.dart';
 
 import 'package:path/path.dart' as path;
 
