@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.40.0] - 2019-04-27
+
+Added
+
+- Firebase analytics for Android
+
 ## [0.39.1] - 2019-04-26
 
 Removed
