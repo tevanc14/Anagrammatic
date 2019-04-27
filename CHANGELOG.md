@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.39.1] - 2019-04-26
+
+Removed
+
+- Quiver dependency as never used the overridden hashCode for Options
+
 ## [0.39.0] - 2019-04-26
 
 Added

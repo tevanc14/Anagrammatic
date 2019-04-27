@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:intl/intl.dart';
-import 'package:quiver/core.dart';
+// import 'package:quiver/core.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
@@ -454,30 +454,6 @@ class Options {
       sortType: sortType ?? this.sortType,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
       wordList: wordList ?? this.wordList,
-    );
-  }
-
-  bool operator ==(other) {
-    return (theme == other.theme &&
-        anagramLengthLowerBound == other.anagramLengthLowerBound &&
-        anagramLengthUpperBound == other.anagramLengthUpperBound &&
-        sortType == other.sortType &&
-        textScaleFactor == other.textScaleFactor &&
-        wordList == other.wordList);
-  }
-
-  int get hashCode {
-    return hash2(
-      hash3(
-        theme,
-        anagramLengthLowerBound,
-        anagramLengthUpperBound,
-      ),
-      hash3(
-        sortType,
-        textScaleFactor,
-        wordList,
-      ),
     );
   }
 }
