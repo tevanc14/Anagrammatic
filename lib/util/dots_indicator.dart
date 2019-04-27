@@ -42,17 +42,20 @@ class DotsIndicator extends AnimatedWidget {
       ),
     );
     double zoom = 1.0 + (_maxZoom - 1.0) * selectedness;
-    return Container(
-      width: _dotSpacing,
-      child: Center(
-        child: Material(
-          color: color,
-          type: MaterialType.circle,
-          child: Container(
-            width: _dotSize * zoom,
-            height: _dotSize * zoom,
-            child: InkWell(
-              onTap: () => onPageSelected(index),
+    return Tooltip(
+      message: "Page ${index + 1} of $itemCount",
+      child: Container(
+        width: _dotSpacing,
+        child: Center(
+          child: Material(
+            color: color,
+            type: MaterialType.circle,
+            child: Container(
+              width: _dotSize * zoom,
+              height: _dotSize * zoom,
+              child: InkWell(
+                onTap: () => onPageSelected(index),
+              ),
             ),
           ),
         ),

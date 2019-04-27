@@ -326,16 +326,13 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
   }
 
   Widget _buildSlider() {
-    final double opacity = 0.2;
-
     return FlutterSlider(
       values: [
         AnagramLengthBounds.minimumAnagramLength.toDouble(),
         AnagramLengthBounds.maximumAnagramLength.toDouble(),
       ],
       min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
-      // Library requires this plus one, unsure why
-      max: AnagramLengthBounds.maximumAnagramLength.toDouble() + 1,
+      max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
       rangeSlider: true,
       tooltip: FlutterSliderTooltip(
         alwaysShowTooltip: true,
@@ -343,10 +340,7 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
       ),
       trackBar: FlutterSliderTrackBar(
         activeTrackBarColor: _optionLabelText.color,
-        leftInactiveTrackBarColor: _optionLabelText.color.withOpacity(opacity),
-        rightInactiveTrackBarColor: _optionLabelText.color.withOpacity(opacity),
       ),
-      touchZone: 1,
       onDragCompleted: (handlerIndex, lowerValue, upperValue) {
         if (handlerIndex == 0) {
           widget.options.anagramLengthLowerBound = lowerValue.toInt();

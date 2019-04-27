@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.38.0] - 2019-04-26
+
+Added
+
+- Page tooltip to dot page indicators
+
+Changed
+
+- Lowered anagram upper length bound to 45
+  - Sadly excluding Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch
+  - But probably best for usability of the length slider
+- Bumped version of range slider for some fixes
+  - Including error when sliding two thumbs together
+
 ## [0.37.1] - 2019-04-19
 
 Changed
