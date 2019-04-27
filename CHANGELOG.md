@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.39.0] - 2019-04-26
+
+Added
+
+- Page indices of results
+
+Removed
+
+- Dot page indicators
+
 ## [0.38.0] - 2019-04-26
 
 Added

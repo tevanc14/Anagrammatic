@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:anagrammatic/anagram/anagram.dart';
 import 'package:anagrammatic/anagram/anagram_generator.dart';
 import 'package:anagrammatic/anagram/anagram_tile.dart';
-import 'package:anagrammatic/util/dots_indicator.dart';
 import 'package:anagrammatic/view/app.dart';
 import 'package:anagrammatic/view/options.dart';
 import 'package:flutter/material.dart';
@@ -56,26 +55,9 @@ class AnagramListState extends State<AnagramList> {
             if (_filteredAnagrams.length <= 0) {
               return _NoResultsText();
             } else {
-              return Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(
-                      8.0,
-                    ),
-                    child: Text(
-                      _resultCountLabel(
-                        _filteredAnagrams,
-                      ),
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                  ),
-                  Expanded(
-                    child: _AnagramPages(
-                      anagrams: _filteredAnagrams,
-                      characters: widget.characters,
-                    ),
-                  ),
-                ],
+              return _AnagramPages(
+                anagrams: _filteredAnagrams,
+                characters: widget.characters,
               );
             }
           } else {
@@ -96,14 +78,6 @@ class AnagramListState extends State<AnagramList> {
         }
       },
     );
-  }
-
-  String _resultCountLabel(List<Anagram> anagrams) {
-    if (anagrams.length == 1) {
-      return '${anagrams.length} result';
-    } else {
-      return '${anagrams.length} results';
-    }
   }
 
   List<Anagram> _filterAnagrams(
@@ -158,86 +132,59 @@ class _AnagramPages extends StatefulWidget {
 
 class _AnagramPagesState extends State<_AnagramPages> {
   final int _numPerPage = 20;
-  final double _dotIndicatorContainerHeight = 50.0;
   final _controller = PageController();
-  final _duration = const Duration(milliseconds: 300);
-  final _curve = Curves.ease;
 
   @override
   Widget build(BuildContext context) {
     int numPages = (widget.anagrams.length / _numPerPage).ceil();
     List<List<Anagram>> pages = paginateAnagrams(
       widget.anagrams,
-      _numPerPage,
       numPages,
     );
 
-    return Stack(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(
-            bottom: _dotIndicatorContainerHeight,
-          ),
-          child: PageView.builder(
-            physics: AlwaysScrollableScrollPhysics(),
-            controller: _controller,
-            itemCount: pages.length,
-            itemBuilder: (
-              BuildContext context,
-              int index,
-            ) {
-              return _buildAnagramList(
+    return PageView.builder(
+      physics: AlwaysScrollableScrollPhysics(),
+      controller: _controller,
+      itemCount: pages.length,
+      itemBuilder: (
+        BuildContext context,
+        int index,
+      ) {
+        return Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(
+                8.0,
+              ),
+              child: Text(
+                _resultCountLabel(
+                  widget.anagrams,
+                  index,
+                ),
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            Expanded(
+              child: _buildAnagramList(
                 pages[index % pages.length],
-              );
-            },
-          ),
-        ),
-        _buildDotsIndicator(
-          pages,
-        ),
-      ],
-    );
-  }
-
-  Positioned _buildDotsIndicator(List<List<Anagram>> pages) {
-    return Positioned(
-      bottom: 0.0,
-      left: 0.0,
-      right: 0.0,
-      child: Container(
-        height: _dotIndicatorContainerHeight,
-        color: Colors.grey[800].withOpacity(0.35),
-        padding: const EdgeInsets.all(
-          10.0,
-        ),
-        child: Center(
-          child: DotsIndicator(
-            controller: _controller,
-            itemCount: pages.length,
-            onPageSelected: (int page) {
-              _controller.animateToPage(
-                page,
-                duration: _duration,
-                curve: _curve,
-              );
-            },
-          ),
-        ),
-      ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
   List<List<Anagram>> paginateAnagrams(
     List<Anagram> filteredAnagrams,
-    int numPerPage,
     int numPages,
   ) {
     List<List<Anagram>> paginatedAnagrams = [];
 
     for (int index = 0; index < numPages; index++) {
-      int lowerIndex = _numPerPage * index;
-      int upperIndex = min(
-        (_numPerPage * (index + 1)),
+      int lowerIndex = _lowerIndexOfPage(index);
+      int upperIndex = _upperIndexOfPage(
+        index,
         filteredAnagrams.length,
       );
 
@@ -278,6 +225,39 @@ class _AnagramPagesState extends State<_AnagramPages> {
       context: context,
       tiles: listTiles,
     ).toList();
+  }
+
+  String _resultCountLabel(
+    List<Anagram> anagrams,
+    int pageIndex,
+  ) {
+    if (anagrams.length == 1) {
+      return '${anagrams.length} result';
+    } else if (anagrams.length <= _numPerPage) {
+      return '${anagrams.length} results';
+    } else {
+      int lowerIndex = _lowerIndexOfPage(pageIndex);
+      int upperIndex = _upperIndexOfPage(
+        pageIndex,
+        anagrams.length,
+      );
+
+      return '${lowerIndex + 1} - $upperIndex of ${anagrams.length} results';
+    }
+  }
+
+  int _lowerIndexOfPage(int pageIndex) {
+    return pageIndex * _numPerPage;
+  }
+
+  int _upperIndexOfPage(
+    int pageIndex,
+    int numOfAnagrams,
+  ) {
+    return min(
+      (_numPerPage * (pageIndex + 1)),
+      numOfAnagrams,
+    );
   }
 }
 
