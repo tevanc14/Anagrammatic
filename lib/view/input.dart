@@ -1,4 +1,5 @@
 import 'package:anagrammatic/anagram/anagram_length_bounds.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:anagrammatic/anagram/anagram_list.dart';
@@ -207,6 +208,11 @@ class InputState extends State<Input> {
 
   void _transferToAnagramList(BuildContext context) {
     if (key.currentState.validate()) {
+      FirebaseAnalytics().logEvent(
+        name: 'generate_anagrams',
+        parameters: {'characters': charactersTextController.text},
+      );
+
       widget.transition(
         AnagramList(
           characters: charactersTextController.text,

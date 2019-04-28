@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.41.0] - 2019-04-28
+
+Added
+
+- Firebase analytics for iOS
+
+Changed
+
+- Extend front layer of Backdrop over the bottom SafeArea
+
 ## [0.40.0] - 2019-04-27
 
 Added

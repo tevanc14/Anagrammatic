@@ -383,8 +383,12 @@ class _BackdropState extends State<Backdrop>
               clipper: ShapeBorderClipper(
                 shape: RoundedRectangleBorder(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(frontHeadingHeight),
-                    topRight: Radius.circular(frontHeadingHeight),
+                    topLeft: Radius.circular(
+                      frontHeadingHeight,
+                    ),
+                    topRight: Radius.circular(
+                      frontHeadingHeight,
+                    ),
                   ),
                 ),
               ),

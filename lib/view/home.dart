@@ -77,6 +77,7 @@ class _HomeState extends State<Home> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: theme.primaryColor,
       body: SafeArea(
+        bottom: false,
         child: WillPopScope(
           child: Backdrop(
             frontAction: AnimatedSwitcher(

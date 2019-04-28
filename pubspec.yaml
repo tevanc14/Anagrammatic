@@ -2,13 +2,15 @@ name: anagrammatic
 description: Generate detailed anagrams with customizable criteria
 authors:
   - Tevan Carrell <tevanc14@gmail.com>
-version: 0.40.0
+version: 0.41.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   cupertino_icons: ^0.1.2
+  firebase_core: ^0.2.5
+  firebase_analytics: ^1.0.4
   flutter:
     sdk: flutter
   flutter_xlider: ^2.4.3
