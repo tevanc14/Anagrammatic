@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.41.1] - 2019-05-16
+
+Changed
+
+- Convert to AndroidX and get it runnable once again
+
 ## [0.41.0] - 2019-04-28
 
 Added
