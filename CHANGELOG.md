@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.42.0] - 2019-05-16
+
+Added
+
+- Custom color on splash screen
+
+Changed
+
+- Fixed weird color issue on Android app icon
+
 ## [0.41.1] - 2019-05-16
 
 Changed
