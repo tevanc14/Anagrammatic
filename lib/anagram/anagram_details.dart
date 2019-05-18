@@ -80,8 +80,10 @@ class _AnagramDetailsState extends State<AnagramDetails> {
             value: widget.anagram.word.length.toString(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 4.0,
+            padding: const EdgeInsets.only(
+              left: 4.0,
+              right: 4.0,
+              bottom: 16.0,
             ),
             child: ExpansionPanelList(
               expansionCallback: (

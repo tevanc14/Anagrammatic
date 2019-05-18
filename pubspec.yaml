@@ -2,7 +2,7 @@ name: anagrammatic
 description: Generate detailed anagrams with customizable criteria
 authors:
   - Tevan Carrell <tevanc14@gmail.com>
-version: 0.42.0
+version: 0.43.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -28,10 +28,5 @@ flutter:
   fonts:
     - family: RobotoCondensed
       fonts:
-        - asset: assets/fonts/RobotoCondensed-Bold.ttf
-        - asset: assets/fonts/RobotoCondensed-BoldItalic.ttf
-        - asset: assets/fonts/RobotoCondensed-Italic.ttf
-        - asset: assets/fonts/RobotoCondensed-Light.ttf
-        - asset: assets/fonts/RobotoCondensed-LightItalic.ttf
         - asset: assets/fonts/RobotoCondensed-Regular.ttf
   uses-material-design: true

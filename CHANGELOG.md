@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.43.0] - 2019-05-18
+
+Added
+
+- Bottom padding for details dialog
+
+Removed
+
+- Unused fonts
+
 ## [0.42.0] - 2019-05-16
 
 Added
