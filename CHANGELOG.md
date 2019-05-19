@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.43.2] - 2019-05-19
+
+Added
+
+- Privacy policies
+
 ## [0.43.1] - 2019-05-18
 
 Changed
