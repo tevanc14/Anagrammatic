@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.43.1] - 2019-05-18
+
+Changed
+
+- Set iOS global platform
+
 ## [0.43.0] - 2019-05-18
 
 Added
