@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.43.3] - 2019-08-07
+
+Changed
+
+- Further customized privacy policies
+
 ## [0.43.2] - 2019-05-19
 
 Added
