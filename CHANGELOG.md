@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.43.4] - 2019-08-31
+
+Changed
+
+- Upgraded dependencies
+
 ## [0.43.3] - 2019-08-07
 
 Changed

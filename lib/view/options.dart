@@ -339,7 +339,9 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
         numberFormat: _numberFormat(),
       ),
       trackBar: FlutterSliderTrackBar(
-        activeTrackBarColor: _optionLabelText.color,
+        activeTrackBar: BoxDecoration(
+          color: _optionLabelText.color,
+        ),
       ),
       onDragCompleted: (handlerIndex, lowerValue, upperValue) {
         if (handlerIndex == 0) {
