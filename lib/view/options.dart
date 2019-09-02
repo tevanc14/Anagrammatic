@@ -6,9 +6,6 @@ import 'package:anagrammatic/options/text_scaling.dart';
 import 'package:anagrammatic/options/word_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:intl/intl.dart';
-// import 'package:quiver/core.dart';
 
 final double _horizontalPadding = 28.0;
 final double _verticalPadding = 8.0;
@@ -297,6 +294,11 @@ class _LengthRangeSlider extends StatefulWidget {
 }
 
 class _LengthRangeSliderState extends State<_LengthRangeSlider> {
+  RangeValues _rangeValues = RangeValues(
+    AnagramLengthBounds.minimumAnagramLength.toDouble(),
+    AnagramLengthBounds.maximumAnagramLength.toDouble(),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -315,7 +317,16 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
             child: Row(
               children: <Widget>[
                 Flexible(
-                  child: _buildSlider(),
+                  child: SliderTheme(
+                    child: _buildSlider(),
+                    data: SliderThemeData(
+                      showValueIndicator: ShowValueIndicator.always,
+                      minThumbSeparation: 0,
+                      valueIndicatorTextStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -326,37 +337,27 @@ class _LengthRangeSliderState extends State<_LengthRangeSlider> {
   }
 
   Widget _buildSlider() {
-    return FlutterSlider(
-      values: [
-        AnagramLengthBounds.minimumAnagramLength.toDouble(),
-        AnagramLengthBounds.maximumAnagramLength.toDouble(),
-      ],
+    return RangeSlider(
+      values: _rangeValues,
       min: AnagramLengthBounds.minimumAnagramLength.toDouble(),
       max: AnagramLengthBounds.maximumAnagramLength.toDouble(),
-      rangeSlider: true,
-      tooltip: FlutterSliderTooltip(
-        alwaysShowTooltip: true,
-        numberFormat: _numberFormat(),
-      ),
-      trackBar: FlutterSliderTrackBar(
-        activeTrackBar: BoxDecoration(
-          color: _optionLabelText.color,
-        ),
-      ),
-      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
-        if (handlerIndex == 0) {
-          widget.options.anagramLengthLowerBound = lowerValue.toInt();
-        } else if (handlerIndex == 1) {
-          widget.options.anagramLengthUpperBound = upperValue.toInt();
-        }
+      onChanged: (RangeValues rangeValues) {
+        widget.options.anagramLengthLowerBound = rangeValues.start.toInt();
+        widget.options.anagramLengthUpperBound = rangeValues.end.toInt();
+        setState(() {
+          _rangeValues = rangeValues;
+        });
       },
+      activeColor: _optionLabelText.color,
+      inactiveColor: _optionLabelText.color.withOpacity(
+        0.2,
+      ),
+      divisions: AnagramLengthBounds.maximumAnagramLength,
+      labels: RangeLabels(
+        '${_rangeValues.start.toInt()}',
+        '${_rangeValues.end.toInt()}',
+      ),
     );
-  }
-
-  NumberFormat _numberFormat() {
-    final NumberFormat numberFormat = NumberFormat();
-    numberFormat.maximumFractionDigits = 0;
-    return numberFormat;
   }
 }
 

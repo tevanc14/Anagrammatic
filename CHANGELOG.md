@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.44.0] - 2019-09-01
+
+Changed
+
+- Replace range slider with Material's
+
 ## [0.43.4] - 2019-08-31
 
 Changed
