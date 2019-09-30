@@ -2,7 +2,7 @@ name: anagrammatic
 description: Generate detailed anagrams with customizable criteria
 authors:
   - Tevan Carrell <tevanc14@gmail.com>
-version: 0.44.0
+version: 0.45.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.3+4
-  url_launcher: ^5.1.2
+  url_launcher: ^5.1.4
 
 dev_dependencies:
   flutter_test:

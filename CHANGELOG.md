@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.45.0] - 2019-09-29
+
+Added
+
+- Encrypted Firebase configs for Codemagic building
+
 ## [0.44.0] - 2019-09-01
 
 Changed
