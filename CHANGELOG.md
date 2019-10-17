@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.46.0] - 2019-10-17
+
+Changed
+
+- Removed alpha channel from ios icon images
+
 ## [0.45.0] - 2019-09-29
 
 Added
