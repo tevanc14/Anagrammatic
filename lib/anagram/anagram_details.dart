@@ -220,7 +220,7 @@ class _AnagramDetailsState extends State<AnagramDetails> {
   List<DataRow> _buildRows(Map<String, int> characterCounts) {
     List<DataRow> rows = List<DataRow>();
 
-    if (characterCounts.length == 0) {
+    if (characterCounts.isEmpty) {
       rows.add(
         DataRow(
           cells: <DataCell>[

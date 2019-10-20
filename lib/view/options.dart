@@ -486,7 +486,7 @@ class OptionsPage extends StatelessWidget {
           options: options,
         ),
         const Divider(
-          color: const Color(
+          color: Color(
             0x1F000000,
           ),
         ),

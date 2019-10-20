@@ -45,9 +45,9 @@ class OptionsLoader {
     int textScaleFactorId = options.textScaleFactor.identifier;
     int wordListId = options.wordList.identifier;
 
-    preferences.setInt(themeParameterName, themeId);
-    preferences.setInt(textScaleParameterName, textScaleFactorId);
-    preferences.setInt(wordListParameterName, wordListId);
+    await preferences.setInt(themeParameterName, themeId);
+    await preferences.setInt(textScaleParameterName, textScaleFactorId);
+    await preferences.setInt(wordListParameterName, wordListId);
   }
 
   Options getDefaultOptions() {

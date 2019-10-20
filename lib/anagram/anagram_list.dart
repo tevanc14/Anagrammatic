@@ -52,7 +52,7 @@ class AnagramListState extends State<AnagramList> {
               options,
             );
 
-            if (_filteredAnagrams.length <= 0) {
+            if (_filteredAnagrams.isEmpty) {
               return _NoResultsText();
             } else {
               return _AnagramPages(

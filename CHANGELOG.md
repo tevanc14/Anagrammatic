@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0] - 2019-10-20
+
+Added
+
+- Dart analyzer config from Pedantic
+
 ## [0.46.0] - 2019-10-17
 
 Changed

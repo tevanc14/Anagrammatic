@@ -41,6 +41,14 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Future<bool> _transition() {
+    if (!shouldSystemBackExit) {
+      _inputTransition();
+    }
+
+    return Future.value(true);
+  }
+
   void _listTransition(Widget newPage) {
     setState(() {
       showBackButton = true;
@@ -112,13 +120,7 @@ class _HomeState extends State<Home> {
             ),
             backLayer: widget.optionsPage,
           ),
-          onWillPop: () {
-            if (shouldSystemBackExit) {
-              SystemNavigator.pop();
-            } else {
-              _inputTransition();
-            }
-          },
+          onWillPop: _transition,
         ),
       ),
     );
